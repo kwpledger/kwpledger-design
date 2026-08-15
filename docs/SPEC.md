@@ -1,0 +1,212 @@
+# kwp design system — specification
+
+Settled 2026-08-14. This is the contract. Values live in `tokens/`; the reasoning lives here.
+
+Written from the brief in `kwpledger-site/docs/DESIGN-SYSTEM-HANDOFF.md`, which remains the record of *why this repo exists*. This document supersedes it on *what the system is*.
+
+---
+
+## 1. Scope
+
+One design system shared by every front-end surface under `*.kwpledger.com`, plus the apps that live outside it.
+
+The governing principle, in Kevin's framing: **if changing a font or a hex value breaks a downstream property, the problem is that the property reached past the semantic layer.** Consumers are built knowing tokens can change. That is the whole point of the abstraction, and it is the standard any consumer is held to.
+
+---
+
+## 2. The layering contract
+
+Three layers. **Each may reach exactly one layer down.**
+
+| Layer | What it is | Example | Lives |
+| :-- | :-- | :-- | :-- |
+| 1. Palette | Raw values, named for what they are | `--teal-700` | `tokens/base.css` |
+| 2. Semantic | Roles components consume | `--surface`, `--accent`, `--data-3-fg` | `tokens/base.css`, `tokens/categorical.css` |
+| 3. Domain | App-specific meanings | `--meal-breakfast`, `--macro-carbs` | **The consuming repo. Never here.** |
+
+**The rule that makes it worth having:** domain tokens map onto semantic tokens, never past them to raw palette values. The moment an app writes `--meal-breakfast: var(--amber-300)`, the abstraction is dead and re-theming means editing every consumer.
+
+**The design system must never learn what a "meal type" or a "macro" is.**
+
+Components in any consumer reference layer 2 only. A component that reaches for `--teal-700` will silently keep the portal's colours when a section remaps the semantic layer around it — the exact failure the layering prevents.
+
+---
+
+## 3. Naming
+
+- Palette: `--<family>-<weight>`, weights on the familiar 0–900 ramp. `--teal-700`, `--navy-900`.
+- Semantic: role words, no hue words. `--surface`, `--surface-card`, `--fg`, `--fg-muted`, `--accent`, `--accent-hover`, `--border`.
+- Categorical: `--data-<n>-<role>` where `<role>` is `surface`, `fg`, or `border`. **Numbered, never named for the hue.** `--data-1` is not "the red one", it is the first slot. Naming it `--data-red` would smuggle meaning into a scale whose entire purpose is to carry none, and would make the value impossible to change.
+- Type: `--font-display`, `--font-body`, `--fw-display`, `--step--1` … `--step-4`.
+- Spacing: `--space-2xs` … `--space-2xl`, plus `--measure` and `--page`.
+
+No prefix (`--kwp-*`). These files are the base layer of every consumer; a prefix would be noise on every line and buys collision-safety this system does not need.
+
+---
+
+## 4. The categorical scale
+
+### 4.1 Count: eight. Fixed.
+
+Known demand is seven — the meal planner's four meal types and three macros. Eight covers that with one spare.
+
+**The count is picked once.** Adding a ninth later means re-authoring hue placement across both themes, which breaks the equal-weight property the same way retrofitting dark mode does. A consumer needing a ninth slot starts a conversation about the scale, not a patch to it.
+
+### 4.2 Structure: three values per slot, not one
+
+Categorised UI is built from **pale filled cards with dark text on them** — fills, not text colours, not strokes. So each slot ships:
+
+- `surface` — the fill. Light enough in light mode for dark text; dark enough in dark mode for light text.
+- `fg` — legible on that fill, and also usable as a bare label on the page background.
+- `border` — the visible edge of the filled element.
+
+Ship one value per slot and the consumer derives its own tint on day one, which is the same drift by a slower route.
+
+### 4.3 Authored in OKLCH, and that is load-bearing
+
+Within a theme, **every slot shares one lightness and one chroma per role; only hue changes.**
+
+Equal lightness in OKLCH means equal *perceived* lightness. In HSL or HSB it does not — the same numbers produce swatches that read as louder or more washed-out than their neighbours. **Categorical colours must read as equals or the scale implies a ranking that is not there.**
+
+Parity is enforced structurally: `tools/verify-contrast.mjs` fails if any slot's L/C differs from its peers.
+
+### 4.4 Hue placement
+
+Eight hues: **25, 60, 105, 150, 216, 274, 310, 345.**
+
+Spacing is uneven on purpose. OKLCH hue is not perceptually uniform in discriminability — the yellow–orange region separates clearly at small steps, while blue–purple needs larger ones to look as different. Even 45° spacing would produce a scale with a crowded half.
+
+**Two bands are excluded**, and the verifier enforces it:
+
+| Band | Why |
+| :-- | :-- |
+| 178–202 | The brand teal, where `--accent` lives. A category that looks like the accent reads as *interactive*. |
+| 238–262 | The navy surface family. A category that looks like navy reads as *chrome*. |
+
+Both are meaning collisions. The scale is therefore cohesive with the brand through **shared chroma and lightness discipline, not by borrowing brand hues** — which is the stronger form of cohesion anyway, since it survives a palette change.
+
+### 4.5 Lightness and chroma registers
+
+| Role | Light | Dark |
+| :-- | :-- | :-- |
+| `surface` | L 90% · C 0.046 | L 32% · C 0.052 |
+| `fg` | L 38% · C 0.062 | L 87% · C 0.058 |
+| `border` | L 80% · C 0.075 | L 45% · C 0.070 |
+
+**Both themes are authored together.** Retrofitting dark onto a categorical scale reliably breaks equal weight in one theme or the other, because the lightness that keeps eight hues inside sRGB differs between them: in light the binding hues are 25 and 274, in dark it is 216. Neither register is derivable from the other.
+
+Dark tints sit above `--surface-card` in lightness so a filled card reads as raised rather than as a hole punched in the page.
+
+### 4.6 Stately, not neon
+
+**Peak chroma is 0.075.** The ceiling is **0.091** — the chroma of `--teal-300`, the most saturated colour in the brand palette.
+
+The scale is not permitted to be louder than the brand it belongs to. This turns a matter of taste into a gate a script can check.
+
+### 4.7 Gamut
+
+Every value sits inside sRGB with margin, and the verifier fails on any that does not.
+
+This is not pedantry. **A clipped colour is silently no longer at its authored lightness** — the browser clamps the out-of-range channel and the swatch shifts, breaking parity with no warning anywhere. Low chroma is what keeps eight hues in gamut at these lightnesses, so §4.6 and this section are the same constraint seen twice.
+
+---
+
+## 5. Notation is mixed, on purpose
+
+- `tokens/base.css` is **hex.**
+- `tokens/categorical.css` is **`oklch()`.**
+
+The brand palette was authored and contrast-validated as hex. Converting it would carry rounding risk for no benefit — the brief's instruction was not to convert unless rendered output is verified unchanged, and there is nothing to gain by trying.
+
+The categorical scale is `oklch()` because the authored intent *is* the parity, and hex would hide it. A reader can see that eight tokens share `90% 0.046` and differ only in hue; the same eight as hex look arbitrary.
+
+Hex equivalents for every categorical value are in [PALETTE.md](PALETTE.md), for consumers that cannot take a dependency.
+
+---
+
+## 6. Contrast gates
+
+Enforced by `npm run verify`. Failing any gate exits non-zero.
+
+| Gate | Threshold | Why |
+| :-- | :-- | :-- |
+| Semantic text pairs (`--fg`, `--fg-muted`, `--accent` on both surfaces, both themes) | ≥ 4.5:1 | WCAG AA, normal text |
+| Categorical `fg` on its own `surface` | ≥ 4.5:1 | The label on the card |
+| Categorical `fg` on the page surface | ≥ 4.5:1 | The same token used as a bare legend label — consumers will do this |
+| Categorical `surface` on the page surface | ≥ 1.2:1 | The fill must be perceptible at all |
+| Categorical `border` on its own `surface` | ≥ 1.3:1 | The edge must be visible against what it edges |
+| **Parity** — spread of WCAG contrast across the eight tints | ≤ 0.25 | The measured form of "these read as peers" |
+| Adjacent tint separation | ΔOKLab ≥ 0.02 | Neighbouring slots must be tellable apart |
+| Chroma ceiling | ≤ 0.091 | §4.6 |
+| sRGB gamut | all values | §4.7 |
+
+**Measured, as of the values in `tokens/`:**
+
+| | light | dark |
+| :-- | :-- | :-- |
+| `fg` on own tint | 7.34 – 7.54 | 8.56 – 8.58 |
+| `fg` on page surface | 9.33 – 9.92 | 12.20 – 12.77 |
+| tint on page surface | 1.27 – 1.32 | 1.42 – 1.49 |
+| border on own tint | 1.37 – 1.41 | 1.68 – 1.73 |
+| **parity spread** | **0.045** | **0.067** |
+
+### 6.1 Why parity has to be measured, not assumed
+
+Equal OKLCH lightness gives equal *perceived* lightness. It does **not** give equal WCAG contrast — WCAG relative luminance is hue-weighted, so a green and a blue at identical OKLCH lightness produce measurably different contrast ratios. The spread is small here (0.045 light, 0.067 dark) but it is a fact about the values, not a property guaranteed by the authoring method. It is checked.
+
+### 6.2 What is deliberately not claimed
+
+**The `border` tokens are not a WCAG 1.4.11 non-text contrast claim.** At 1.37–1.73:1 they are below the 3:1 that standard requires for a UI component boundary that *identifies* the component.
+
+That is a considered decision, not an oversight. Under §7 every colour-coded axis carries a text label, so a categorical element is never identified by its edge — the border is reinforcement on an element already identified by its label. Raising these to 3:1 would put a heavy outline on every card and lose the register the brand actually has: the existing `--border` against `--surface` is 1.19:1.
+
+If a consumer builds something where the boundary *is* the only identifier, that component needs its own stronger stroke and this scale is the wrong tool for it.
+
+---
+
+## 7. Colour is reinforcement, never the sole carrier of meaning
+
+**Every colour-coded axis carries a text label beside it.** Non-negotiable, and it is a documented rule of this system rather than an implementation detail of any one consumer.
+
+It is an accessibility requirement first. It also has a practical payoff that is easy to miss: because nothing depends on colour alone, **the palette can change later without breaking comprehension.** That is what makes the values in this repo safe to revise.
+
+---
+
+## 8. What consumers may and may not do
+
+**May:**
+
+- Define layer-3 domain tokens mapping onto layer-2 tokens
+- Remap the semantic layer on a wrapper element to theme a section
+- Import `base.css` without `fonts.css` and serve the faces themselves
+- Skip `categorical.css` entirely if they display no categorised data
+
+**May not:**
+
+- Reference palette tokens (`--teal-700`, `--navy-800`) from a component
+- Map a domain token onto a raw palette value
+- Redefine a token's meaning while keeping its name
+- Wire light/dark to the same switch as section or channel identity — see *Three layers* in `kwpledger-site/docs/SITE-POSITIONING.md`
+
+**Light/dark is user preference. Channel and section identity is not.** Dark mode must never make the portal silently wear KPLS's uniform.
+
+---
+
+## 9. Changing the system
+
+**Safe:** adding a new semantic token; adjusting a palette hex within its role; adding a spacing or type step at the ends.
+
+**Requires re-verification (`npm run verify` must pass):** any colour value; any lightness or chroma register.
+
+**Requires a spec change and a conversation:** the categorical count; hue placement; the layering contract; the chroma ceiling; the text-label rule in §7.
+
+Versioning is semver against consumer-visible behaviour. **Removing or renaming a token is a major bump** even if no consumer uses it — the whole distribution model assumes pinning, and a silent rename is exactly the breakage pinning exists to prevent.
+
+---
+
+## 10. Out of scope
+
+- **No authoring UI or tooling.** `tools/` holds a verifier and the colour maths it needs, and stays that size.
+- **Restyling the Base44 apps.** [PALETTE.md](PALETTE.md) ships the values; applying them is separate work.
+- **The YouTube channel themes.** `brandtokens_youtube.css` becomes a layer *on top of* these semantics later, once the base is stable. Not now.
+- **Converting the brand palette to OKLCH.** §5.
