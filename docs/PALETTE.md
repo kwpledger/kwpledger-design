@@ -1,6 +1,6 @@
 # kwp palette — the human-readable copy
 
-**Every value in this system, as plain hex.** For consumers that cannot take a dependency on this repo — Base44 apps, a Unity project, a slide template, anything where you have to *tell* a tool the colours rather than import them.
+**Every value in this system, as plain hex.** For consumers that cannot take a dependency on this repo — Base44 apps, a Unity project, a slide template, anything where you have to *tell* a tool the colors rather than import them.
 
 This is a real deliverable, not a convenience. Base44 generates the app; there is no `package.json` to add a dependency to. The only way these apps stay on-brand is if the values are written down somewhere a person can read them out.
 
@@ -10,16 +10,16 @@ This is a real deliverable, not a convenience. Base44 generates the app; there i
 
 ## How to use this with Base44
 
-Paste the relevant table into the prompt and say the colours are fixed. Something like:
+Paste the relevant table into the prompt and say the colors are fixed. Something like:
 
-> Use exactly these colours and do not substitute or adjust them. Background `#fbfaf8`, cards `#ffffff`, body text `#1a1917`, secondary text `#5c5a57`, links and buttons `#0d5c58` with `#0a4a47` on hover, borders `#e3e0da`. In dark mode: background `#0a1420`, cards `#10202f`, body text `#e6ecf2`, secondary text `#9aabbb`, links and buttons `#5fbdb4` with `#8ad8d0` on hover, borders `#1e3245`.
+> Use exactly these colors and do not substitute or adjust them. Background `#fbfaf8`, cards `#ffffff`, body text `#1a1917`, secondary text `#5c5a57`, links and buttons `#0d5c58` with `#0a4a47` on hover, borders `#e3e0da`. In dark mode: background `#0a1420`, cards `#10202f`, body text `#e6ecf2`, secondary text `#9aabbb`, links and buttons `#5fbdb4` with `#8ad8d0` on hover, borders `#1e3245`.
 >
 > Fonts: headings in Lora SemiBold, body in Hanken Grotesk.
 
 **Two things that go wrong if you do not say them out loud:**
 
 1. **Lora is only available at SemiBold (600).** Ask for Lora Bold or Lora Regular and the browser fakes the weight — it looks subtly wrong and nobody can say why. Say "Lora SemiBold" every time.
-2. **Generators love to saturate.** If the output comes back brighter than these values, it has substituted its own palette. Say "do not adjust these colours" explicitly.
+2. **Generators love to saturate.** If the output comes back brighter than these values, it has substituted its own palette. Say "do not adjust these colors" explicitly.
 
 ---
 
@@ -31,8 +31,8 @@ Do not use these directly in a component. They exist so the semantic roles below
 | :-- | :-- | :-- |
 | `--paper-0` | `#ffffff` | White |
 | `--paper-50` | `#fbfaf8` | Warm off-white — the light page |
-| `--sand-200` | `#e3e0da` | Warm grey — light borders |
-| `--ink-500` | `#5c5a57` | Warm mid grey — secondary text |
+| `--sand-200` | `#e3e0da` | Warm gray — light borders |
+| `--ink-500` | `#5c5a57` | Warm mid gray — secondary text |
 | `--ink-900` | `#1a1917` | Near-black, warm — body text |
 | `--teal-200` | `#8ad8d0` | Pale teal |
 | `--teal-300` | `#5fbdb4` | Light teal — the dark-mode accent |
@@ -64,11 +64,11 @@ All text pairs meet WCAG AA. The weakest is `--fg-muted` on `--surface` at 6.59:
 
 ---
 
-## Categorical scale — eight slots for categorised data
+## Categorical scale — eight slots for categorized data
 
-**Use these when you need several colours that read as equals** — meal types, macros, chart series, tags. Not for anything meaning "primary", "success", or "danger"; these slots carry no meaning by design.
+**Use these when you need several colors that read as equals** — meal types, macros, chart series, tags. Not for anything meaning "primary", "success", or "danger"; these slots carry no meaning by design.
 
-**Take them in order.** If you need three, use slots 1, 2, 3 — not your three favourites. Consistent ordering is what makes two different apps look related.
+**Take them in order.** If you need three, use slots 1, 2, 3 — not your three favorites. Consistent ordering is what makes two different apps look related.
 
 Each slot is a set of three: the **surface** is the fill, the **text** goes on that fill, the **border** is its edge.
 
@@ -106,9 +106,9 @@ Each slot is a set of three: the **surface** is the fill, the **text** goes on t
 
 ## The rule that outranks all of the above
 
-**Colour is always reinforcement, never the sole carrier of meaning. Every colour-coded thing carries a text label beside it.**
+**Color is always reinforcement, never the sole carrier of meaning. Every color-coded thing carries a text label beside it.**
 
-A colour-coded legend with no text is not acceptable output, however good it looks. This is an accessibility requirement, and it is also what makes every value on this page safe to change later without breaking anyone's understanding of the interface.
+A color-coded legend with no text is not acceptable output, however good it looks. This is an accessibility requirement, and it is also what makes every value on this page safe to change later without breaking anyone's understanding of the interface.
 
 ---
 
@@ -124,7 +124,7 @@ Fallbacks, in order:
 - Lora → Georgia, Iowan Old Style, Palatino Linotype, Palatino, serif
 - Hanken Grotesk → system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif
 
-Both are open licensed (SIL OFL). The licence notice is in `fonts/OFL-NOTICE.txt` and **travels with the font files** — if you copy the woff2s, copy the notice.
+Both are open licensed (SIL OFL). The license notice is in `fonts/OFL-NOTICE.txt` and **travels with the font files** — if you copy the woff2s, copy the notice.
 
 ### Type scale
 

@@ -2,10 +2,10 @@
 
 Design tokens shared by **kwpledger.com**, the **`*.kwpledger.com`** subdomains, and the apps and games that live outside them.
 
-One source of truth. Change a colour here, bump the pin in a consumer, and it propagates — without any consumer needing to know what changed.
+One source of truth. Change a color here, bump the pin in a consumer, and it propagates — without any consumer needing to know what changed.
 
 - **[docs/SPEC.md](docs/SPEC.md)** — the contract. Naming, the layering rules, the categorical scale, the contrast gates. Read this before changing a value.
-- **[docs/PALETTE.md](docs/PALETTE.md)** — every value as plain hex, for tools you can only *tell* the colours to (Base44, Unity, slide templates).
+- **[docs/PALETTE.md](docs/PALETTE.md)** — every value as plain hex, for tools you can only *tell* the colors to (Base44, Unity, slide templates).
 
 ---
 
@@ -40,7 +40,7 @@ Then in your root stylesheet:
 @import '@kwpledger/design';
 ```
 
-**Copy `fonts/` into whatever your host serves as `/fonts/`**, licence notice included. The `@font-face` paths are absolute by convention, not resolved by a bundler — that is what lets a plain-CSS consumer and a Tailwind consumer use the same file. If you serve the faces yourself, import the pieces and skip `fonts.css`:
+**Copy `fonts/` into whatever your host serves as `/fonts/`**, license notice included. The `@font-face` paths are absolute by convention, not resolved by a bundler — that is what lets a plain-CSS consumer and a Tailwind consumer use the same file. If you serve the faces yourself, import the pieces and skip `fonts.css`:
 
 ```css
 @import '@kwpledger/design/base.css';
@@ -80,7 +80,7 @@ Import the tokens, then bridge the ones you want as utilities. Use `@theme inlin
 }
 ```
 
-Confirm the exact `@theme` behaviour against the Tailwind version you are on when you migrate — this is the intent, and the reasoning above tells you what to adjust if the mechanism differs.
+Confirm the exact `@theme` behavior against the Tailwind version you are on when you migrate — this is the intent, and the reasoning above tells you what to adjust if the mechanism differs.
 
 ### Base44 apps, and anything else that cannot take a dependency
 
@@ -115,13 +115,13 @@ If changing a font or a hex value here breaks a downstream property, the problem
 
 ---
 
-## Categorised data
+## Categorized data
 
 `--data-1` through `--data-8`. Eight slots, no meaning, three values each — `-surface` (the fill), `-fg` (text on that fill), `-border` (its edge). Both themes.
 
-Take them **in order.** If you need three, use 1, 2, 3 — not your three favourites. Consistent ordering is what makes two different apps look related.
+Take them **in order.** If you need three, use 1, 2, 3 — not your three favorites. Consistent ordering is what makes two different apps look related.
 
-**Colour is always reinforcement, never the sole carrier of meaning.** Every colour-coded axis carries a text label beside it. That is an accessibility requirement, and it is also what makes these values safe to change later.
+**Color is always reinforcement, never the sole carrier of meaning.** Every color-coded axis carries a text label beside it. That is an accessibility requirement, and it is also what makes these values safe to change later.
 
 ---
 
@@ -158,6 +158,6 @@ Releases are cut by CI: merge a version bump to `main` and `.github/workflows/re
 
 **Not everything.** Uniformity across surfaces doing different jobs is flattening, not cohesion.
 
-Added colour is fine where it makes sense for what the thing actually is — a game's mode and difficulty colours may be louder than this system's ceiling, because reading them at speed is a different problem than categorising data at rest. What holds: **your entry surface should fit**, deviation is justified by function rather than preference, and it lives in your repo as additive tokens, never as an edit here.
+Added color is fine where it makes sense for what the thing actually is — a game's mode and difficulty colors may be louder than this system's ceiling, because reading them at speed is a different problem than categorizing data at rest. What holds: **your entry surface should fit**, deviation is justified by function rather than preference, and it lives in your repo as additive tokens, never as an edit here.
 
 Full rule, with a worked example: [SPEC.md §9](docs/SPEC.md).

@@ -28,7 +28,7 @@ Three layers. **Each may reach exactly one layer down.**
 
 **The design system must never learn what a "meal type" or a "macro" is.**
 
-Components in any consumer reference layer 2 only. A component that reaches for `--teal-700` will silently keep the portal's colours when a section remaps the semantic layer around it — the exact failure the layering prevents.
+Components in any consumer reference layer 2 only. A component that reaches for `--teal-700` will silently keep the portal's colors when a section remaps the semantic layer around it — the exact failure the layering prevents.
 
 ---
 
@@ -54,7 +54,7 @@ Known demand is seven — the meal planner's four meal types and three macros. E
 
 ### 4.2 Structure: three values per slot, not one
 
-Categorised UI is built from **pale filled cards with dark text on them** — fills, not text colours, not strokes. So each slot ships:
+Categorized UI is built from **pale filled cards with dark text on them** — fills, not text colors, not strokes. So each slot ships:
 
 - `surface` — the fill. Light enough in light mode for dark text; dark enough in dark mode for light text.
 - `fg` — legible on that fill, and also usable as a bare label on the page background.
@@ -66,7 +66,7 @@ Ship one value per slot and the consumer derives its own tint on day one, which 
 
 Within a theme, **every slot shares one lightness and one chroma per role; only hue changes.**
 
-Equal lightness in OKLCH means equal *perceived* lightness. In HSL or HSB it does not — the same numbers produce swatches that read as louder or more washed-out than their neighbours. **Categorical colours must read as equals or the scale implies a ranking that is not there.**
+Equal lightness in OKLCH means equal *perceived* lightness. In HSL or HSB it does not — the same numbers produce swatches that read as louder or more washed-out than their neighbors. **Categorical colors must read as equals or the scale implies a ranking that is not there.**
 
 Parity is enforced structurally: `tools/verify-contrast.mjs` fails if any slot's L/C differs from its peers.
 
@@ -99,7 +99,7 @@ Dark tints sit above `--surface-card` in lightness so a filled card reads as rai
 
 ### 4.6 Stately, not neon
 
-**Peak chroma is 0.075.** The ceiling is **0.091** — the chroma of `--teal-300`, the most saturated colour in the brand palette.
+**Peak chroma is 0.075.** The ceiling is **0.091** — the chroma of `--teal-300`, the most saturated color in the brand palette.
 
 The scale is not permitted to be louder than the brand it belongs to. This turns a matter of taste into a gate a script can check.
 
@@ -107,7 +107,7 @@ The scale is not permitted to be louder than the brand it belongs to. This turns
 
 Every value sits inside sRGB with margin, and the verifier fails on any that does not.
 
-This is not pedantry. **A clipped colour is silently no longer at its authored lightness** — the browser clamps the out-of-range channel and the swatch shifts, breaking parity with no warning anywhere. Low chroma is what keeps eight hues in gamut at these lightnesses, so §4.6 and this section are the same constraint seen twice.
+This is not pedantry. **A clipped color is silently no longer at its authored lightness** — the browser clamps the out-of-range channel and the swatch shifts, breaking parity with no warning anywhere. Low chroma is what keeps eight hues in gamut at these lightnesses, so §4.6 and this section are the same constraint seen twice.
 
 ---
 
@@ -136,7 +136,7 @@ Enforced by `npm run verify`. Failing any gate exits non-zero.
 | Categorical `surface` on the page surface | ≥ 1.2:1 | The fill must be perceptible at all |
 | Categorical `border` on its own `surface` | ≥ 1.3:1 | The edge must be visible against what it edges |
 | **Parity** — spread of WCAG contrast across the eight tints | ≤ 0.25 | The measured form of "these read as peers" |
-| Adjacent tint separation | ΔOKLab ≥ 0.02 | Neighbouring slots must be tellable apart |
+| Adjacent tint separation | ΔOKLab ≥ 0.02 | Neighboring slots must be tellable apart |
 | Chroma ceiling | ≤ 0.091 | §4.6 |
 | sRGB gamut | all values | §4.7 |
 
@@ -158,17 +158,17 @@ Equal OKLCH lightness gives equal *perceived* lightness. It does **not** give eq
 
 **The `border` tokens are not a WCAG 1.4.11 non-text contrast claim.** At 1.37–1.73:1 they are below the 3:1 that standard requires for a UI component boundary that *identifies* the component.
 
-That is a considered decision, not an oversight. Under §7 every colour-coded axis carries a text label, so a categorical element is never identified by its edge — the border is reinforcement on an element already identified by its label. Raising these to 3:1 would put a heavy outline on every card and lose the register the brand actually has: the existing `--border` against `--surface` is 1.19:1.
+That is a considered decision, not an oversight. Under §7 every color-coded axis carries a text label, so a categorical element is never identified by its edge — the border is reinforcement on an element already identified by its label. Raising these to 3:1 would put a heavy outline on every card and lose the register the brand actually has: the existing `--border` against `--surface` is 1.19:1.
 
 If a consumer builds something where the boundary *is* the only identifier, that component needs its own stronger stroke and this scale is the wrong tool for it.
 
 ---
 
-## 7. Colour is reinforcement, never the sole carrier of meaning
+## 7. Color is reinforcement, never the sole carrier of meaning
 
-**Every colour-coded axis carries a text label beside it.** Non-negotiable, and it is a documented rule of this system rather than an implementation detail of any one consumer.
+**Every color-coded axis carries a text label beside it.** Non-negotiable, and it is a documented rule of this system rather than an implementation detail of any one consumer.
 
-It is an accessibility requirement first. It also has a practical payoff that is easy to miss: because nothing depends on colour alone, **the palette can change later without breaking comprehension.** That is what makes the values in this repo safe to revise.
+It is an accessibility requirement first. It also has a practical payoff that is easy to miss: because nothing depends on color alone, **the palette can change later without breaking comprehension.** That is what makes the values in this repo safe to revise.
 
 ---
 
@@ -179,7 +179,7 @@ It is an accessibility requirement first. It also has a practical payoff that is
 - Define layer-3 domain tokens mapping onto layer-2 tokens
 - Remap the semantic layer on a wrapper element to theme a section
 - Import `base.css` without `fonts.css` and serve the faces themselves
-- Skip `categorical.css` entirely if they display no categorised data
+- Skip `categorical.css` entirely if they display no categorized data
 
 **May not:**
 
@@ -196,15 +196,15 @@ It is an accessibility requirement first. It also has a practical payoff that is
 
 **Not everything has to match.** Uniformity across surfaces that do different jobs is not cohesion, it is flattening, and it produces worse design rather than more of it.
 
-Kevin's framing, which governs: **added colour is fine where it makes sense for what the thing actually is.** A colour axis that encodes a game mechanic may deviate from this system. A status colour an app genuinely needs may be defined before this system ships one.
+Kevin's framing, which governs: **added color is fine where it makes sense for what the thing actually is.** A color axis that encodes a game mechanic may deviate from this system. A status color an app genuinely needs may be defined before this system ships one.
 
 Three things keep that from becoming a free-for-all:
 
 1. **The entry surface conforms.** A property's first screen — the title screen, the landing page, whatever a visitor sees before they have done anything — should read as belonging to the family. Interiors earn more latitude the further they get from that first impression, because by then the visitor is inside a specific thing rather than working out whose it is.
-2. **Deviation is justified by function, not preference.** "This hue reads faster in peripheral vision while the player is dodging" is a reason. "I like it better" is a conversation about the system, not a licence to fork it locally.
+2. **Deviation is justified by function, not preference.** "This hue reads faster in peripheral vision while the player is dodging" is a reason. "I like it better" is a conversation about the system, not a license to fork it locally.
 3. **Deviation is additive and lives in the consumer.** Define domain tokens, or remap the semantic layer on a wrapper (§8). Never edit this repo to suit one consumer, and never map a domain token onto a raw palette value to reach a hue the system lacks — define the value in your own repo, and say why in a comment.
 
-**Worked example — tapdodge.** Its four game-state colours run chroma 0.134–0.175, roughly twice the ceiling in §4.6. They stay. Reading "Hard mode" in peripheral vision mid-dodge is a legibility-under-motion problem, and a 0.075-chroma tint fails at it: the register differs because the function differs. The game still takes the type scale, the spacing scale, and the neutral family — enough to read as the same person's work — and its title screen should fit.
+**Worked example — tapdodge.** Its four game-state colors run chroma 0.134–0.175, roughly twice the ceiling in §4.6. They stay. Reading "Hard mode" in peripheral vision mid-dodge is a legibility-under-motion problem, and a 0.075-chroma tint fails at it: the register differs because the function differs. The game still takes the type scale, the spacing scale, and the neutral family — enough to read as the same person's work — and its title screen should fit.
 
 Three of tapdodge's seven accents (reward, success, error) are **not** categorical and must never be mapped onto `--data-n`. Those slots are defined by carrying no meaning; pointing "error" at slot 7 would make error re-themeable to whatever hue slot 7 becomes. They belong to a status layer this system does not yet ship.
 
@@ -214,17 +214,17 @@ Three of tapdodge's seven accents (reward, success, error) are **not** categoric
 
 **Safe:** adding a new semantic token; adjusting a palette hex within its role; adding a spacing or type step at the ends.
 
-**Requires re-verification (`npm run verify` must pass):** any colour value; any lightness or chroma register.
+**Requires re-verification (`npm run verify` must pass):** any color value; any lightness or chroma register.
 
 **Requires a spec change and a conversation:** the categorical count; hue placement; the layering contract; the chroma ceiling; the text-label rule in §7.
 
-Versioning is semver against consumer-visible behaviour. **Removing or renaming a token is a major bump** even if no consumer uses it — the whole distribution model assumes pinning, and a silent rename is exactly the breakage pinning exists to prevent.
+Versioning is semver against consumer-visible behavior. **Removing or renaming a token is a major bump** even if no consumer uses it — the whole distribution model assumes pinning, and a silent rename is exactly the breakage pinning exists to prevent.
 
 ---
 
 ## 11. Out of scope
 
-- **No authoring UI or tooling.** `tools/` holds a verifier and the colour maths it needs, and stays that size.
+- **No authoring UI or tooling.** `tools/` holds a verifier and the color math it needs, and stays that size.
 - **Restyling the Base44 apps.** [PALETTE.md](PALETTE.md) ships the values; applying them is separate work.
 - **The YouTube channel themes.** `brandtokens_youtube.css` becomes a layer *on top of* these semantics later, once the base is stable. Not now.
 - **Converting the brand palette to OKLCH.** §5.

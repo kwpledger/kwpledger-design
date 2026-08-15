@@ -8,7 +8,7 @@
  * emitted both would only ever prove it agreed with itself.
  *
  * Zero dependencies on purpose — this repo has no build, and adding a
- * toolchain to check eight colours would cost more than it returns.
+ * toolchain to check eight colors would cost more than it returns.
  */
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
