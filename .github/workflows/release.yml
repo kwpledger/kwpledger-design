@@ -1,0 +1,103 @@
+# Verify the tokens, and tag a release when the version in package.json changes.
+#
+# WHY THIS EXISTS: an agent session cannot create git refs — pushing a tag and
+# POSTing to the refs API are both blocked. Actions runs inside GitHub with its
+# own token, so it can. Without this, every release is hand-tagged from a local
+# clone, forever.
+#
+# THE VERIFY JOB IS NOT A REQUIRED STATUS CHECK, AND MUST NOT BECOME ONE.
+# Branch protection here deliberately omits required checks — see the handoff
+# brief §8. A check that runs and reports is useful; a *required* check that
+# fails to report blocks every merge permanently. Leave it advisory.
+#
+# The release job cuts the tag only when package.json's version has no tag yet,
+# so it is safe to re-run and safe on any merge that does not bump the version.
+
+name: Verify and release
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    name: Verify tokens
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      # No install step — the verifier has zero dependencies, by design.
+      - name: Check contrast, gamut, chroma ceiling, hue bands, parity
+        run: npm run verify
+
+  release:
+    name: Tag if the version changed
+    needs: verify
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Read the version
+        id: v
+        run: echo "version=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
+
+      - name: Has this version already been tagged?
+        id: check
+        run: |
+          if git ls-remote --exit-code --tags origin \
+              "refs/tags/v${{ steps.v.outputs.version }}" >/dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+            echo "v${{ steps.v.outputs.version }} already tagged — nothing to do."
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Tag and publish the release
+        if: steps.check.outputs.exists == 'false'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          V="v${{ steps.v.outputs.version }}"
+          git config user.name  'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git tag -a "$V" -m "$V"
+          git push origin "$V"
+
+          # Built with echo rather than a heredoc: YAML block scalars re-indent
+          # heredoc bodies, and backticks inside double quotes would be command
+          # substitution. Single-quoted fence lines keep both harmless.
+          {
+            echo 'Pin this release:'
+            echo
+            echo '```bash'
+            echo "npm i github:kwpledger/kwpledger-design#$V"
+            echo '```'
+            echo
+            echo 'Every token gate passed on this commit — WCAG contrast in both'
+            echo 'themes, sRGB gamut, the chroma ceiling, the excluded hue bands,'
+            echo 'and categorical parity. See docs/SPEC.md §6.'
+          } > "$RUNNER_TEMP/notes.md"
+
+          gh release create "$V" --title "$V" --notes-file "$RUNNER_TEMP/notes.md"
