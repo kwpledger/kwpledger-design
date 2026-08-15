@@ -192,7 +192,25 @@ It is an accessibility requirement first. It also has a practical payoff that is
 
 ---
 
-## 9. Changing the system
+## 9. How much must a consumer conform?
+
+**Not everything has to match.** Uniformity across surfaces that do different jobs is not cohesion, it is flattening, and it produces worse design rather than more of it.
+
+Kevin's framing, which governs: **added colour is fine where it makes sense for what the thing actually is.** A colour axis that encodes a game mechanic may deviate from this system. A status colour an app genuinely needs may be defined before this system ships one.
+
+Three things keep that from becoming a free-for-all:
+
+1. **The entry surface conforms.** A property's first screen — the title screen, the landing page, whatever a visitor sees before they have done anything — should read as belonging to the family. Interiors earn more latitude the further they get from that first impression, because by then the visitor is inside a specific thing rather than working out whose it is.
+2. **Deviation is justified by function, not preference.** "This hue reads faster in peripheral vision while the player is dodging" is a reason. "I like it better" is a conversation about the system, not a licence to fork it locally.
+3. **Deviation is additive and lives in the consumer.** Define domain tokens, or remap the semantic layer on a wrapper (§8). Never edit this repo to suit one consumer, and never map a domain token onto a raw palette value to reach a hue the system lacks — define the value in your own repo, and say why in a comment.
+
+**Worked example — tapdodge.** Its four game-state colours run chroma 0.134–0.175, roughly twice the ceiling in §4.6. They stay. Reading "Hard mode" in peripheral vision mid-dodge is a legibility-under-motion problem, and a 0.075-chroma tint fails at it: the register differs because the function differs. The game still takes the type scale, the spacing scale, and the neutral family — enough to read as the same person's work — and its title screen should fit.
+
+Three of tapdodge's seven accents (reward, success, error) are **not** categorical and must never be mapped onto `--data-n`. Those slots are defined by carrying no meaning; pointing "error" at slot 7 would make error re-themeable to whatever hue slot 7 becomes. They belong to a status layer this system does not yet ship.
+
+---
+
+## 10. Changing the system
 
 **Safe:** adding a new semantic token; adjusting a palette hex within its role; adding a spacing or type step at the ends.
 
@@ -204,7 +222,7 @@ Versioning is semver against consumer-visible behaviour. **Removing or renaming 
 
 ---
 
-## 10. Out of scope
+## 11. Out of scope
 
 - **No authoring UI or tooling.** `tools/` holds a verifier and the colour maths it needs, and stays that size.
 - **Restyling the Base44 apps.** [PALETTE.md](PALETTE.md) ships the values; applying them is separate work.

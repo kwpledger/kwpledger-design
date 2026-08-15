@@ -148,4 +148,16 @@ Run it before tagging a release. Zero dependencies — nothing to install.
 
 **Removing or renaming a token is a major version bump** even if you believe nothing uses it.
 
-Some changes are not unilateral — the categorical count, hue placement, the layering contract, the chroma ceiling, and the text-label rule all need a spec change and a conversation. See [SPEC.md §9](docs/SPEC.md).
+Some changes are not unilateral — the categorical count, hue placement, the layering contract, the chroma ceiling, and the text-label rule all need a spec change and a conversation. See [SPEC.md §10](docs/SPEC.md).
+
+Releases are cut by CI: merge a version bump to `main` and `.github/workflows/release.yml` tags it and publishes the release. Nothing is hand-tagged.
+
+---
+
+## How much do you have to match?
+
+**Not everything.** Uniformity across surfaces doing different jobs is flattening, not cohesion.
+
+Added colour is fine where it makes sense for what the thing actually is — a game's mode and difficulty colours may be louder than this system's ceiling, because reading them at speed is a different problem than categorising data at rest. What holds: **your entry surface should fit**, deviation is justified by function rather than preference, and it lives in your repo as additive tokens, never as an edit here.
+
+Full rule, with a worked example: [SPEC.md §9](docs/SPEC.md).
