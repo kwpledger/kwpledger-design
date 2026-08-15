@@ -1,0 +1,41 @@
+/*
+ * kwp design — @font-face declarations.
+ *
+ * Split out from base.css deliberately. A consumer that already serves these
+ * faces, or that cannot copy files into a public directory (Base44), imports
+ * base.css and skips this file. The --font-display / --font-body stacks in
+ * base.css degrade to their fallbacks without it.
+ *
+ * PATHS ARE ABSOLUTE — /fonts/. That is a convention, not a bundler feature:
+ * copy this package's fonts/ directory to the root of whatever your host
+ * serves as /fonts/, including OFL-NOTICE.txt. The licence travels with the
+ * fonts. Override the src paths if your host puts them elsewhere.
+ *
+ * Latin subset only, ~56KB total. Not loaded from Google Fonts: no
+ * third-party request, no dependency on an external host staying up.
+ *
+ * The pairing is the one settled for both YouTube channels, which is what
+ * makes every surface read as the same family. Note the two files differ in
+ * kind — Lora is a STATIC SemiBold, Hanken Grotesk is VARIABLE (100–900). Ask
+ * Lora for any weight other than 600 and the browser fakes it; that is what
+ * --fw-display exists to prevent.
+ */
+@font-face {
+  font-family: 'Lora';
+  src: url('/fonts/lora-latin.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304,
+    U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Hanken Grotesk';
+  src: url('/fonts/hanken-grotesk-latin.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304,
+    U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}

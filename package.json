@@ -1,0 +1,35 @@
+{
+  "name": "@kwpledger/design",
+  "version": "0.1.0",
+  "description": "Shared design tokens for kwpledger.com, the *.kwpledger.com subdomains, and associated apps.",
+  "license": "UNLICENSED",
+  "private": false,
+  "type": "module",
+  "sideEffects": [
+    "*.css"
+  ],
+  "exports": {
+    ".": "./tokens/index.css",
+    "./tokens.css": "./tokens/index.css",
+    "./base.css": "./tokens/base.css",
+    "./categorical.css": "./tokens/categorical.css",
+    "./fonts.css": "./tokens/fonts.css",
+    "./fonts/*": "./fonts/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "tokens",
+    "fonts",
+    "docs"
+  ],
+  "scripts": {
+    "verify": "node tools/verify-contrast.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kwpledger/kwpledger-design.git"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}
