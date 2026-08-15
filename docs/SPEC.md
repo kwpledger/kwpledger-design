@@ -21,7 +21,7 @@ Three layers. **Each may reach exactly one layer down.**
 | Layer | What it is | Example | Lives |
 | :-- | :-- | :-- | :-- |
 | 1. Palette | Raw values, named for what they are | `--teal-700` | `tokens/base.css` |
-| 2. Semantic | Roles components consume | `--surface`, `--accent`, `--data-3-fg` | `tokens/base.css`, `tokens/categorical.css` |
+| 2. Semantic | Roles components consume | `--surface`, `--accent`, `--data-3-fg`, `--danger-fg` | `tokens/base.css`, `tokens/categorical.css`, `tokens/status.css` |
 | 3. Domain | App-specific meanings | `--meal-breakfast`, `--macro-carbs` | **The consuming repo. Never here.** |
 
 **The rule that makes it worth having:** domain tokens map onto semantic tokens, never past them to raw palette values. The moment an app writes `--meal-breakfast: var(--amber-300)`, the abstraction is dead and re-theming means editing every consumer.
@@ -37,6 +37,7 @@ Components in any consumer reference layer 2 only. A component that reaches for 
 - Palette: `--<family>-<weight>`, weights on the familiar 0–900 ramp. `--teal-700`, `--navy-900`.
 - Semantic: role words, no hue words. `--surface`, `--surface-card`, `--fg`, `--fg-muted`, `--accent`, `--accent-hover`, `--border`.
 - Categorical: `--data-<n>-<role>` where `<role>` is `surface`, `fg`, or `border`. **Numbered, never named for the hue.** `--data-1` is not "the red one", it is the first slot. Naming it `--data-red` would smuggle meaning into a scale whose entire purpose is to carry none, and would make the value impossible to change.
+- Status: `--<success|warning|danger>-<role>`, same three roles. **Named for the meaning, never numbered** — the exact inverse of the categorical rule, and for the same reason: a status's meaning is fixed, so its name must be too.
 - Type: `--font-display`, `--font-body`, `--fw-display`, `--step--1` … `--step-4`.
 - Spacing: `--space-2xs` … `--space-2xl`, plus `--measure` and `--page`.
 
@@ -111,7 +112,59 @@ This is not pedantry. **A clipped color is silently no longer at its authored li
 
 ---
 
-## 5. Notation is mixed, on purpose
+## 5. The status layer
+
+`--success`, `--warning`, `--danger`. Each with `-surface`, `-fg`, `-border`, both themes — the same triple as the categorical scale.
+
+### 5.1 Why it is not the categorical scale
+
+**These carry meaning, and the meaning is the point.** The categorical slots are defined by carrying none.
+
+Pointing `--danger` at `--data-1` would make "error" re-themeable to whatever hue slot 1 becomes — an error state that quietly stops looking like one. **Numbered slots are reassignable by design; meanings are not.** A consumer must never map a status onto `--data-n`, in either direction.
+
+### 5.2 Why it did not ship in v0.1.0
+
+The categorical scale was sized against apps that **display data** — the meal planner's meal types and macros. Apps that have **outcomes** need something different, and nothing in the portal had one: no forms, no states, nothing to succeed or fail.
+
+The gap surfaced when Kevin inventoried tapdodge and three of its seven accents turned out to be reward, success, and error rather than categories. Recorded because it is a sizing lesson, not a one-off: *count the outcomes, not only the categories.*
+
+### 5.3 Hues are conventional and not up for redesign
+
+**danger 27 · warning 75 · success 150.**
+
+Red/amber/green is too deeply learned to renumber for internal tidiness. A "danger" that is not red is worse than any collision avoiding it would buy.
+
+### 5.4 They collide with categorical hues, and chroma is what separates them
+
+Danger at 27 sits beside `--data-1` at 25; success at 150 sits exactly on `--data-4`. That is accepted, and resolved by authoring **every status role at strictly higher chroma than the categorical role of the same name.** The verifier fails if that stops being true.
+
+This is the correct relationship rather than a workaround. **A warning should out-shout a category** — grabbing attention is its entire job, where a categorical slot's job is to sit quietly and be equal to its peers. Same hue family, different urgency, and the difference is visible rather than something a reader has to be told.
+
+| Role | Categorical chroma | Status chroma |
+| :-- | :-- | :-- |
+| `surface` | 0.046 light / 0.052 dark | **0.058 / 0.062** |
+| `fg` | 0.062 / 0.058 | **0.072 / 0.068** |
+| `border` | 0.075 / 0.070 | **0.085 / 0.082** |
+
+Peak status chroma is 0.085 — still under the 0.091 ceiling in §4.6. Louder than the categorical scale, quieter than the brand's loudest color.
+
+### 5.5 One register for all three
+
+They share lightness and chroma and differ only in hue, so parity is checked exactly as for the categorical scale.
+
+Danger reads more urgent than success because red does, not because it was given extra weight. Encoding urgency in lightness as well as hue would make a warning banner and an error banner different sizes of loud for no reason a user could name.
+
+### 5.6 There is no `--info`
+
+Informational messaging is the brand accent: use `--accent` with `--surface-card`. A fourth status meaning "nothing has gone wrong" invites consumers to reach for it as a second accent, which is how a status layer turns into a palette.
+
+### 5.7 The text-label rule applies hardest here
+
+An error indicated only by a red border is invisible to a colorblind user and to anyone who has not learned the convention. **Every status carries text**, and usually an icon. See §8.
+
+---
+
+## 6. Notation is mixed, on purpose
 
 - `tokens/base.css` is **hex.**
 - `tokens/categorical.css` is **`oklch()`.**
@@ -124,7 +177,7 @@ Hex equivalents for every categorical value are in [PALETTE.md](PALETTE.md), for
 
 ---
 
-## 6. Contrast gates
+## 7. Contrast gates
 
 Enforced by `npm run verify`. Failing any gate exits non-zero.
 
@@ -139,6 +192,10 @@ Enforced by `npm run verify`. Failing any gate exits non-zero.
 | Adjacent tint separation | ΔOKLab ≥ 0.02 | Neighboring slots must be tellable apart |
 | Chroma ceiling | ≤ 0.091 | §4.6 |
 | sRGB gamut | all values | §4.7 |
+| Status `fg` / `surface` / `border` | same four thresholds as categorical | A status banner is the same shape of thing as a category card |
+| **Status louder than categorical** | chroma strictly greater, per role, per theme | §5.4 — the only thing separating a status from a category at the same hue |
+| Status register consistency | one L/C per role across all three | §5.5 |
+| Status parity | ≤ 0.25 | Same measured form as the categorical scale |
 
 **Measured, as of the values in `tokens/`:**
 
@@ -150,21 +207,33 @@ Enforced by `npm run verify`. Failing any gate exits non-zero.
 | border on own tint | 1.37 – 1.41 | 1.68 – 1.73 |
 | **parity spread** | **0.045** | **0.067** |
 
-### 6.1 Why parity has to be measured, not assumed
+Status layer, same measurements:
+
+| | light | dark |
+| :-- | :-- | :-- |
+| `fg` on own surface | 6.89 – 7.07 | 7.37 – 7.41 |
+| `fg` on page surface | 9.29 – 9.93 | 11.81 – 12.41 |
+| surface on page surface | 1.35 – 1.40 | 1.59 – 1.68 |
+| border on own surface | 1.48 – 1.52 | 1.86 – 1.91 |
+| **parity spread** | **0.057** | **0.090** |
+
+Note the status surfaces sit *more* present against the page than the categorical tints do — 1.35–1.40 against 1.27–1.32 in light. That is §5.4 showing up in the measurements rather than only in the prose.
+
+### 7.1 Why parity has to be measured, not assumed
 
 Equal OKLCH lightness gives equal *perceived* lightness. It does **not** give equal WCAG contrast — WCAG relative luminance is hue-weighted, so a green and a blue at identical OKLCH lightness produce measurably different contrast ratios. The spread is small here (0.045 light, 0.067 dark) but it is a fact about the values, not a property guaranteed by the authoring method. It is checked.
 
-### 6.2 What is deliberately not claimed
+### 7.2 What is deliberately not claimed
 
 **The `border` tokens are not a WCAG 1.4.11 non-text contrast claim.** At 1.37–1.73:1 they are below the 3:1 that standard requires for a UI component boundary that *identifies* the component.
 
-That is a considered decision, not an oversight. Under §7 every color-coded axis carries a text label, so a categorical element is never identified by its edge — the border is reinforcement on an element already identified by its label. Raising these to 3:1 would put a heavy outline on every card and lose the register the brand actually has: the existing `--border` against `--surface` is 1.19:1.
+That is a considered decision, not an oversight. Under §8 every color-coded axis carries a text label, so a categorical element is never identified by its edge — the border is reinforcement on an element already identified by its label. Raising these to 3:1 would put a heavy outline on every card and lose the register the brand actually has: the existing `--border` against `--surface` is 1.19:1.
 
 If a consumer builds something where the boundary *is* the only identifier, that component needs its own stronger stroke and this scale is the wrong tool for it.
 
 ---
 
-## 7. Color is reinforcement, never the sole carrier of meaning
+## 8. Color is reinforcement, never the sole carrier of meaning
 
 **Every color-coded axis carries a text label beside it.** Non-negotiable, and it is a documented rule of this system rather than an implementation detail of any one consumer.
 
@@ -172,7 +241,7 @@ It is an accessibility requirement first. It also has a practical payoff that is
 
 ---
 
-## 8. What consumers may and may not do
+## 9. What consumers may and may not do
 
 **May:**
 
@@ -192,7 +261,7 @@ It is an accessibility requirement first. It also has a practical payoff that is
 
 ---
 
-## 9. How much must a consumer conform?
+## 10. How much must a consumer conform?
 
 **Not everything has to match.** Uniformity across surfaces that do different jobs is not cohesion, it is flattening, and it produces worse design rather than more of it.
 
@@ -202,7 +271,7 @@ Three things keep that from becoming a free-for-all:
 
 1. **The entry surface conforms.** A property's first screen — the title screen, the landing page, whatever a visitor sees before they have done anything — should read as belonging to the family. Interiors earn more latitude the further they get from that first impression, because by then the visitor is inside a specific thing rather than working out whose it is.
 2. **Deviation is justified by function, not preference.** "This hue reads faster in peripheral vision while the player is dodging" is a reason. "I like it better" is a conversation about the system, not a license to fork it locally.
-3. **Deviation is additive and lives in the consumer.** Define domain tokens, or remap the semantic layer on a wrapper (§8). Never edit this repo to suit one consumer, and never map a domain token onto a raw palette value to reach a hue the system lacks — define the value in your own repo, and say why in a comment.
+3. **Deviation is additive and lives in the consumer.** Define domain tokens, or remap the semantic layer on a wrapper (§9). Never edit this repo to suit one consumer, and never map a domain token onto a raw palette value to reach a hue the system lacks — define the value in your own repo, and say why in a comment.
 
 **Worked example — tapdodge.** Its four game-state colors run chroma 0.134–0.175, roughly twice the ceiling in §4.6. They stay. Reading "Hard mode" in peripheral vision mid-dodge is a legibility-under-motion problem, and a 0.075-chroma tint fails at it: the register differs because the function differs. The game still takes the type scale, the spacing scale, and the neutral family — enough to read as the same person's work — and its title screen should fit.
 
@@ -210,21 +279,21 @@ Three of tapdodge's seven accents (reward, success, error) are **not** categoric
 
 ---
 
-## 10. Changing the system
+## 11. Changing the system
 
 **Safe:** adding a new semantic token; adjusting a palette hex within its role; adding a spacing or type step at the ends.
 
 **Requires re-verification (`npm run verify` must pass):** any color value; any lightness or chroma register.
 
-**Requires a spec change and a conversation:** the categorical count; hue placement; the layering contract; the chroma ceiling; the text-label rule in §7.
+**Requires a spec change and a conversation:** the categorical count; hue placement; the layering contract; the chroma ceiling; the text-label rule in §8.
 
 Versioning is semver against consumer-visible behavior. **Removing or renaming a token is a major bump** even if no consumer uses it — the whole distribution model assumes pinning, and a silent rename is exactly the breakage pinning exists to prevent.
 
 ---
 
-## 11. Out of scope
+## 12. Out of scope
 
 - **No authoring UI or tooling.** `tools/` holds a verifier and the color math it needs, and stays that size.
 - **Restyling the Base44 apps.** [PALETTE.md](PALETTE.md) ships the values; applying them is separate work.
 - **The YouTube channel themes.** `brandtokens_youtube.css` becomes a layer *on top of* these semantics later, once the base is stable. Not now.
-- **Converting the brand palette to OKLCH.** §5.
+- **Converting the brand palette to OKLCH.** §6.

@@ -30,6 +30,7 @@ tokens/
   fonts.css        # @font-face only; absolute /fonts/ paths, by convention not bundler
   base.css         # palette + semantic, type, spacing. Ported unchanged from the site.
   categorical.css  # --data-1 … --data-8 × {surface, fg, border} × both themes
+  status.css       # --success / --warning / --danger × same roles × both themes
 fonts/             # woff2 + OFL-NOTICE.txt — the license travels with the files
 tools/
   color.mjs             # sRGB <-> OKLab/OKLCH, WCAG contrast. No dependencies.
@@ -43,12 +44,14 @@ docs/PALETTE.md    # every value as hex, for consumers that can't take a depende
 - **Three layers; each may reach exactly one layer down.** Palette → semantic → domain. Domain tokens (`--meal-breakfast`) live in the consuming repo, **never here**. This repo must never learn what a "meal type" is.
 - **Consumers reference semantic tokens only**, never raw palette values.
 - **Categorical slots are numbered, never named for their hue.** `--data-1` is the first slot, not "the red one".
+- **Status tokens are named for their meaning, never numbered** — the inverse rule, same reason. Never map a status onto `--data-n` or vice versa: slots are reassignable, meanings are not.
+- **Status is authored louder than categorical** (higher chroma per role, still under the ceiling). That is what stops an error reading as an ordinary category at the same hue. Gated.
 - **Color is always reinforcement, never the sole carrier of meaning.** Every color-coded axis carries a text label. Accessibility requirement, and it is what makes these values safe to change later.
 - **Author light and dark together.** Neither register is derivable from the other — the lightness that keeps eight hues in sRGB differs between themes.
 - **Never exceed the chroma ceiling of 0.091** (`--teal-300`, the most saturated brand color). Stately, not neon, expressed as a number a script can check.
 - **Never let a value clip out of sRGB.** A clipped color is silently no longer at its authored lightness, which breaks parity with no warning.
 - **Light/dark is user preference; channel or section identity is not.** Never wire them to the same switch.
-- Notation is deliberately mixed — `base.css` hex, `categorical.css` `oklch()`. See SPEC §5. Do not "tidy" this.
+- Notation is deliberately mixed — `base.css` hex, `categorical.css` `oklch()`. See SPEC §6. Do not "tidy" this.
 - **Do not build an authoring UI or tooling.** `tools/` holds a verifier and the math it needs, and stays that size.
 
 ## Changing something

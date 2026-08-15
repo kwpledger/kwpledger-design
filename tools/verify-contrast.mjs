@@ -29,6 +29,16 @@ const GATES = {
   chromaCeiling: 0.091, // --teal-300; the scale may not out-shout the brand
   semanticText: 4.5, // base.css text pairs
 };
+
+/*
+ * The status layer shares the categorical hue space on purpose (red danger at
+ * 27 against --data-1 at 25, green success at 150 against --data-4 at 150) and
+ * is separated from it by chroma instead. That separation is the whole reason
+ * a status reads as urgent rather than as a category, so it is a gate rather
+ * than a note: every status role must be authored at strictly higher chroma
+ * than the categorical role of the same name, in the same theme.
+ */
+const STATUS_NAMES = ['danger', 'warning', 'success'];
 const EXCLUDED_HUE_BANDS = [
   [178, 202, 'brand teal / --accent'],
   [238, 262, 'navy surface family'],
@@ -73,9 +83,26 @@ function parseCategorical() {
   return { light: grab(css.slice(0, i)), dark: grab(css.slice(i)) };
 }
 
+/* ---- parse status.css: name -> {surface, fg, border} as [L,C,H] ---- */
+function parseStatus() {
+  const css = read('tokens/status.css');
+  const i = css.indexOf('@media (prefers-color-scheme: dark)');
+  const grab = (src) => {
+    const out = {};
+    for (const m of src.matchAll(
+      /--(danger|warning|success)-(surface|fg|border):\s*oklch\(\s*([\d.]+)%\s+([\d.]+)\s+([\d.]+)\s*\)/g
+    )) {
+      (out[m[1]] ??= {})[m[2]] = [Number(m[3]) / 100, Number(m[4]), Number(m[5])];
+    }
+    return out;
+  };
+  return { light: grab(css.slice(0, i)), dark: grab(css.slice(i)) };
+}
+
 /* ---- run ---- */
 const base = parseBase();
 const cat = parseCategorical();
+const status = parseStatus();
 const failures = [];
 const fail = (msg) => failures.push(msg);
 const ok = (v, gate) => (v >= gate ? '' : ' ✗');
@@ -175,6 +202,72 @@ for (const theme of ['light', 'dark']) {
     `  parity: contrast spread ${spread.toFixed(3)} (gate ≤${GATES.paritySpread})` +
       `   adjacent ΔOKLab ${minD.toFixed(4)} (gate ≥${GATES.minDeltaOklab})\n`
   );
+}
+
+/* status */
+for (const theme of ['light', 'dark']) {
+  const s = status[theme];
+  const bgHex = base[theme].surface;
+  const bg = hexToRgb(bgHex);
+  console.log(`status.css — ${theme} (on ${bgHex})`);
+  console.log('  name     hue  surface   fg        border    s/bg  fg/s  fg/bg b/s   louder  gamut');
+
+  const tintContrasts = [];
+  let sharedReg = null;
+
+  for (const name of STATUS_NAMES) {
+    const t = s[name];
+    if (!t || !t.surface || !t.fg || !t.border) { fail(`${theme}: --${name}-* incomplete`); continue; }
+    const [srf, f, b] = [t.surface, t.fg, t.border].map(([L, C, H]) => oklchToSrgb(L, C, H));
+    const hue = t.surface[2];
+    const gam = [srf, f, b].every(inGamut);
+    if (!gam) fail(`${theme} --${name}: outside sRGB — clipping breaks lightness parity`);
+
+    for (const [role, v] of Object.entries(t))
+      if (v[1] > GATES.chromaCeiling)
+        fail(`${theme} --${name}-${role}: chroma ${v[1]} exceeds ceiling ${GATES.chromaCeiling}`);
+
+    // THE GATE THAT KEEPS STATUS DISTINGUISHABLE FROM A CATEGORY.
+    // Status shares categorical hues deliberately; chroma is what separates
+    // them. If a status role ever stops out-chroma-ing its categorical
+    // counterpart, an error state starts reading as an ordinary category.
+    const catSlot = cat[theme]['1'];
+    let louder = true;
+    for (const role of ['surface', 'fg', 'border']) {
+      if (!(t[role][1] > catSlot[role][1])) {
+        louder = false;
+        fail(
+          `${theme} --${name}-${role}: chroma ${t[role][1]} is not above the categorical ` +
+            `${role} chroma ${catSlot[role][1]} — status would not read as louder than a category`
+        );
+      }
+    }
+
+    // One register for all three: same L and C, differing only in hue.
+    const reg = ['surface', 'fg', 'border'].map((r) => `${t[r][0]}/${t[r][1]}`).join(' ');
+    sharedReg ??= reg;
+    if (reg !== sharedReg) fail(`${theme} --${name}: register ${reg} differs from ${sharedReg}`);
+
+    const sbg = contrast(srf, bg), fs = contrast(f, srf), fbg = contrast(f, bg), bs = contrast(b, srf);
+    tintContrasts.push(sbg);
+
+    if (fs < GATES.textOnTint) fail(`${theme} --${name}: fg on its surface ${fs.toFixed(2)}:1 < ${GATES.textOnTint}`);
+    if (fbg < GATES.textOnSurface) fail(`${theme} --${name}: fg on page ${fbg.toFixed(2)}:1 < ${GATES.textOnSurface}`);
+    if (sbg < GATES.tintOnSurface) fail(`${theme} --${name}: surface on page ${sbg.toFixed(2)}:1 < ${GATES.tintOnSurface}`);
+    if (bs < GATES.borderOnTint) fail(`${theme} --${name}: border on surface ${bs.toFixed(2)}:1 < ${GATES.borderOnTint}`);
+
+    console.log(
+      `  ${name.padEnd(8)} ${String(hue).padStart(3)}  ${rgbToHex(srf)}   ${rgbToHex(f)}   ${rgbToHex(b)}  ` +
+        `${sbg.toFixed(2).padStart(5)}${ok(sbg, GATES.tintOnSurface)}${fs.toFixed(2).padStart(6)}${ok(fs, GATES.textOnTint)}` +
+        `${fbg.toFixed(2).padStart(6)}${ok(fbg, GATES.textOnSurface)}${bs.toFixed(2).padStart(6)}${ok(bs, GATES.borderOnTint)}` +
+        `   ${louder ? 'yes' : ' NO'}    ${gam ? 'ok' : 'OUT'}`
+    );
+  }
+
+  const spread = Math.max(...tintContrasts) - Math.min(...tintContrasts);
+  if (spread > GATES.paritySpread)
+    fail(`${theme}: status contrast spread ${spread.toFixed(3)} > ${GATES.paritySpread}`);
+  console.log(`  parity: contrast spread ${spread.toFixed(3)} (gate ≤${GATES.paritySpread})\n`);
 }
 
 if (failures.length) {

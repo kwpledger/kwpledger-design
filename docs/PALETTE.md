@@ -104,6 +104,38 @@ Each slot is a set of three: the **surface** is the fill, the **text** goes on t
 
 ---
 
+## Status colors — success, warning, danger
+
+**Use these for outcomes**: something saved, something needs attention, something failed.
+
+**Do not use the categorical slots above for these, and do not use these for categories.** They are different jobs. A category is a neutral label the app assigns meaning to; a status *is* the meaning. Slot 1 could be reassigned to a different hue next year without anything breaking — "error" could not.
+
+Same structure as the categorical slots: the **surface** is the fill, the **text** goes on that fill, the **border** is its edge.
+
+### Light mode
+
+| Status | Surface (fill) | Text | Border |
+| :-- | :-- | :-- | :-- |
+| `--danger` | `#fccac3` | `#63322d` | `#e29c94` |
+| `--warning` | `#eed3ae` | `#583c0d` | `#d1aa73` |
+| `--success` | `#bde3c4` | `#224d2d` | `#8ac195` |
+
+### Dark mode
+
+| Status | Surface (fill) | Text | Border |
+| :-- | :-- | :-- | :-- |
+| `--danger` | `#572d29` | `#fbc1b9` | `#8c5049` |
+| `--warning` | `#4d3510` | `#eccba0` | `#7e5c28` |
+| `--success` | `#204329` | `#b2deba` | `#3e704a` |
+
+**These are deliberately a little louder than the categorical colors** — slightly more saturated, so a status reads as more urgent than an ordinary category sitting next to it. If a generator returns them looking identical in weight to the category colors, it has substituted its own palette.
+
+**There is no "info" color.** For neutral informational messaging use the brand accent, `#0d5c58` light / `#5fbdb4` dark, on a normal card background.
+
+**Never pair across rows or across themes**, same as the categorical scale. Each status's text is validated against its own surface only.
+
+---
+
 ## The rule that outranks all of the above
 
 **Color is always reinforcement, never the sole carrier of meaning. Every color-coded thing carries a text label beside it.**

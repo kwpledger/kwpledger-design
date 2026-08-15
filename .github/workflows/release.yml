@@ -97,7 +97,7 @@ jobs:
             echo
             echo 'Every token gate passed on this commit — WCAG contrast in both'
             echo 'themes, sRGB gamut, the chroma ceiling, the excluded hue bands,'
-            echo 'and categorical parity. See docs/SPEC.md §6.'
+            echo 'and categorical parity. See docs/SPEC.md §7.'
           } > "$RUNNER_TEMP/notes.md"
 
           gh release create "$V" --title "$V" --notes-file "$RUNNER_TEMP/notes.md"

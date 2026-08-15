@@ -1,0 +1,96 @@
+/*
+ * kwp design — the status layer. Three outcomes, fixed meanings.
+ *
+ * WHAT THIS IS FOR. --success, --warning, --danger. Feedback about an
+ * outcome: a form that saved, an input that will cause trouble, an operation
+ * that failed. Unlike the categorical scale, THESE CARRY MEANING, and that
+ * meaning is the whole point.
+ *
+ * WHY IT EXISTS SEPARATELY FROM --data-n, AND WHY THAT DISTINCTION IS NOT
+ * COSMETIC. The categorical slots are defined by carrying no meaning; a
+ * consumer maps its own domain onto them and the system stays ignorant of
+ * what "breakfast" is. Point --danger at --data-1 and error becomes
+ * re-themeable to whatever hue slot 1 happens to be next year — the failure
+ * mode is an error state that quietly stops looking like one. Numbered slots
+ * are reassignable by design. Meanings are not.
+ *
+ * WHY IT DID NOT SHIP IN v0.1.0. The categorical scale was sized against apps
+ * that DISPLAY DATA — the meal planner's meal types and macros. Apps that
+ * have OUTCOMES need a different thing, and nothing in the portal had one:
+ * no forms, no states, nothing to succeed or fail. The gap surfaced when
+ * Kevin inventoried tapdodge and three of its seven accents turned out to be
+ * reward, success, and error rather than categories.
+ *
+ * HUES ARE CONVENTIONAL AND NOT UP FOR REDESIGN. Red danger, amber warning,
+ * green success is too deeply learned to renumber for internal tidiness. A
+ * "danger" that is not red is worse than any collision it avoids.
+ *
+ * SO THEY COLLIDE WITH CATEGORICAL HUES, ON PURPOSE, AND ARE SEPARATED BY
+ * CHROMA INSTEAD. Danger sits at hue 27 against --data-1 at 25; success at
+ * 150 against --data-4 at 150. Every status token is authored at HIGHER
+ * CHROMA than the categorical token in the same role, and the verifier fails
+ * if that stops being true. This is not a dodge — it is the correct
+ * relationship. A warning SHOULD out-shout a category: grabbing attention is
+ * its entire job, where a categorical slot's job is to sit quietly and be
+ * equal to its peers. Same hue family, different urgency, and the difference
+ * is visible rather than something you have to be told.
+ *
+ * STILL UNDER THE BRAND CEILING. Peak chroma here is 0.085, below the 0.091
+ * of --teal-300. Louder than the categorical scale, quieter than the brand's
+ * loudest color. "Stately, not neon" survives.
+ *
+ * ONE REGISTER FOR ALL THREE. They share lightness and chroma and differ only
+ * in hue, so parity is checked exactly as it is for the categorical scale.
+ * Danger reads more urgent than success because red does, not because it was
+ * given extra weight — encoding urgency in lightness as well as hue would
+ * make a warning banner and an error banner different sizes of loud for no
+ * reason a user could name.
+ *
+ * THERE IS NO --info. Informational messaging is the brand accent; use
+ * --accent and --surface-card. Adding a fourth status that means "nothing has
+ * gone wrong" invites consumers to reach for it as a second accent.
+ *
+ * COLOR IS STILL NEVER THE SOLE CARRIER OF MEANING — and this layer is where
+ * that matters most. An error indicated only by a red border is invisible to
+ * a colorblind user and to anyone who has not learned the convention. Every
+ * status carries text, and usually an icon.
+ */
+
+:root {
+  /* ---- Light. surface L 88% C 0.058 · fg L 38% C 0.072 · border L 76% C 0.085 ---- */
+
+  --danger-surface: oklch(88% 0.058 27);
+  --danger-fg: oklch(38% 0.072 27);
+  --danger-border: oklch(76% 0.085 27);
+
+  --warning-surface: oklch(88% 0.058 75);
+  --warning-fg: oklch(38% 0.072 75);
+  --warning-border: oklch(76% 0.085 75);
+
+  --success-surface: oklch(88% 0.058 150);
+  --success-fg: oklch(38% 0.072 150);
+  --success-border: oklch(76% 0.085 150);
+}
+
+/*
+ * Authored alongside light, never derived from it — same reasoning as the
+ * categorical scale. The binding hue differs between themes: in light it is
+ * danger at 27 that runs out of sRGB first, in dark it is warning at 75.
+ */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* ---- Dark. surface L 35% C 0.062 · fg L 86% C 0.068 · border L 50% C 0.082 ---- */
+
+    --danger-surface: oklch(35% 0.062 27);
+    --danger-fg: oklch(86% 0.068 27);
+    --danger-border: oklch(50% 0.082 27);
+
+    --warning-surface: oklch(35% 0.062 75);
+    --warning-fg: oklch(86% 0.068 75);
+    --warning-border: oklch(50% 0.082 75);
+
+    --success-surface: oklch(35% 0.062 150);
+    --success-fg: oklch(86% 0.068 150);
+    --success-border: oklch(50% 0.082 150);
+  }
+}
