@@ -17,6 +17,7 @@ tokens/
   fonts.css        # @font-face only; expects the woff2 files at /fonts/
   base.css         # palette + semantic layers, type scale, spacing scale
   categorical.css  # --data-1 … --data-8, three values each, both themes
+  status.css       # --success / --warning / --danger, same triple
 fonts/             # Lora + Hanken Grotesk, latin subset, ~56KB, and the OFL notice
 tools/             # contrast + parity verifier. No build, no toolchain.
 docs/
@@ -45,6 +46,7 @@ Then in your root stylesheet:
 ```css
 @import '@kwpledger/design/base.css';
 @import '@kwpledger/design/categorical.css';
+@import '@kwpledger/design/status.css';
 ```
 
 ### Plain CSS (kwpledger.com, project pages)
@@ -125,13 +127,35 @@ Take them **in order.** If you need three, use 1, 2, 3 — not your three favori
 
 ---
 
+## Status
+
+`--success`, `--warning`, `--danger` — same three roles each. For **outcomes**: something saved, something needs attention, something failed.
+
+```css
+.alert-error {
+  background: var(--danger-surface);
+  color: var(--danger-fg);
+  border: 1px solid var(--danger-border);
+}
+```
+
+**These are not categorical slots and the two must never be mapped onto each other.** A category is a neutral label your app assigns meaning to; a status *is* the meaning. `--data-1` could be reassigned to a different hue in a future version without breaking anything — "error" could not.
+
+They share hues with the categorical scale (danger 27 beside `--data-1` at 25, success exactly on `--data-4`) and are separated from it by **chroma**: every status role is authored louder than the categorical role of the same name, and `npm run verify` fails if that stops being true. A warning should out-shout a category — that is its job.
+
+**There is no `--info`.** Neutral informational messaging is `--accent` on `--surface-card`.
+
+The text-label rule matters most here: an error shown only as a red border is invisible to a colorblind user and to anyone who hasn't learned the convention.
+
+---
+
 ## Verifying
 
 ```bash
 npm run verify
 ```
 
-Checks every token against the gates in [docs/SPEC.md](docs/SPEC.md) §6 — WCAG contrast in both themes, sRGB gamut, the chroma ceiling, hue-band exclusions, and the parity spread that keeps the eight categorical slots reading as equals. Exits non-zero on any failure.
+Checks every token against the gates in [docs/SPEC.md](docs/SPEC.md) §7 — WCAG contrast in both themes, sRGB gamut, the chroma ceiling, hue-band exclusions, and the parity spread that keeps the eight categorical slots reading as equals. Exits non-zero on any failure.
 
 It **parses** the CSS rather than generating it. The stylesheets are the source of truth; the verifier is an independent check on them. A generator that emitted both would only ever prove it agreed with itself.
 
@@ -148,7 +172,7 @@ Run it before tagging a release. Zero dependencies — nothing to install.
 
 **Removing or renaming a token is a major version bump** even if you believe nothing uses it.
 
-Some changes are not unilateral — the categorical count, hue placement, the layering contract, the chroma ceiling, and the text-label rule all need a spec change and a conversation. See [SPEC.md §10](docs/SPEC.md).
+Some changes are not unilateral — the categorical count, hue placement, the layering contract, the chroma ceiling, and the text-label rule all need a spec change and a conversation. See [SPEC.md §11](docs/SPEC.md).
 
 Releases are cut by CI: merge a version bump to `main` and `.github/workflows/release.yml` tags it and publishes the release. Nothing is hand-tagged.
 
@@ -160,4 +184,4 @@ Releases are cut by CI: merge a version bump to `main` and `.github/workflows/re
 
 Added color is fine where it makes sense for what the thing actually is — a game's mode and difficulty colors may be louder than this system's ceiling, because reading them at speed is a different problem than categorizing data at rest. What holds: **your entry surface should fit**, deviation is justified by function rather than preference, and it lives in your repo as additive tokens, never as an edit here.
 
-Full rule, with a worked example: [SPEC.md §9](docs/SPEC.md).
+Full rule, with a worked example: [SPEC.md §10](docs/SPEC.md).
