@@ -25,7 +25,7 @@
  * `--meal-breakfast: var(--teal-700)`, the abstraction is dead and
  * re-theming means editing every consumer.
  *
- * That is what lets a future section drop in with its own colours by
+ * That is what lets a future section drop in with its own colors by
  * remapping the semantic layer on one wrapper, without touching a component.
  *
  * NOTATION IS MIXED, ON PURPOSE. This file is hex; categorical.css is oklch().
@@ -52,7 +52,7 @@
      MPSAS #2f8079); the portal sits in the same family without copying
      either, which is what makes it read as the parent rather than a third
      sibling. OKLCH hue ~188; --teal-300 at chroma 0.091 is the most
-     saturated colour in the system and sets the ceiling everything else
+     saturated color in the system and sets the ceiling everything else
      stays under. See docs/SPEC.md, "Stately, not neon". */
   --teal-800: #0a4a47;
   --teal-700: #0d5c58;
@@ -112,7 +112,7 @@
  *
  * This switch is USER PREFERENCE, and it is deliberately not the same switch
  * as brand identity. A future channel- or section-scoped block sets its own
- * fixed colours and must NOT invert with this — dark mode should never make
+ * fixed colors and must NOT invert with this — dark mode should never make
  * the portal silently wear KPLS's uniform, and light mode should never put
  * MPSAS cream on a page that isn't MPSAS.
  */

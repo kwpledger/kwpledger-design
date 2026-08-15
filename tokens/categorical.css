@@ -3,12 +3,12 @@
  *
  * WHAT THIS IS FOR. Nothing in the semantic layer gives an app several
  * equal-weight categories. --accent means "interactive"; --fg-muted means
- * "secondary". An app that colour-codes four meal types or three macros has
+ * "secondary". An app that color-codes four meal types or three macros has
  * nowhere to point, so it reaches past the semantic layer to a raw palette
  * value on day one — precisely the drift the layering exists to prevent.
  * This file is the sanctioned place to point instead.
  *
- * THESE COLOURS CARRY NO INHERENT MEANING and are deliberately not named for
+ * THESE COLORS CARRY NO INHERENT MEANING and are deliberately not named for
  * their hues. --data-1 is not "the red one", it is the first slot. Consumers
  * define domain tokens on top:
  *
@@ -20,17 +20,17 @@
  *
  * The design system must never learn what a "meal type" is.
  *
- * THREE VALUES PER SLOT, NOT ONE. Categorised UI is built from pale filled
- * cards with dark text on them, not from text colours. Ship one value per
+ * THREE VALUES PER SLOT, NOT ONE. Categorized UI is built from pale filled
+ * cards with dark text on them, not from text colors. Ship one value per
  * slot and the consumer derives its own tint immediately, which is the same
  * drift by a slower route. So each slot ships the surface it is filled with,
  * the foreground that is legible on that fill, and the border that edges it.
  *
  * AUTHORED IN OKLCH, AND THAT IS LOAD-BEARING. Within a theme every slot
  * shares one lightness and one chroma; only hue changes. Equal lightness in
- * OKLCH means equal PERCEIVED lightness, which is what makes eight colours
+ * OKLCH means equal PERCEIVED lightness, which is what makes eight colors
  * read as peers. In HSL the same numbers produce swatches that read as louder
- * or more washed-out than their neighbours, and a categorical scale that
+ * or more washed-out than their neighbors, and a categorical scale that
  * implies a ranking is broken — the ranking is not there.
  *
  * Perceptual parity is not the same as measured parity: WCAG luminance is
@@ -38,9 +38,9 @@
  * spread. It is measured, not assumed — see docs/SPEC.md and `npm run verify`.
  *
  * STATELY, NOT NEON. Peak chroma here is 0.075, under the 0.091 of
- * --teal-300, the most saturated colour in the brand palette. The scale is
+ * --teal-300, the most saturated color in the brand palette. The scale is
  * not permitted to be louder than the brand it belongs to. Every value also
- * sits inside sRGB with margin: a clipped colour is silently no longer at its
+ * sits inside sRGB with margin: a clipped color is silently no longer at its
  * authored lightness, which would break parity without any warning.
  *
  * HUE PLACEMENT AVOIDS TWO BANDS. Nothing sits at 178–202 (the brand teal,
@@ -49,8 +49,8 @@
  * as chrome. Both are meaning collisions, so the scale is cohesive through
  * shared chroma and lightness discipline rather than by borrowing brand hues.
  *
- * COLOUR IS ALWAYS REINFORCEMENT, NEVER THE SOLE CARRIER OF MEANING. Every
- * colour-coded axis carries a text label beside it. That is an accessibility
+ * COLOR IS ALWAYS REINFORCEMENT, NEVER THE SOLE CARRIER OF MEANING. Every
+ * color-coded axis carries a text label beside it. That is an accessibility
  * requirement and a documented rule of this system, not an implementation
  * detail — and it is what makes these values safe to change later.
  *

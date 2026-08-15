@@ -8,7 +8,7 @@
  *
  * PATHS ARE ABSOLUTE — /fonts/. That is a convention, not a bundler feature:
  * copy this package's fonts/ directory to the root of whatever your host
- * serves as /fonts/, including OFL-NOTICE.txt. The licence travels with the
+ * serves as /fonts/, including OFL-NOTICE.txt. The license travels with the
  * fonts. Override the src paths if your host puts them elsewhere.
  *
  * Latin subset only, ~56KB total. Not loaded from Google Fonts: no

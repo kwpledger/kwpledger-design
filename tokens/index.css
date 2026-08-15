@@ -7,7 +7,7 @@
  *
  * fonts.css is first because @font-face should be declared before anything
  * references the families. It expects the woff2 files at /fonts/ — copy this
- * package's fonts/ directory across, licence notice included. If you serve
+ * package's fonts/ directory across, license notice included. If you serve
  * the faces yourself, import base.css and categorical.css directly and skip
  * this file.
  */
