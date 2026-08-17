@@ -37,6 +37,7 @@ tools/
   verify-contrast.mjs   # parses the CSS and checks it. Does not generate it.
 docs/SPEC.md       # the contract
 docs/PALETTE.md    # every value as hex, for consumers that can't take a dependency
+docs/infographic-design-system.md   # the 1080x1350 infographic format — a layer-3 consumer
 ```
 
 ## Rules
