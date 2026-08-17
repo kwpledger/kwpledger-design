@@ -8,9 +8,9 @@ Values here are correct as of the tokens at this commit. Hex is copied from [PAL
 
 ---
 
-## 0. Two decisions to make before you read further
+## 0. Scope
 
-**Canvas is 1080×1350, not 1070×1350.** You asked for 1070. 1080×1350 is the native 4:5 that LinkedIn and Instagram both target and YouTube community posts accept without resampling; 1070 is 10px narrower than any platform target, so every upload gets soft-scaled for no gain. Everything below derives from `--ig-w: 1080`. If 1070 is deliberate, change that one constant and the two derived column widths in §2.2 — nothing else moves.
+**1080×1350 exactly.** That is the native 4:5 LinkedIn targets and YouTube community posts accept without resampling. Any other width — even ten pixels off — gets soft-scaled on upload, which costs the hairlines and the smallest type first. Everything below derives from `--ig-w: 1080`; treat it as fixed, not as a default.
 
 **This format is not a YouTube thumbnail.** A thumbnail is 1280×720, carries three to five words, and is read at 210px wide. Nothing in this document applies to one. Use this for LinkedIn feed posts, LinkedIn document-post covers, YouTube community posts, and the end-of-video card. A separate spec covers thumbnails when you get to them.
 
