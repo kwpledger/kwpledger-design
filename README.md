@@ -6,6 +6,7 @@ One source of truth. Change a color here, bump the pin in a consumer, and it pro
 
 - **[docs/SPEC.md](docs/SPEC.md)** — the contract. Naming, the layering rules, the categorical scale, the contrast gates. Read this before changing a value.
 - **[docs/PALETTE.md](docs/PALETTE.md)** — every value as plain hex, for tools you can only *tell* the colors to (Base44, Unity, slide templates).
+- **[docs/infographic-design-system.md](docs/infographic-design-system.md)** — the 1080×1350 LinkedIn/YouTube infographic format. A layer-3 consumer, written to be pasted into ChatGPT.
 
 ---
 
@@ -19,6 +20,7 @@ tokens/
   categorical.css  # --data-1 … --data-8, three values each, both themes
   status.css       # --success / --warning / --danger, same triple
 fonts/             # Lora + Hanken Grotesk, latin subset, ~56KB, and the OFL notice
+logos/             # the kwp signature marks, and PROVENANCE.md — recolor only, never redraw
 tools/             # contrast + parity verifier. No build, no toolchain.
 docs/
 ```
