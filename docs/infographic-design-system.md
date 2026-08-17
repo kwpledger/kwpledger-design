@@ -37,7 +37,7 @@ Three reference infographics were analyzed: a dark five-step process graphic, a 
 ### 1.2 What the references get wrong for our purposes
 
 - **The traffic-light window chrome.** Red/amber/green dots as decoration. Our system reserves those three hues for actual outcomes (SPEC §5). Reused as chrome, they stop meaning anything. Our receipt panels use neutral dots — see §5.3.
-- **Icon soup.** Two of the three lean hard on stock icon sets. Generated icons come back inconsistent in stroke weight, optical size, and metaphor, and there is no kwp icon system to hold them to. **We ship no icons in v1** — see §5.6.
+- **Icon soup.** Two of the three lean hard on stock icon sets. Generated icons come back inconsistent in stroke weight, optical size, and metaphor, and there is no kwp icon system to hold them to. **We ship no icons in v1** — see §5.7.
 - **Density creep.** The bento reference runs ~250 words. That works in a tighter sans at high chroma. It does not work in Lora at our chroma ceiling. Our budget is §7.4.
 - **Saturation.** All three sit well above chroma 0.091. We do not follow them there. Our differentiation comes from lightness discipline and type, not volume.
 
@@ -67,6 +67,7 @@ Three reference infographics were analyzed: a dark five-step process graphic, a 
 | 2 equal | `480px` |
 | 3 equal | `313.33px` |
 | Claim + receipt (60/40) | `576px` / `384px` |
+| Stack + return channel | `810px` / `150px` |
 
 Express these as `fr` units in CSS; the pixel values are here so you can sanity-check a render.
 
@@ -300,9 +301,63 @@ Two columns, `--success` left and `--danger` right, each with a heading word —
 
 Dashed 2px lines in `--border`, with a solid arrowhead in the `--data-n-border` of the module being pointed *at*. **Only when there is a real sequence.** Peers get no arrows.
 
-### 5.6 No topic icons in v1
+### 5.6 Return path
 
-**A brand mark is not an icon, and this rule is only about icons.** `logos/` holds the kwp signature marks — those are identity, they appear once, in the footer, and §5.7 governs them. What this section forbids is a *topic glyph*: the little symbol that would sit inside a module card next to "Risk Assessment" or "Tool Stack," repeated once per module.
+For a framework where the last step feeds back into the first — a feedback loop, a cycle, a reinforcing effect. It runs **alongside** the stack in its own channel, never as an extra row.
+
+```
+┌────────────────────────────┐  ┐
+│  module (origin or target) │  │  ╭─────╮
+└────────────────────────────┘  │  │     │
+┌────────────────────────────┐  │  │  R  │
+│  module                    │  │  │  E  │  ← label, two lines,
+└────────────────────────────┘  │  │  T  │    vertically centered
+┌────────────────────────────┐  │  │  U  │
+│  module (target or origin) │  │  ╰──▶──╯
+└────────────────────────────┘  ┘
+   810px                          150px
+```
+
+**Geometry.** The channel takes 150px off the right of the content width, with the standard 20px gap, so modules narrow from 980px to **810px**. Horizontal internals still fit comfortably: a 280px chip-and-title column, 20px gap, a 510px body column. Row heights and the §2.4 count table are unchanged — the channel is horizontal cost only.
+
+**The arc.** Leaves the vertical center of the origin module's right edge, bows into the channel, and ends in a solid arrowhead at the vertical center of the target module's right edge.
+
+**Styling deviates from §5.5 on purpose.** The arc is dashed 2px in **`--fg-muted`**, not `--border`. A §5.5 connector links two adjacent modules a reader can already see are adjacent; this one spans the whole graphic and carries a labeled concept of its own. `--border` at 1.19:1 against the page is reinforcement weight, and this is not reinforcement — it is one of the things the graphic is claiming. The arrowhead still follows §5.5: solid, in the target module's `--data-n-border`.
+
+**The label** is required — §4.7 applies to an arc exactly as it does to a card. Set it at `--ig-step--1`, uppercase, `0.10em` tracking, `--fg-muted`, stacked on two short lines and vertically centered in the channel, with a small padded knockout in the canvas color so the arc does not run through the type. **Never rotate it.** Rotated 19px type is unreadable at feed scale, and the channel is sized so it does not need to be.
+
+Keep the label to **two or three words**. Any explanation of what the loop does belongs in the subhead or in the body line of the module the arc leaves from — the channel is too narrow for a sentence.
+
+**One return path per graphic.** Two arcs in one channel is a wiring diagram, and this format is not one.
+
+The arc is the one element a generator reliably gets wrong, so give it the geometry directly. For a 150×833 channel, bottom-up (arrowhead at the bottom, into step 1):
+
+```html
+<svg class="return" viewBox="0 0 150 833" width="150" height="833" aria-hidden="true">
+  <!-- out of step 7's right edge, bow right, back into step 1's right edge -->
+  <path d="M 0 50 C 110 50, 110 783, 8 783"
+        fill="none" stroke="var(--fg-muted)" stroke-width="2" stroke-dasharray="8 7"/>
+  <!-- solid arrowhead, in the TARGET module's data border -->
+  <path d="M 14 776 L 0 783 L 14 790 Z" fill="var(--data-1-border)"/>
+</svg>
+```
+
+```css
+.return-channel{position:relative; display:grid; place-items:center;}
+.return-channel .label{
+  position:relative; z-index:1; text-align:center;
+  background:var(--surface); padding:var(--space-2xs) 0;   /* knockout */
+  font-size:var(--step--1); font-weight:600; letter-spacing:.10em;
+  text-transform:uppercase; color:var(--fg-muted); line-height:1.25;
+}
+.return-channel svg{position:absolute; inset:0;}
+```
+
+Flip the two `y` values in the path for top-down.
+
+### 5.7 No topic icons in v1
+
+**A brand mark is not an icon, and this rule is only about icons.** `logos/` holds the kwp signature marks — those are identity, they appear once, in the footer, and §5.8 governs them. What this section forbids is a *topic glyph*: the little symbol that would sit inside a module card next to "Risk Assessment" or "Tool Stack," repeated once per module.
 
 There is no kwp topic-glyph set. A generated one comes back inconsistent in stroke weight, optical size, and metaphor, and inconsistency in a repeated element is more visible than the absence of the element. The numbered chip and the type hierarchy do the wayfinding instead.
 
@@ -312,7 +367,7 @@ If a future version adds them, they arrive as a fixed drawn set with a stated st
 
 **Never an emoji.** Not as a bullet, not as an icon, not in the headline.
 
-### 5.7 Footer
+### 5.8 Footer
 
 ```
 ──────────────────   1px --border, full content width
@@ -363,6 +418,19 @@ Pick one per graphic. Do not blend two.
 Use when the modules are **peers**. No arrows. At 6–7 rows use horizontal internals (§5.2).
 
 Body zone 833px: 4 rows at 193 · 5 at 150 · 6 at 122 · 7 at 101.
+
+**A.2 — Stack with a return path.** Same stack, plus a 150px right-hand channel carrying one labeled arc from the last step back to the first (§5.6). Modules narrow to 810px; row heights and the count table above are unchanged.
+
+Use when the steps are **ordered and the last one feeds the first** — a cycle, a feedback loop, a reinforcing effect. That is a different claim from A's peers-with-no-arrows, and it is the only thing that justifies the channel. If the loop is not real, do not reserve the space.
+
+**Reading direction is a decision, not a default.** A stack reads top-down; a ladder climbs bottom-up. Pick one and make the arc agree with it:
+
+| | Step 1 sits | Arc runs | Arrowhead at |
+| :-- | :-- | :-- | :-- |
+| **Top-down** | top | bottom → top | top, into step 1 |
+| **Bottom-up** | bottom | top → bottom | bottom, into step 1 |
+
+Top-down matches how a feed image is scanned and is the safer default. **Bottom-up wins when the framework is canonically drawn that way** and your audience knows it — a ladder of inference drawn top-down will read as wrong to anyone who has seen it before, and being right for the people who know the material beats being convenient for the people who don't. Numbered chips carry the order either way, so the cost of bottom-up is smaller than it looks.
 
 ### B. Ladder — for processes and sequences
 
@@ -576,7 +644,7 @@ Paste this file, then say roughly:
 >
 > Before you build, show me the copy as plain text with a word count, and stop for my approval.
 
-Upload three files with it: the two woff2 faces (§8.2) and the footer mark for your register (§5.7).
+Upload three files with it: the two woff2 faces (§8.2) and the footer mark for your register (§5.8).
 
 Four things go wrong if you do not say them out loud — the first two are the same failures documented in [PALETTE.md](PALETTE.md):
 
@@ -600,12 +668,13 @@ Run this before every export. It is ordered by how often each one actually fails
 5. **Grayscale test.** Desaturate the render. Every distinction still readable? Every module still identifiable by its label?
 6. **Every module has a text label**, not only a color.
 7. **Status colors appear only on outcomes**, never as module identity, and never as window chrome.
-8. **Module titles are grammatically parallel.**
-9. **Every receipt is real.** No invented numbers, filenames, or screenshots.
-10. **`kwp` is lowercase, and the mark matches the register** — dark mark on a light canvas, inverted on dark. No generated signature mark. No `kwp_logo_short_blue.png` (baked white box).
-11. **One register.** No light values on a dark canvas.
-12. **Squint at it at 400px wide.** The headline and the module count should survive. If they don't, nothing else on the canvas matters.
-13. Exported at exactly **1080×1350**.
+8. **If there is a return path**, its label is present, unrotated, and its arrowhead points at step 1.
+9. **Module titles are grammatically parallel.**
+10. **Every receipt is real.** No invented numbers, filenames, or screenshots.
+11. **`kwp` is lowercase, and the mark matches the register** — dark mark on a light canvas, inverted on dark. No generated signature mark. No `kwp_logo_short_blue.png` (baked white box).
+12. **One register.** No light values on a dark canvas.
+13. **Squint at it at 400px wide.** The headline and the module count should survive. If they don't, nothing else on the canvas matters.
+14. Exported at exactly **1080×1350**.
 
 ---
 
