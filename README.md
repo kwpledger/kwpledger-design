@@ -20,6 +20,7 @@ tokens/
   categorical.css  # --data-1 … --data-8, three values each, both themes
   status.css       # --success / --warning / --danger, same triple
 fonts/             # Lora + Hanken Grotesk, latin subset, ~56KB, and the OFL notice
+logos/             # the kwp signature marks, and PROVENANCE.md — recolor only, never redraw
 tools/             # contrast + parity verifier. No build, no toolchain.
 docs/
 ```

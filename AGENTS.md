@@ -32,6 +32,7 @@ tokens/
   categorical.css  # --data-1 … --data-8 × {surface, fg, border} × both themes
   status.css       # --success / --warning / --danger × same roles × both themes
 fonts/             # woff2 + OFL-NOTICE.txt — the license travels with the files
+logos/             # the signature marks + PROVENANCE.md. Recolor only, never redraw.
 tools/
   color.mjs             # sRGB <-> OKLab/OKLCH, WCAG contrast. No dependencies.
   verify-contrast.mjs   # parses the CSS and checks it. Does not generate it.
@@ -67,7 +68,7 @@ Edit → `npm run verify` passes → update SPEC.md and regenerate the PALETTE.m
 
 - No credentials, tokens, or `.env` contents in tracked files.
 - No day-job specifics. This repo is public.
-- **Never redraw the signature marks.** They are traced from Kevin's 2013 handwritten signature. Recolor if needed; do not vectorize, retrace, or regenerate the glyph.
+- **Never redraw the signature marks** in `logos/`. They are traced from Kevin's handwritten signature. Recolor if needed; do not vectorize, retrace, or regenerate the glyph. `logos/PROVENANCE.md` is the authority — which file is a real vector, which register each mark belongs on, and why.
 - **Kevin's initials are lowercase — `kwp`, never `KWP`.** The signature monogram is the reason.
 - Font licenses travel with the font files. If you move `fonts/`, move `OFL-NOTICE.txt` with it.
 

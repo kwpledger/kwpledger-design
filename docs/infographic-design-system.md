@@ -300,11 +300,15 @@ Two columns, `--success` left and `--danger` right, each with a heading word —
 
 Dashed 2px lines in `--border`, with a solid arrowhead in the `--data-n-border` of the module being pointed *at*. **Only when there is a real sequence.** Peers get no arrows.
 
-### 5.6 No icons in v1
+### 5.6 No topic icons in v1
 
-There is no kwp icon system. A generated icon set comes back inconsistent in stroke weight and optical size, and inconsistency in a repeated element is more visible than the absence of the element. The numbered chip and the type hierarchy do the wayfinding.
+**A brand mark is not an icon, and this rule is only about icons.** `logos/` holds the kwp signature marks — those are identity, they appear once, in the footer, and §5.7 governs them. What this section forbids is a *topic glyph*: the little symbol that would sit inside a module card next to "Risk Assessment" or "Tool Stack," repeated once per module.
 
-If a future version adds icons, they arrive as a fixed drawn set with a stated stroke weight, not as per-graphic generation.
+There is no kwp topic-glyph set. A generated one comes back inconsistent in stroke weight, optical size, and metaphor, and inconsistency in a repeated element is more visible than the absence of the element. The numbered chip and the type hierarchy do the wayfinding instead.
+
+The failure mode that matters most is the partial set: icons on four of six modules looks broken in a way that no icons at all never does. **Optional is the dangerous state** — either every module has one from a fixed set, or none does.
+
+If a future version adds them, they arrive as a fixed drawn set with a stated stroke weight and a stated icon box, not as per-graphic generation. The §2.4 module-height table would need rechecking at that point, because an icon box costs horizontal room at 4–5 modules and vertical room at 6–7.
 
 **Never an emoji.** Not as a bullet, not as an icon, not in the headline.
 
@@ -312,12 +316,39 @@ If a future version adds icons, they arrive as a fixed drawn set with a stated s
 
 ```
 ──────────────────   1px --border, full content width
-kwp                  step--1, --fg           |  what you help with, step--1, --fg-muted
+[mark]  kwp          mark ~110px tall, wordmark step--1, --fg
+                                        |  what you help with, step--1, --fg-muted
 ```
 
 `kwp` is **lowercase, always.** The monogram is traced from a handwritten signature and that is why.
 
-**Never let a generator draw the signature mark.** If you want the mark rather than the wordmark, supply the existing SVG as a file. A model asked to "make a signature logo" will invent one, and an invented signature is worse than no signature.
+**Never let a generator draw the signature mark.** Supply the file. A model asked to "make a signature logo" will invent one, and an invented signature is worse than no signature — see `logos/PROVENANCE.md`, which is the authority on these assets.
+
+#### Which file
+
+The mark is chosen by **register**, and the choice is not optional. The inverted marks are white strokes with a thin dark outline: the outline reads against a mid-tone photo, but on a near-white page only about 0.8% of the mark clears 3:1, against 12.3% for the dark mark. It reads as a ghost. Full measurements in `logos/PROVENANCE.md`.
+
+| Register | Long mark (footer lockup) | Short mark (corner badge) |
+| :-- | :-- | :-- |
+| Light canvas | `kwp_logo_long.png` | `kwp_logo_short.svg` |
+| Dark canvas | `kwp_logo_long_inverted.png` | `kwp_logo_short_inverted_navy.png` |
+
+Two files that must **not** go on this canvas:
+
+- `kwp_logo_short_blue.png` — no alpha channel, so it carries a baked white rectangle. On the dark register that is a white box in your footer.
+- `kwp_logo_short_green.svg` — the extension lies. It is two 496×598 PNGs base64-embedded in an SVG wrapper, and it scales exactly as badly as a 496px raster.
+
+`kwp_logo_short.svg` is the only true vector in the set, and there is **no true vector of the long signature at all** — the largest is 525×300. That is ample at footer size and will soften past roughly 500px wide, so the long mark is a footer element and never a hero element.
+
+#### Ring color is not the register switch
+
+Some variants carry a colored ring around the initials. The ring is intended to encode **channel or section identity**; the inverted/dark choice encodes **light or dark**. Those are two independent axes and the system forbids wiring them to one switch:
+
+> Light/dark is user preference; channel or section identity is not. Never wire them to the same switch.
+
+So a dark-register graphic for a green-ringed channel uses the *inverted* mark with the *green* ring — not "the dark-mode version of the green one." Four combinations, not two.
+
+**Which ring color means what is undecided**, so v1 ships without ring semantics: use the plain long mark, or the navy ring if you want the badge form. Navy (`#202a44`, chroma 0.050) is also the only ring under the system's 0.091 chroma ceiling — the rest run 1.3× to 3.3× over it, with bright blue `#0026ff` the worst. That is a conversation about SPEC §10, not something this document settles.
 
 ---
 
@@ -541,15 +572,18 @@ Paste this file, then say roughly:
 
 > Build a 1080×1350 infographic following the attached spec exactly. Topic: **[topic]**. Layout: **[A stack / B ladder / C bento]**. **[N]** modules. Light register.
 >
-> Use exactly the hex values in the spec and do not substitute, adjust, or "improve" them. Headings in **Lora SemiBold 600 only** — no other Lora weight. Body in Hanken Grotesk. No icons, no emoji, no gradients, no shadows, no italics. Output one standalone HTML file, then render it to JPG at exactly 1080×1350.
+> Use exactly the hex values in the spec and do not substitute, adjust, or "improve" them. Headings in **Lora SemiBold 600 only** — no other Lora weight. Body in Hanken Grotesk. No topic icons, no emoji, no gradients, no shadows, no italics. The footer mark is the file I uploaded — place it as-is, do not redraw or recreate it. Output one standalone HTML file, then render it to JPG at exactly 1080×1350.
 >
 > Before you build, show me the copy as plain text with a word count, and stop for my approval.
 
-Three things go wrong if you do not say them out loud — the first two are the same failures documented in [PALETTE.md](PALETTE.md):
+Upload three files with it: the two woff2 faces (§8.2) and the footer mark for your register (§5.7).
+
+Four things go wrong if you do not say them out loud — the first two are the same failures documented in [PALETTE.md](PALETTE.md):
 
 1. **Generators saturate.** If the output comes back brighter than the tables in §4, it substituted its own palette. Say "do not adjust these colors."
 2. **Lora exists at 600 only.** Ask for Lora Bold or Regular and it gets faked.
 3. **Generators add icons and emoji unprompted.** Say no icons and no emoji explicitly, every time.
+4. **Generators will happily redraw your signature.** Asked for a logo they do not have, they invent one rather than leave a gap. Upload the file and say "place it as-is."
 
 The "show me the copy first" step is the highest-value line in that prompt. It catches the word-budget overrun while it is still cheap to fix.
 
@@ -568,7 +602,7 @@ Run this before every export. It is ordered by how often each one actually fails
 7. **Status colors appear only on outcomes**, never as module identity, and never as window chrome.
 8. **Module titles are grammatically parallel.**
 9. **Every receipt is real.** No invented numbers, filenames, or screenshots.
-10. **`kwp` is lowercase.** No generated signature mark.
+10. **`kwp` is lowercase, and the mark matches the register** — dark mark on a light canvas, inverted on dark. No generated signature mark. No `kwp_logo_short_blue.png` (baked white box).
 11. **One register.** No light values on a dark canvas.
 12. **Squint at it at 400px wide.** The headline and the module count should survive. If they don't, nothing else on the canvas matters.
 13. Exported at exactly **1080×1350**.
@@ -602,7 +636,8 @@ Also declared, though not deviations: card radius and the 2px module edge are la
 - Never use an emoji.
 - Never invent a receipt.
 - Never write `KWP`.
-- Never let a model draw the signature mark.
+- Never let a model draw, retrace, or "clean up" the signature mark. Recolor only.
+- Never put an inverted mark on a light canvas, or a dark mark on a dark one.
 
 ---
 
