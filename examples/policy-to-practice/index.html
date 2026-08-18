@@ -1,0 +1,156 @@
+<meta charset="utf-8">
+<title>From AI Policy to AI Practice — 1080×1350</title>
+<style>
+  @font-face { font-family:'Lora'; src:url('../../fonts/lora-latin.woff2') format('woff2');
+               font-weight:600; font-style:normal; }
+  @font-face { font-family:'Hanken Grotesk'; src:url('../../fonts/hanken-grotesk-latin.woff2') format('woff2');
+               font-weight:100 900; font-style:normal; }
+
+  :root{
+    /* ---- LIGHT REGISTER. One register per canvas — never mix. §4.1 ---- */
+    --surface:#fbfaf8; --surface-card:#ffffff;
+    --fg:#1a1917; --fg-muted:#5c5a57;
+    --accent:#0d5c58; --border:#e3e0da;
+
+    --data-1-surface:#fbd3cf; --data-1-fg:#5f3531; --data-1-border:#eaaba5;
+    --data-2-surface:#f6d8c0; --data-2-fg:#5a3a1e; --data-2-border:#e2b38d;
+    --data-3-surface:#e2e0be; --data-3-fg:#474419; --data-3-border:#c4c188;
+    --data-4-surface:#c9e7ce; --data-4-fg:#284c30; --data-4-border:#9ccca4;
+    --data-5-surface:#bde6f2; --data-5-fg:#0d4a57; --data-5-border:#84cadd;
+    --data-6-surface:#d4ddfd; --data-6-fg:#384063; --data-6-border:#aebbef;
+    --data-7-surface:#e7d6f5; --data-7-fg:#4c395b; --data-7-border:#cdb1e2;
+
+    --font-display:'Lora',Georgia,'Iowan Old Style',Palatino,serif;
+    --font-body:'Hanken Grotesk',system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+
+    --step--1:19px; --step-0:23px; --step-1:28px;
+    --step-2:36px;  --step-4:57px;
+
+    --space-2xs:10px; --space-xs:15px; --space-s:20px;
+    --space-m:30px;   --space-l:50px;
+
+    --radius-card:14px; --radius-chip:8px;
+  }
+
+  *{box-sizing:border-box; margin:0;}
+  body{margin:0; background:#555;}
+
+  .canvas{
+    width:1080px; height:1350px;
+    padding:var(--space-l);
+    background:var(--surface); color:var(--fg);
+    font-family:var(--font-body); font-size:var(--step-0);
+    display:flex; flex-direction:column;
+    overflow:hidden;
+  }
+
+  /* ---- Header §5.1 ---- */
+  .eyebrow{font-size:var(--step--1); font-weight:600; letter-spacing:.10em;
+           line-height:1.2; text-transform:uppercase; color:var(--accent);}
+  h1{font-family:var(--font-display); font-weight:600;
+     font-size:var(--step-4); line-height:1.05; margin-top:var(--space-2xs);}
+  h1 em{font-style:normal; color:var(--accent);}   /* no italics — §3.4 */
+  .subhead{font-size:var(--step-1); line-height:1.35;
+           color:var(--fg-muted); margin-top:var(--space-xs);}
+  hr{border:0; border-top:1px solid var(--border); margin:var(--space-m) 0;}
+
+  /* ---- Body: layout A stack, 7 rows §6A ---- */
+  .body{flex:1; display:grid; grid-template-rows:repeat(7,1fr); gap:var(--space-s);}
+
+  .module{
+    background:var(--surface-card);
+    border:2px solid var(--edge);
+    border-radius:var(--radius-card);
+    padding:0 var(--space-s);
+    display:grid;
+    grid-template-columns:300px 1fr;   /* §5.2 horizontal internals at 6-7 modules */
+    grid-template-rows:auto auto;
+    column-gap:var(--space-s); row-gap:var(--space-2xs);
+    align-content:center;
+  }
+  .chip{
+    grid-column:1; grid-row:1; justify-self:start;
+    background:var(--tint); color:var(--ink);
+    border:1px solid var(--edge); border-radius:var(--radius-chip);
+    padding:6px 14px; font-size:var(--step--1); font-weight:600;
+    letter-spacing:.10em; text-transform:uppercase; line-height:1;
+  }
+  .module h2{
+    grid-column:1; grid-row:2;
+    font-family:var(--font-display); font-weight:600;
+    font-size:var(--step-2); line-height:1.15; color:var(--ink);
+  }
+  .module p{grid-column:2; grid-row:2; align-self:center;
+            line-height:1.40; color:var(--fg);}
+
+  /* One slot per module, taken in order — §4.3 */
+  .s1{--tint:var(--data-1-surface); --ink:var(--data-1-fg); --edge:var(--data-1-border);}
+  .s2{--tint:var(--data-2-surface); --ink:var(--data-2-fg); --edge:var(--data-2-border);}
+  .s3{--tint:var(--data-3-surface); --ink:var(--data-3-fg); --edge:var(--data-3-border);}
+  .s4{--tint:var(--data-4-surface); --ink:var(--data-4-fg); --edge:var(--data-4-border);}
+  .s5{--tint:var(--data-5-surface); --ink:var(--data-5-fg); --edge:var(--data-5-border);}
+  .s6{--tint:var(--data-6-surface); --ink:var(--data-6-fg); --edge:var(--data-6-border);}
+  .s7{--tint:var(--data-7-surface); --ink:var(--data-7-fg); --edge:var(--data-7-border);}
+
+  /* ---- Footer §5.8 ---- */
+  footer{
+    border-top:1px solid var(--border);
+    margin-top:var(--space-m); padding-top:var(--space-s);
+    display:flex; justify-content:space-between; align-items:center;
+    font-size:var(--step--1);
+  }
+  /* Long mark = the full signature, reads "kwpledger". Placed as-is, never redrawn. */
+  footer .mark{height:110px; width:auto; display:block;}
+  footer .who{color:var(--fg-muted); letter-spacing:.10em; text-transform:uppercase;
+              font-weight:600;}
+</style>
+
+<div class="canvas">
+  <div class="eyebrow">Written is not deployed</div>
+  <h1>Your AI policy travels <em>seven layers</em> before it changes anything</h1>
+  <div class="subhead">Most of the AI policies I&rsquo;ve read are specific through layer three.</div>
+  <hr>
+
+  <div class="body">
+    <article class="module s1">
+      <span class="chip">Layer 1</span>
+      <h2>Principle</h2>
+      <p>The value nobody argues with: &ldquo;use AI responsibly.&rdquo;</p>
+    </article>
+    <article class="module s2">
+      <span class="chip">Layer 2</span>
+      <h2>Policy</h2>
+      <p>The written rule. Approved tools, prohibited data.</p>
+    </article>
+    <article class="module s3">
+      <span class="chip">Layer 3</span>
+      <h2>Standard</h2>
+      <p>What &ldquo;verify the output&rdquo; specifically requires.</p>
+    </article>
+    <article class="module s4">
+      <span class="chip">Layer 4</span>
+      <h2>Workflow</h2>
+      <p>Where that step actually sits in the real work.</p>
+    </article>
+    <article class="module s5">
+      <span class="chip">Layer 5</span>
+      <h2>Tool behavior</h2>
+      <p>What the software permits, blocks, or quietly logs.</p>
+    </article>
+    <article class="module s6">
+      <span class="chip">Layer 6</span>
+      <h2>User action</h2>
+      <p>What one person actually does at 4:00 on Thursday.</p>
+    </article>
+    <article class="module s7">
+      <span class="chip">Layer 7</span>
+      <h2>Evidence</h2>
+      <p>What remains afterward proving it actually happened.</p>
+    </article>
+  </div>
+
+  <footer>
+    <img class="mark" src="../../logos/kwp_logo_long.png" alt="kwpledger">
+    <span class="who">AI implementation in regulated environments</span>
+  </footer>
+</div>
