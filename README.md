@@ -34,7 +34,7 @@ There is no build step. The CSS in `tokens/` is what ships.
 Install pinned to a tag — **never to a branch.** The whole delivery model assumes explicit updates:
 
 ```bash
-npm i github:kwpledger/kwpledger-design#v0.1.0
+npm i github:kwpledger/kwpledger-design#v0.2.0
 ```
 
 Then in your root stylesheet:
