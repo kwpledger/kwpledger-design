@@ -56,6 +56,16 @@ docs/infographic-design-system.md   # the 1080x1350 infographic format — a lay
 - Notation is deliberately mixed — `base.css` hex, `categorical.css` `oklch()`. See SPEC §6. Do not "tidy" this.
 - **Do not build an authoring UI or tooling.** `tools/` holds a verifier and the math it needs, and stays that size.
 
+## Who owns this repo
+
+**The `kwpledger-site` line of sessions is the source of truth here** (Kevin, 2026-08-19). If you are working in this repo from some other task, that is you being a guest, and the rule is simple:
+
+- **Add freely.** New docs, new assets, new consumer specs. `docs/infographic-design-system.md` and `logos/` both arrived this way and are welcome.
+- **Do not change or subtract.** Tokens, the rules above, `docs/SPEC.md`, and the contrast gates are not yours to edit. If your task seems to need a token changed, that is a conversation with Kevin, not a commit.
+- **Do not bump the version or cut a tag.** Version bumps originate from the site line. Pinning only means something if one line of succession decides when a version exists — two sessions bumping independently produce two different claims about what `v0.3.0` contains.
+
+This file is a handoff to the **next** session and to whatever **parallel** session is in here right now. Write it for both.
+
 ## Changing something
 
 Edit → `npm run verify` passes → update SPEC.md and regenerate the PALETTE.md tables in the same commit if values or rules moved → tag.

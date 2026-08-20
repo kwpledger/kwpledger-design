@@ -19,6 +19,14 @@ The reason the no-redraw rule exists: the mark's authority comes from being an a
 
 Some variants add a **ring** around the initials. The ring is intended to carry channel or section identity — a different color per aspect of the brand. **Which color means what is not decided yet**, so treat every ring color below as unassigned.
 
+## These files are pending rework — do not build on their geometry
+
+**Kevin is redoing the marks in Inkscape** (noted 2026-08-19). Only one file here was ever a true vector — `kwp_logo_short.svg`, the one he traced from the scan himself — and the table below is why.
+
+So treat everything in this directory as **provisional**. Recolor and place them, yes. Do not write a spec, a lockup, or a layout that depends on their exact dimensions, path counts, or which extensions happen to be honest, because those are the things about to change.
+
+The no-redraw rule above is unaffected and still absolute: *Kevin* reworking his own signature in Inkscape is not the same act as a session auto-tracing it.
+
 ## Vector status — read this before scaling anything
 
 | File | Actually a vector? |
