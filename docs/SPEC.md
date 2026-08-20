@@ -301,3 +301,4 @@ Versioning is semver against consumer-visible behavior. **Removing or renaming a
 - **Restyling the Base44 apps.** [PALETTE.md](PALETTE.md) ships the values; applying them is separate work.
 - **The YouTube channel themes.** `brandtokens_youtube.css` becomes a layer *on top of* these semantics later, once the base is stable. Not now.
 - **Converting the brand palette to OKLCH.** §6.
+- **Headers and footers.** Deliberately unspecified. Consumers vary from total control (kwpledger.com) to five theme settings (Substack) to fully generated (Base44) to a fixed canvas (the infographic format, which has its own footer spec), so a single rule cannot be about CSS. A shared lockup is wanted eventually — tracked as **KWP-16** in `kwpledger-site/docs/BACKLOG.md`, sequenced after the `logos/` rework because it depends on the marks' geometry. **Do not invent one in the meantime.**

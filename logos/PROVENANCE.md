@@ -4,7 +4,7 @@
 
 ## Where they came from
 
-Kevin's short-form signature, written in Sharpie on a 3×5 index card and scanned. The raster variants were produced in Paint.NET; `kwp_logo_short.svg` was traced from that scan in Inkscape.
+Kevin's short-form signature, **written in 2013** in Sharpie on a 3×5 index card and scanned. (The date came across from `kwpledger-site/CLAUDE.md`, which carried it until this file did.) The raster variants were produced in Paint.NET; `kwp_logo_short.svg` was traced from that scan in Inkscape.
 
 There is no third-party license to carry. Every file here is Kevin's own work — unlike `fonts/`, nothing needs to travel alongside these.
 
