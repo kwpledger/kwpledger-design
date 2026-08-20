@@ -23,6 +23,28 @@ Paste the relevant table into the prompt and say the colors are fixed. Something
 
 ---
 
+## How to use this with Substack
+
+Substack is the same kind of consumer as Base44 — **convention, not dependency.** It cannot import a stylesheet, and its theme panel exposes exactly five things. Set them in *Website editor*:
+
+| Setting | Value |
+| :-- | :-- |
+| Background | `#FBFAF8` |
+| Accent | `#0D5C58` |
+| Wordmark / Post titles / Section titles | Lora |
+| Post body | Inter — the closest available stand-in for Hanken Grotesk |
+| Links | keep **underlined** |
+
+**The accent value is not interchangeable, and this is the trap.** Substack pairs **white** text with the accent on its subscribe button. Its default lavender `#B599F1` gives white text only **2.39:1**, which fails WCAG AA on the publication's own call to action. `#0D5C58` gives **7.81:1**.
+
+Do **not** substitute `#5fbdb4` (`--teal-300`) here, even though it matches the default's lightness and looks like the tidier swap: white on it is **2.23:1**, no better than the lavender. Which teal is correct depends entirely on the text color the platform pairs with it — **check the button, do not reason from lightness.**
+
+Keep the links underlined. An underline means a link is not identified by color alone, which is the text-label rule applied to links, and it is the one Substack default already correct.
+
+**Add a navigation item pointing at `https://kwpledger.com`.** Not a color decision, and worth more than all of the above: without it a reader who arrives at the newsletter has no route back to anything else.
+
+---
+
 ## Brand palette — the raw values
 
 Do not use these directly in a component. They exist so the semantic roles below have something to point at.

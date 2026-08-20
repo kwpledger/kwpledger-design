@@ -275,7 +275,11 @@ Three things keep that from becoming a free-for-all:
 
 **Worked example — tapdodge.** Its four game-state colors run chroma 0.134–0.175, roughly twice the ceiling in §4.6. They stay. Reading "Hard mode" in peripheral vision mid-dodge is a legibility-under-motion problem, and a 0.075-chroma tint fails at it: the register differs because the function differs. The game still takes the type scale, the spacing scale, and the neutral family — enough to read as the same person's work — and its title screen should fit.
 
-Three of tapdodge's seven accents (reward, success, error) are **not** categorical and must never be mapped onto `--data-n`. Those slots are defined by carrying no meaning; pointing "error" at slot 7 would make error re-themeable to whatever hue slot 7 becomes. They belong to a status layer this system does not yet ship.
+Three of tapdodge's seven accents (reward, success, error) are **not** categorical and must never be mapped onto `--data-n`. Those slots are defined by carrying no meaning; pointing "error" at slot 7 would make error re-themeable to whatever hue slot 7 becomes. They belong to the status layer in §5, which shipped in v0.2.0 precisely because that inventory found the gap.
+
+**Worked example — Substack.** The opposite case from tapdodge, and the more common one. The newsletter cannot import anything and exposes five settings, so conformance is *everything it is able to do* rather than a question of how far to deviate: background, accent, three font slots. It takes those from [PALETTE.md](PALETTE.md) and the rest is Substack's.
+
+The lesson worth carrying: **a platform's defaults are not neutral.** Its accent was failing WCAG AA at 2.39:1 against the white text it pairs on its own subscribe button, so adopting the brand accent fixed an accessibility defect rather than only matching a hue. And the token that *looked* like the tidier swap on paper — `--teal-300`, matching the default's lightness exactly — would have been just as bad, because what governs is the text color the platform pairs with the accent, not the lightness. Check the rendered component; do not reason from the numbers alone.
 
 ---
 
