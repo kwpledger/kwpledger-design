@@ -48,6 +48,9 @@ Measured in the render, not estimated:
   procs are pure path operators (`m`/`l`/`c`/`h`/`f`), no bitmap glyphs, so they
   print at printer resolution. The only raster on the page is the signature mark,
   525×300px placed at 1.33×0.76in — 396 dpi.
+- **Printed and confirmed** on an HP Color LaserJet MFP M477fdw, 2026-08-21. The
+  pastel slot tints hold and the Type3 body type renders clean, so that question
+  is settled empirically, not just structurally.
 
 ## Declared deviations
 

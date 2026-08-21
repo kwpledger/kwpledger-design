@@ -33,6 +33,9 @@ matching `../four-principles/`.
 It required one additive line in `index.html`: an `@media print` rule whitening the
 `#555` viewing backdrop, which was never part of the graphic. Nothing else changed.
 
+**Printed and confirmed** on an HP Color LaserJet MFP M477fdw, 2026-08-21. All seven
+slot tints hold on paper — this is the denser of the two graphics and the harder test.
+
 §0 of the spec fixes the canvas at 1080×1350 and scopes the format to LinkedIn and
 YouTube, so a letter-size export is outside what it covers. Declared here rather
 than assumed.
