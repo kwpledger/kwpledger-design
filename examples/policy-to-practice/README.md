@@ -9,7 +9,7 @@ The first graphic built against [`docs/infographic-design-system.md`](../../docs
 | Slots | `--data-1` … `--data-7`, in order (§4.3) |
 | Card mode | Neutral (§4.4) — chip carries the tint |
 | Word count | **109** |
-| Export | `policy-to-practice.jpg`, 1080×1350, quality 92 |
+| Exports | `policy-to-practice.jpg` 1080×1350 q92 · `policy-to-practice-letter.pdf` US Letter |
 
 ## Rendering it
 
@@ -21,6 +21,21 @@ math it needs, and stays that size.
 The two `@font-face` rules point at `../../fonts/`, and the footer mark at
 `../../logos/kwp_logo_long.png`. Both are relative, so the file only renders
 correctly from inside this directory.
+
+## The letter PDF
+
+Added later, for use as a printed handout alongside the feed export. Same canvas at
+the same proportions, scaled to fit and centered on 8.5×11in — not a second layout,
+and the JPG is unchanged. Produced from this same `index.html` via Chrome's
+`Page.printToPDF` at `scale 0.66` with 0.53in side and 0.84in top/bottom margins,
+matching `../four-principles/`.
+
+It required one additive line in `index.html`: an `@media print` rule whitening the
+`#555` viewing backdrop, which was never part of the graphic. Nothing else changed.
+
+§0 of the spec fixes the canvas at 1080×1350 and scopes the format to LinkedIn and
+YouTube, so a letter-size export is outside what it covers. Declared here rather
+than assumed.
 
 ## Declared deviations
 

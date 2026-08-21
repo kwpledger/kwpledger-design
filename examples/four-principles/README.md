@@ -42,8 +42,12 @@ Measured in the render, not estimated:
 - Grayscale: every module still identified by its `PRINCIPLE n` chip.
 - Squint at 400px wide: headline and the count of four both survive.
 - Module rows all 191px, detail columns all 128px — nothing wraps unevenly.
-- Letter PDF is one page, content bbox 7.45×9.34in, margins 0.53/0.52/0.83/0.83in,
-  both faces embedded as subset TrueType. Type is vector, not a placed raster.
+- Letter PDF is one page, content bbox 7.45×9.34in, margins 0.53/0.52/0.83/0.83in.
+  Both faces are vector: Lora as subset TrueType (Type0), Hanken Grotesk as Type3
+  glyph procedures — Chrome converts variable-font instances that way. The Type3
+  procs are pure path operators (`m`/`l`/`c`/`h`/`f`), no bitmap glyphs, so they
+  print at printer resolution. The only raster on the page is the signature mark,
+  525×300px placed at 1.33×0.76in — 396 dpi.
 
 ## Declared deviations
 
