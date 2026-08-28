@@ -1,6 +1,8 @@
 # The kwp signature marks
 
-**Never redraw these.** Do not vectorize, retrace, auto-trace, "clean up," or regenerate the glyph. Recolor if you need to — that is the only permitted modification.
+**Never redraw these.** Do not vectorize, retrace, auto-trace, "clean up," or regenerate the glyph.
+
+**And the glyph is not yours to recolor either.** Kevin, 2026-08-28: *the signature itself is always black, or white with a black border in the inverted register.* **Only the ring color varies.** Pick the file that matches the register you need; do not tint the initials to an accent, a channel hue, or anything else. Scaling, cropping, and opacity are fine — those do not change the color.
 
 ## Where they came from
 
@@ -17,7 +19,7 @@ The reason the no-redraw rule exists: the mark's authority comes from being an a
 | **long** | The full short-form signature — reads as `kwpledger` |
 | **short** | The initials alone — the long mark with the `ledger` portion removed. `kwp`, **always lowercase** |
 
-Some variants add a **ring** around the initials. The ring is intended to carry channel or section identity — a different color per aspect of the brand. **Which color means what is not decided yet**, so treat every ring color below as unassigned.
+Some variants add a **ring** around the initials. The ring is intended to carry channel or section identity — a different color per aspect of the brand, and it is **the only part of the mark whose color is variable**. **Which color means what is not decided yet**, so treat every ring color below as unassigned.
 
 ## These files are pending rework — do not build on their geometry
 
@@ -37,7 +39,11 @@ The no-redraw rule above is unaffected and still absolute: *Kevin* reworking his
 
 **There is no true vector of the long signature.** The largest long-mark asset is 525×300. That is ample for a footer lockup and will soften if pushed much past ~500px wide.
 
-`kwp_logo_short.svg` uses literal `fill:#000000` / `stroke:#000000` rather than `currentColor`, so it cannot inherit a CSS color as-is. Swapping those two declarations for `currentColor` would let one file serve every register and ring color — worth doing, and it is an edit to the *color declarations only*, not to the path data, so it does not violate the no-redraw rule.
+`kwp_logo_short.svg` uses literal `fill:#000000` / `stroke:#000000` rather than `currentColor`, so it cannot inherit a CSS color as-is.
+
+**An earlier version of this file recommended swapping those for `currentColor` so one file could serve every register and ring color. That advice is withdrawn (2026-08-28).** It was written before the rule above was stated, and it points directly at the thing that is not allowed: `currentColor` on this file tints *the initials*, because this is the plain black no-ring mark. It does not get you the inverted register either — inverted is a white glyph **with a black border**, which is a different mark, not this one recolored. Use the file that matches the register.
+
+Left on the record rather than deleted, because the reasoning was plausible and a future session will otherwise re-derive it. The no-redraw rule was never the only constraint on this mark; the color rule is the other half, and it is easy to miss because "recolor is the permitted modification" sounds like permission until you ask *recolor what*.
 
 ## The files
 
