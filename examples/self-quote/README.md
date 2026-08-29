@@ -116,6 +116,6 @@ inside the card's own quotation, which is exactly what they are — the large op
 outer level. Promoting them to double quotes would put two visible sets of double marks on one
 card and look like an error.
 
-The talk name in the context line is inferred from the date in
-[`examples/four-principles/README.md`](../four-principles/README.md), not separately confirmed.
-It is the one thing on this canvas nobody has verified.
+The talk name in the context line was first inferred from the date in
+[`examples/four-principles/README.md`](../four-principles/README.md). **Kevin confirmed it on
+2026-08-29** as the direct context for this quote, so nothing on this canvas is now unverified.
