@@ -134,15 +134,21 @@ than to white, preserving alpha. That is reproducible, but **do not treat it as 
 there is no recolor tool in this repo and there should not be one. `tools/` holds the verifier and
 the math it needs, and stays that size.
 
-### The open question these variants raise
+### The open question these variants raise — and where it stands
 
 The ring is meant to carry **channel or section identity**, and which color means what is still
-undecided. Using `--accent` for the ring implicitly proposes **teal = the parent identity** — the
-portal accent both channels sit inside, as distinct from a channel's own color.
+undecided.
 
-That is a reasonable reading and it is the one the quote-post format is built on, but **it is a
-proposal, not a settled assignment.** It is Kevin's to ratify or throw out. Recorded here so the
-decision is visible rather than buried in one template's `src` attribute.
+An earlier version of this section framed `--accent` on the ring as proposing **teal = the parent
+identity**. **Kevin's decision, 2026-08-29: the identity question stays open, and the teal ring is
+not an answer to it.** The quote-post format uses it because it pairs with the accent-colored
+opening mark on the same card — a compositional reason — and because every alternative fails on
+measurable grounds (below). He has said the color there is **retconnable** once color-topic
+distribution is settled.
+
+So, plainly: **this file existing is not evidence that teal means anything.** When the assignment
+is finally made, the things to revisit are whatever is using a ringed mark at that point. Today
+that is `examples/self-quote/` and nothing else.
 
 Teal is also the only ring color in this directory that sits **at or under the system's 0.091
 chroma ceiling while still being legible on a dark canvas** — it measures exactly 0.091, the

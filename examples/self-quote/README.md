@@ -100,8 +100,12 @@ brand accent is the only ring that is legible here *and* inside the system, at 8
 
 `logos/kwp_logo_short_inverted_teal.png` is a **ring-only recolor** of the navy file: same
 dimensions, alpha channel byte-identical, zero glyph pixels changed, 3,075 ring pixels remapped.
-Full note and the open question it raises — whether teal may stand for the parent identity — are
-in [`logos/PROVENANCE.md`](../../logos/PROVENANCE.md) under *Derived variants*.
+Full note in [`logos/PROVENANCE.md`](../../logos/PROVENANCE.md) under *Derived variants*.
+
+**The teal ring is provisional.** Kevin's decision, 2026-08-29: whether teal stands for the parent
+identity stays open, and the ring is teal here because it pairs with the opening mark, not because
+it means anything. Swapping it once color-topic distribution is settled is a file swap and a
+re-render — nothing in the layout depends on it.
 
 ## Content sourcing
 
