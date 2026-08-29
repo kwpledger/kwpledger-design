@@ -197,14 +197,28 @@ Every visible ring in the shipped set breaks the chroma ceiling by 1.3× to 2.6�
 them borrow a status hue — red sits *on* danger. **The accent is the only ring that is both
 legible on this canvas and inside the system.** It is also the most legible of all of them.
 
-And it does not smuggle in an unassigned meaning. `logos/PROVENANCE.md` says the ring is intended
-to carry channel or section identity and that **which color means what is undecided** — so a
-green or orange ring would assert a channel this card does not belong to. Teal is the *parent*
-identity: the portal accent both channels sit inside. On Kevin's own quote card that is the
-correct thing for the ring to say.
+And unlike the alternatives, it does not claim an identity this card has not been given.
+`logos/PROVENANCE.md` says the ring is intended to carry channel or section identity and that
+**which color means what is undecided** — so a green, orange or red ring would assert a channel
+the system has not handed out.
 
-**This does read as proposing teal = parent.** That is a SPEC §10 conversation and it is Kevin's
-to ratify or reject; it is recorded here rather than left implicit in a file choice.
+#### The teal ring is a composition, not an identity claim
+
+An earlier draft of this section argued the ring should read as *teal = the parent identity*.
+**Kevin's decision, 2026-08-29: that question stays open, and this is not an answer to it.**
+
+The ring is teal here because it pairs with the opening mark — the card then carries one
+chromatic color, stated twice, at the two ends of the diagonal. That is a compositional reason,
+not a semantic one, and it is the whole of the argument.
+
+It follows that the ring color is **provisional and deliberately retconnable.** Nothing in this
+format may depend on it. When the wider decision about how color maps to topic is made, this card
+is a *consumer* of that decision, never a precedent for it: swap the badge file, re-render, done.
+**Do not cite this format as evidence that teal means anything.**
+
+What the choice actually rests on is the table above, and any replacement ring has to clear the
+same three bars: legible on this canvas, at or under the 0.091 chroma ceiling, and not borrowing
+a status hue.
 
 The asset is a **ring-only recolor** of `kwp_logo_short_inverted_navy.png` — glyph pixels and the
 alpha channel are byte-identical, verified pixel by pixel. See `logos/PROVENANCE.md`.
