@@ -131,9 +131,12 @@ to make edges 3:1, and this is an edge.
 **No categorical slots and no status colors on this canvas.** There is nothing here to
 categorize and no outcome to report. A quote is not a category.
 
-**`--accent` appears exactly once**, on the opening mark. That is the only color on an otherwise
-monochrome card, and it is the whole reason the card reads as brand rather than as a default
-dark theme. Do not tint the quote text, and do not add a second accent element.
+**`--accent` is the only chromatic color on the card, and it appears in exactly two places:**
+the opening mark and the badge ring (§4). Everything else is the neutral family. That pairing is
+what makes the card read as brand rather than as a default dark theme — one accent, stated twice,
+top-left and bottom-right, which also weights the diagonal the eye already travels.
+
+Do not tint the quote text, and do not introduce a third accent element.
 
 ### 3.1 The 2px rule
 
@@ -149,7 +152,7 @@ Kevin's short signature mark, small, bottom right.
 
 | | |
 | :-- | :-- |
-| File (dark canvas) | `logos/kwp_logo_short_inverted_navy.png` |
+| File (dark canvas) | `logos/kwp_logo_short_inverted_teal.png` |
 | Size | **104px tall, width left to the file** |
 | Position | Flush to the right and bottom margins, vertically centred in the attribution band |
 
@@ -168,29 +171,43 @@ worse than none. And the glyph itself is not recolorable — **the signature is 
 white with a black border in the inverted register; only the ring color varies.**
 `logos/PROVENANCE.md` is the authority.
 
-### 4.2 Why the navy ring, and the tension it carries
+### 4.2 Why the ring is the brand accent
 
-Navy is the §5.8 default for a dark canvas and the only ring under the system's 0.091 chroma
-ceiling, at 0.050. Every other ring runs 1.3× to 3.3× over it.
+The ring is **`--accent` `#5fbdb4`** — the same teal as the opening mark.
 
-Measured, the ring `#202a44` sits at **1.30:1 against the canvas** — the same register as
-`--border` at 1.41:1. So it reads as a quiet enclosure, not as a color. The white initials
-inside carry the mark at 18.52:1 and are what anyone actually sees.
+The infographic format's §5.8 defaults a dark canvas to the navy ring, and that default does not
+survive contact with this canvas. Measured, navy `#202a44` sits at **1.30:1** against `#0a1420` —
+the same register as `--border` at 1.41:1 — and the ring renders as a **~1.6px stroke** at badge
+size. A 1.6px stroke at 1.30:1 is not a quiet ring; it is an absent one. On a light canvas navy
+works, which is why the default exists.
 
-**That is the trade and it should be made knowingly.** A ring that reads as a *color* on this
-canvas costs either the chroma ceiling or the ring's own meaning:
+Every other shipped ring is worse, and the table is the argument:
 
-| Ring | Hex | vs canvas | Chroma vs 0.091 ceiling |
-| :-- | :-- | :-- | :-- |
-| navy | `#202a44` | 1.30:1 | 0.050 — **under** |
-| green (dark) | `#046a38` | 2.76:1 | 0.116 — 1.3× over |
-| red | `#ed1d24` | 4.24:1 | 0.234 — 2.6× over |
-| orange | `#ff8200` | 7.45:1 | 0.185 — 2.0× over |
-| green (bright) | `#39be15` | 7.54:1 | 0.223 — 2.4× over |
+| Ring | Hex | vs canvas | Chroma vs 0.091 ceiling | Hue collision |
+| :-- | :-- | :-- | :-- | :-- |
+| navy | `#202a44` | 1.30:1 | 0.050 — under | — |
+| blue (deep) | `#06038d` | 1.24:1 | 0.198 — 2.2× over | — |
+| green (dark) | `#046a38` | 2.76:1 | 0.116 — 1.3× over | success, h154 |
+| red | `#ed1d24` | 4.24:1 | 0.234 — 2.6× over | **danger, h27 exactly** |
+| orange | `#ff8200` | 7.45:1 | 0.185 — 2.0× over | warm caution register |
+| green (bright) | `#39be15` | 7.54:1 | 0.223 — 2.4× over | success, h141 |
+| **accent teal** | **`#5fbdb4`** | **8.31:1** | **0.091 — at the ceiling** | — |
 
-Independently of chroma, **which ring color means what is undecided**, so a colored ring would
-be asserting a channel identity the system has not assigned yet. Changing this is a conversation
-about SPEC §10, not a per-card choice.
+Every visible ring in the shipped set breaks the chroma ceiling by 1.3× to 2.6×, and three of
+them borrow a status hue — red sits *on* danger. **The accent is the only ring that is both
+legible on this canvas and inside the system.** It is also the most legible of all of them.
+
+And it does not smuggle in an unassigned meaning. `logos/PROVENANCE.md` says the ring is intended
+to carry channel or section identity and that **which color means what is undecided** — so a
+green or orange ring would assert a channel this card does not belong to. Teal is the *parent*
+identity: the portal accent both channels sit inside. On Kevin's own quote card that is the
+correct thing for the ring to say.
+
+**This does read as proposing teal = parent.** That is a SPEC §10 conversation and it is Kevin's
+to ratify or reject; it is recorded here rather than left implicit in a file choice.
+
+The asset is a **ring-only recolor** of `kwp_logo_short_inverted_navy.png` — glyph pixels and the
+alpha channel are byte-identical, verified pixel by pixel. See `logos/PROVENANCE.md`.
 
 ### 4.3 The badge is not the attribution
 
@@ -216,8 +233,13 @@ mark beside `Kevin Pledger` says two different things.
 better sentence in your own mouth is not. If the line needs a rewrite to work on a card, it is a
 written line and the card should not claim it was spoken.
 
-**No quotation marks in the text.** The opening mark stands in for them. Adding both sets them
+**No *enclosing* quotation marks.** The opening mark stands in for them; adding both sets them
 twice.
+
+**Quotation marks *inside* the quote stay, and stay single.** A speaker naming a term — ‘Risk’,
+‘Regulations’ — is doing real work and the marks carry it. They sit one level in from the card's
+own quotation, which is what the large opening mark is, so single is correct; double would put
+two visible sets of double marks on one canvas and read as a mistake.
 
 **The card must work with the caption removed.** It gets screenshotted and reposted.
 
@@ -236,7 +258,8 @@ Measured in a render, not estimated:
 6. Inverted mark on the dark canvas. Never `kwp_logo_short_blue.png` (no alpha — it carries a
    baked white rectangle).
 7. `kwp` is lowercase everywhere it appears, including alt text.
-8. No italics. No quotation marks around the quote. No second accent element.
+8. No italics. No enclosing quotation marks — marks around quoted *terms* are fine, and single.
+   No third accent element beyond the opening mark and the ring.
 9. Grayscale test: nothing is lost, because nothing on this canvas is carried by color.
 10. Squint at 400px wide: the quote's first line and the name both survive.
 

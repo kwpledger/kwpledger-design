@@ -8,8 +8,8 @@ two `REPLACE ME` blocks, set the tier class, re-render.
 | :-- | :-- |
 | Canvas | **1400×1000**, 7:5 (§0.1) |
 | Register | **Dark** (§3) |
-| Tier | `t-m` — 43 words (§2.2) |
-| Badge | `kwp_logo_short_inverted_navy.png`, 104px tall, bottom right (§4) |
+| Tier | `t-xl` — 20 words (§2.2) |
+| Badge | `kwp_logo_short_inverted_teal.png`, 104px tall, bottom right (§4) |
 | Exports | `self-quote.jpg` 1400×1000 q92 |
 
 ## Using it
@@ -52,16 +52,19 @@ preflight item 5 checks `naturalWidth > 0` rather than trusting the eye.
 Measured in the render, not estimated:
 
 - Canvas 1400×1000, `scrollHeight − height = 0`. Nothing overflows.
-- Quote at `t-m`/43 words: 6 lines, 389px of text in the 598px zone, 104px clear above the mark
-  and 141px clear below to the rule.
+- Quote at `t-xl`/20 words: 5 lines, 419px of text in the 598px zone, 89px clear above the mark
+  and 127px clear below to the rule.
 - All four tiers checked at their upper word bound — 20/35/55/70 — none clash. The tightest is
   `t-m` at 55 words: 7 lines, 446px, 76px clear above and 113px below. 81 words at `t-s` still
   clears with 76px and 114px, which is where the "editorial, not geometric" claim in §2.2
   comes from.
 - Both faces report `loaded`. Badge `naturalWidth` 248, placed at 104px tall / 86.3px wide,
   flush to the 70px right and bottom margins.
+- Badge ring is `--accent`, measured 8.31:1 against the canvas and 0.091 chroma — legible, and
+  at the ceiling rather than over it (§4.2).
 - Nothing read as a sentence below 30px (§2.1). The two attribution lines are 36px and 30px.
-- No categorical or status colors anywhere. `--accent` used once, on the opening mark.
+- No categorical or status colors anywhere. `--accent` used in exactly two places — the
+  opening mark and the badge ring — and nowhere else.
 - No element computes to a non-normal `font-style` — nothing is italic, synthesized or otherwise.
 - Grayscale: nothing lost — no distinction on this canvas is carried by color.
 
@@ -84,17 +87,35 @@ not a bleed," and this card bleeds. A quote card is one object already; framing 
 has no internal modules just insets it for no reason. The 2px rule above the attribution is the
 only division on the canvas.
 
-## Content sourcing — read before posting
+## The ring is not the format's default, and that is deliberate
 
-**The placeholder quote is not a verified quotation and must be replaced.**
+The infographic format's §5.8 sends a dark canvas to the **navy** ring. This card does not, and
+the reason is measured rather than aesthetic: navy is 1.30:1 against `#0a1420` and renders as a
+~1.6px stroke at badge size, so it is not a subtle ring, it is an absent one. On a light canvas
+the same default is correct.
 
-Its first two sentences — *"Grounding cuts fabrication, not risk"* and *"Sounding reasonable is
-not checking"* — are Kevin's, recorded in
-[`examples/four-principles/README.md`](../four-principles/README.md) as correctives from the
-source précis. Everything after the em dash is filler, written here to size the `t-m` tier. It
-reads like something he might have said, which is precisely the problem: **§5 says quote what
-was actually said**, and this card does not yet.
+Every other shipped ring is either invisible too (deep blue, 1.24:1) or 1.3×–2.6× over the 0.091
+chroma ceiling, and three of those borrow a status hue — red sits exactly on danger at h27. The
+brand accent is the only ring that is legible here *and* inside the system, at 8.31:1 and 0.091.
 
-The context line assumes the talk was *Use AI Effectively & Safely in High-Risk Environments*,
-the Learning Guild session dated 27 August 2026 in the four-principles README. That is an
-inference from a date in this repo, not a fact anyone confirmed. Check it.
+`logos/kwp_logo_short_inverted_teal.png` is a **ring-only recolor** of the navy file: same
+dimensions, alpha channel byte-identical, zero glyph pixels changed, 3,075 ring pixels remapped.
+Full note and the open question it raises — whether teal may stand for the parent identity — are
+in [`logos/PROVENANCE.md`](../../logos/PROVENANCE.md) under *Derived variants*.
+
+## Content sourcing
+
+The quote is Kevin's, from his first presentation — *Use AI Effectively & Safely in High-Risk
+Environments*, The Learning Guild, 27 August 2026. Supplied by him directly, verbatim:
+
+> ‘Regulations’ describe the constraints and what you must do. ‘Risk’ describes the consequences
+> and tells you why the regulations matter.
+
+**The single quotation marks around the two terms are his and are kept.** They read as nested
+inside the card's own quotation, which is exactly what they are — the large opening mark is the
+outer level. Promoting them to double quotes would put two visible sets of double marks on one
+card and look like an error.
+
+The talk name in the context line is inferred from the date in
+[`examples/four-principles/README.md`](../four-principles/README.md), not separately confirmed.
+It is the one thing on this canvas nobody has verified.

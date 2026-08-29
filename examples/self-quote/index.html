@@ -82,7 +82,9 @@
 
   /* The badge is sized by HEIGHT ONLY and its width is left to the file.
      logos/PROVENANCE.md: the marks are being reworked, so nothing may depend
-     on their exact geometry. Dark canvas -> the inverted mark. §5.8. */
+     on their exact geometry. Dark canvas -> the inverted mark.
+     Ring is the brand accent, the only visible option that stays under the
+     0.091 chroma ceiling and borrows no status hue. See the format doc §4.2. */
   .badge{height:var(--q-badge); width:auto; display:block; flex:none;}
 </style>
 
@@ -91,11 +93,10 @@
   <div class="mark" aria-hidden="true">&ldquo;</div>
 
   <!-- REPLACE ME. Keep the tier class in step with the word count.
-       This placeholder is 43 words -> t-m. -->
-  <blockquote class="quote t-m">
-    Grounding cuts fabrication, not risk. Sounding reasonable is not checking. That is why
-    every one of the four criteria ends in a question a human has to answer — because the
-    moment you stop asking it, the tool is making the decision for you.
+       This quote is 20 words -> t-xl. -->
+  <blockquote class="quote t-xl">
+    ‘Regulations’ describe the constraints and what you must do.
+    ‘Risk’ describes the consequences and tells you why the regulations matter.
   </blockquote>
 
   <footer class="attribution">
@@ -104,7 +105,7 @@
       <!-- REPLACE ME if the talk is not this one. -->
       <div class="context">Use AI Effectively &amp; Safely in High-Risk Environments</div>
     </div>
-    <img class="badge" src="../../logos/kwp_logo_short_inverted_navy.png"
+    <img class="badge" src="../../logos/kwp_logo_short_inverted_teal.png"
          alt="kwp signature monogram">
   </footer>
 
