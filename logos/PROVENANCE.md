@@ -111,3 +111,40 @@ For comparison, the brand's own teals sit at 0.070–0.091, and the two channel 
 **This is not automatically a violation.** SPEC §10 permits deviation justified by function, and a logo is identity rather than data. But it is a real tension and it should be decided rather than inherited: on a surface governed by the ceiling, a `#ff8200` ring is the loudest thing on the page by a factor of two, and it will out-shout the content it sits beside.
 
 Only `navy` is currently usable without that conversation.
+
+---
+
+## Derived variants
+
+Files produced from the originals above by **recoloring the ring only**. The rule at the top of
+this file is what permits them: the ring is the one part of the mark whose color varies. None of
+them touches the glyph — if a future variant does, it does not belong in this section or this
+directory.
+
+| File | Derived from | Ring | Why it exists |
+| :-- | :-- | :-- | :-- |
+| `kwp_logo_short_inverted_teal.png` | `kwp_logo_short_inverted_navy.png` | `#5fbdb4` — `--accent` | The navy ring measures 1.30:1 on the `#0a1420` dark canvas and disappears at badge size. See `docs/quote-post-design-system.md` §4.2. |
+
+**`kwp_logo_short_inverted_teal.png`, verified pixel by pixel against its source:** same 248×299
+dimensions, **alpha channel byte-identical** (0 pixels differ), **0 white glyph pixels changed**,
+3,075 ring pixels recolored. The glyph is untouched in the literal sense, not the approximate one.
+
+It was made by drawing the source into a canvas and remapping only pixels closer to the ring navy
+than to white, preserving alpha. That is reproducible, but **do not treat it as a pipeline** —
+there is no recolor tool in this repo and there should not be one. `tools/` holds the verifier and
+the math it needs, and stays that size.
+
+### The open question these variants raise
+
+The ring is meant to carry **channel or section identity**, and which color means what is still
+undecided. Using `--accent` for the ring implicitly proposes **teal = the parent identity** — the
+portal accent both channels sit inside, as distinct from a channel's own color.
+
+That is a reasonable reading and it is the one the quote-post format is built on, but **it is a
+proposal, not a settled assignment.** It is Kevin's to ratify or throw out. Recorded here so the
+decision is visible rather than buried in one template's `src` attribute.
+
+Teal is also the only ring color in this directory that sits **at or under the system's 0.091
+chroma ceiling while still being legible on a dark canvas** — it measures exactly 0.091, the
+chroma of `--teal-300`. Navy is under the ceiling but invisible there; everything else is visible
+but 1.3× to 2.6× over it.

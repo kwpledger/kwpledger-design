@@ -1,0 +1,112 @@
+<meta charset="utf-8">
+<title>Self-quote card — 1400×1000 (7:5), dark register</title>
+<style>
+  @font-face { font-family:'Lora'; src:url('../../fonts/lora-latin.woff2') format('woff2');
+               font-weight:600; font-style:normal; }
+  @font-face { font-family:'Hanken Grotesk'; src:url('../../fonts/hanken-grotesk-latin.woff2') format('woff2');
+               font-weight:100 900; font-style:normal; }
+
+  :root{
+    /* ---- DARK REGISTER. One register per canvas — never mix. Infographic §4.1/§4.2 ---- */
+    --surface:#0a1420; --surface-card:#10202f;
+    --fg:#e6ecf2; --fg-muted:#9aabbb;
+    --accent:#5fbdb4; --border:#1e3245;
+
+    --font-display:'Lora',Georgia,'Iowan Old Style',Palatino,serif;
+    --font-body:'Hanken Grotesk',system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+
+    /* Type floors are canvas-width-derived, not copied from the 1080 ladder.
+       See README "Why the type is bigger than the infographic's". */
+    --q-name:36px;      /* Hanken 600 */
+    --q-context:30px;   /* Hanken 400 — the sentence floor for a 1400px canvas */
+
+    --q-pad:70px;
+    --q-measure:1080px;
+    --q-badge:104px;
+  }
+
+  *{box-sizing:border-box; margin:0;}
+  body{margin:0; background:#555;}
+  /* The #555 body is a viewing backdrop, not part of the card. */
+
+  .canvas{
+    width:1400px; height:1000px;          /* 7:5 exactly. See README §0. */
+    padding:var(--q-pad);
+    background:var(--surface); color:var(--fg);
+    font-family:var(--font-body);
+    display:flex; flex-direction:column;
+    overflow:hidden;
+  }
+
+  /* ---- The opening mark. Stands in for quotation marks; the quote itself
+         carries none. Lora, because Lora is the display face — and this is
+         the one place brand color enters an otherwise monochrome card. ---- */
+  .mark{
+    height:90px;
+    font-family:var(--font-display); font-weight:600; font-size:150px;
+    line-height:1; color:var(--accent);
+    user-select:none;
+  }
+
+  /* ---- The quote. Vertically centred in the space the footer leaves, so a
+         short quote does not hang off the top. ---- */
+  .quote{
+    margin-block:auto;   /* centres in the space the footer leaves. Plain block
+                            flow, so extra <p>s inside behave normally. */
+    max-width:var(--q-measure);
+    font-family:var(--font-display); font-weight:600;
+    color:var(--fg);
+    text-wrap:pretty;   /* long quotes: kill orphans. Short tiers override below. */
+    hyphens:none;       /* never hyphenate, never justify. §3.3 */
+    /* No italics anywhere — neither shipped face has a true italic. §3.4 */
+  }
+
+  /* Size tiers, by word count. Pick ONE — see the table in the README. */
+  .t-xl{font-size:68px; line-height:1.22; text-wrap:balance;}   /*   ≤ 20 words */
+  .t-l {font-size:58px; line-height:1.26; text-wrap:balance;}   /*  21 – 35 words */
+  .t-m {font-size:50px; line-height:1.30;}   /*  36 – 55 words */
+  .t-s {font-size:43px; line-height:1.32;}   /*  56 – 70 words — hard cap */
+
+  /* ---- Attribution. 2px rule, not 1px: at 1400px canvas a 1px hairline
+         resolves to 0.40 screen px in a LinkedIn feed and disappears. ---- */
+  .attribution{
+    margin-top:36px;
+    border-top:2px solid var(--border);
+    padding-top:30px;
+    min-height:var(--q-badge);
+    display:flex; align-items:center; justify-content:space-between; gap:40px;
+  }
+  .name{font-size:var(--q-name); font-weight:600; line-height:1.2; color:var(--fg);}
+  .context{font-size:var(--q-context); font-weight:400; line-height:1.35;
+           color:var(--fg-muted); margin-top:8px;}
+
+  /* The badge is sized by HEIGHT ONLY and its width is left to the file.
+     logos/PROVENANCE.md: the marks are being reworked, so nothing may depend
+     on their exact geometry. Dark canvas -> the inverted mark.
+     Ring is the brand accent, the only visible option that stays under the
+     0.091 chroma ceiling and borrows no status hue. See the format doc §4.2. */
+  .badge{height:var(--q-badge); width:auto; display:block; flex:none;}
+</style>
+
+<div class="canvas">
+
+  <div class="mark" aria-hidden="true">&ldquo;</div>
+
+  <!-- REPLACE ME. Keep the tier class in step with the word count.
+       This quote is 20 words -> t-xl. -->
+  <blockquote class="quote t-xl">
+    ‘Regulations’ describe the constraints and what you must do.
+    ‘Risk’ describes the consequences and tells you why the regulations matter.
+  </blockquote>
+
+  <footer class="attribution">
+    <div class="who">
+      <div class="name">Kevin Pledger</div>
+      <!-- REPLACE ME if the talk is not this one. -->
+      <div class="context">Use AI Effectively &amp; Safely in High-Risk Environments</div>
+    </div>
+    <img class="badge" src="../../logos/kwp_logo_short_inverted_teal.png"
+         alt="kwp signature monogram">
+  </footer>
+
+</div>
