@@ -39,6 +39,7 @@ tools/
 docs/SPEC.md       # the contract
 docs/PALETTE.md    # every value as hex, for consumers that can't take a dependency
 docs/infographic-design-system.md   # the 1080x1350 infographic format — a layer-3 consumer
+docs/quote-post-design-system.md    # the 1400x1000 (7:5) quote-card format — a layer-3 consumer
 ```
 
 ## Rules

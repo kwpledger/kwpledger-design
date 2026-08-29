@@ -7,6 +7,7 @@ One source of truth. Change a color here, bump the pin in a consumer, and it pro
 - **[docs/SPEC.md](docs/SPEC.md)** — the contract. Naming, the layering rules, the categorical scale, the contrast gates. Read this before changing a value.
 - **[docs/PALETTE.md](docs/PALETTE.md)** — every value as plain hex, for tools you can only *tell* the colors to (Base44, Unity, slide templates).
 - **[docs/infographic-design-system.md](docs/infographic-design-system.md)** — the 1080×1350 LinkedIn/YouTube infographic format. A layer-3 consumer, written to be pasted into ChatGPT.
+- **[docs/quote-post-design-system.md](docs/quote-post-design-system.md)** — the 1400×1000 (7:5) quote-card format. A layer-3 consumer; reference implementation and template in [examples/self-quote/](examples/self-quote/).
 
 ---
 
