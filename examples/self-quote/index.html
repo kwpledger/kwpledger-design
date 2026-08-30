@@ -80,9 +80,9 @@
   .context{font-size:var(--q-context); font-weight:400; line-height:1.35;
            color:var(--fg-muted); margin-top:8px;}
 
-  /* The badge is sized by HEIGHT ONLY and its width is left to the file.
-     logos/PROVENANCE.md: the marks are being reworked, so nothing may depend
-     on their exact geometry. Dark canvas -> the inverted mark.
+  /* The badge is sized by HEIGHT ONLY and its width is left to the file --
+     the long and short marks have different aspects, so a series that pins
+     width breaks when it switches marks. Dark canvas -> the inverted mark.
      Ring is the brand accent, the only visible option that stays under the
      0.091 chroma ceiling and borrows no status hue. See the format doc §4.2. */
   .badge{height:var(--q-badge); width:auto; display:block; flex:none;}
@@ -105,7 +105,10 @@
       <!-- REPLACE ME if the talk is not this one. -->
       <div class="context">Use AI Effectively &amp; Safely in High-Risk Environments</div>
     </div>
-    <img class="badge" src="../../logos/kwp_logo_short_inverted_teal.png"
+    <!-- Vector, vendored from kwpledger/logos-and-wordmarks. The teal ring is a
+         one-attribute recolor of logo_short_ring_inv.svg; never use a _ring file
+         at the #0026FF it ships with. logos/PROVENANCE.md is the authority. -->
+    <img class="badge" src="../../logos/logo_short_ring_inv_teal.svg"
          alt="kwp signature monogram">
   </footer>
 

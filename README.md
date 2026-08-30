@@ -21,7 +21,7 @@ tokens/
   categorical.css  # --data-1 … --data-8, three values each, both themes
   status.css       # --success / --warning / --danger, same triple
 fonts/             # Lora + Hanken Grotesk, latin subset, ~56KB, and the OFL notice
-logos/             # the kwp signature marks, and PROVENANCE.md — recolor only, never redraw
+logos/             # the kwp signature marks (8 SVGs) + PROVENANCE.md — recolor the ring only, never redraw
 tools/             # contrast + parity verifier. No build, no toolchain.
 docs/
 ```
@@ -35,7 +35,7 @@ There is no build step. The CSS in `tokens/` is what ships.
 Install pinned to a tag — **never to a branch.** The whole delivery model assumes explicit updates:
 
 ```bash
-npm i github:kwpledger/kwpledger-design#v0.2.0
+npm i github:kwpledger/kwpledger-design#v0.3.0
 ```
 
 Then in your root stylesheet:

@@ -152,7 +152,7 @@ Kevin's short signature mark, small, bottom right.
 
 | | |
 | :-- | :-- |
-| File (dark canvas) | `logos/kwp_logo_short_inverted_teal.png` |
+| File (dark canvas) | `logos/logo_short_ring_inv_teal.svg` |
 | Size | **104px tall, width left to the file** |
 | Position | Flush to the right and bottom margins, vertically centred in the attribution band |
 
@@ -160,9 +160,16 @@ This is the **short mark / corner badge** cell of the infographic format's §5.8
 badge rather than a footer lockup. Nothing new is being invented here, which matters: SPEC §12
 puts a shared header/footer lockup out of scope and says not to invent one in the meantime.
 
-**Size it by height only.** `logos/PROVENANCE.md` says the marks are being reworked in Inkscape
-and that no spec or layout may depend on their current geometry. `width: auto` is how this
-format complies — when the file changes proportion, the card still works.
+**Size it by height only**, with `width: auto`. The reason has changed and is worth stating,
+because the old one is now wrong: `logos/PROVENANCE.md` used to forbid depending on the marks'
+geometry at all, since they were mid-rework. **The rework has landed and the geometry is stable.**
+Height-only sizing stays because the long and short marks have different aspect ratios, so any
+series that pins width breaks the day it switches which mark it uses. Measured, the badge renders
+a **71×82px ink box** inside its 104px slot.
+
+**The card was authored against a 248×299 raster and now uses a true vector.** At the same 104px
+the SVG's ink box is about 5% smaller than the PNG's was — imperceptible, and 104px is kept
+rather than nudged, because the number is load-bearing for the §1 vertical budget.
 
 ### 4.1 Never redraw it, never recolor the glyph
 
@@ -177,9 +184,12 @@ The ring is **`--accent` `#5fbdb4`** — the same teal as the opening mark.
 
 The infographic format's §5.8 defaults a dark canvas to the navy ring, and that default does not
 survive contact with this canvas. Measured, navy `#202a44` sits at **1.30:1** against `#0a1420` —
-the same register as `--border` at 1.41:1 — and the ring renders as a **~1.6px stroke** at badge
-size. A 1.6px stroke at 1.30:1 is not a quiet ring; it is an absent one. On a light canvas navy
-works, which is why the default exists.
+the same register as `--border` at 1.41:1. On a light canvas navy works, which is why the default
+exists; at 1.30:1 on this one it is not a quiet ring, it is an absent one.
+
+The reworked ring is heavier than the raster's — **2.7px at 104px tall**, measured, against the
+old file's ~1.6px. That helps every ring color, and it is not enough to rescue navy: a 2.7px
+stroke at 1.30:1 is still nothing.
 
 Every other shipped ring is worse, and the table is the argument:
 
@@ -220,8 +230,13 @@ What the choice actually rests on is the table above, and any replacement ring h
 same three bars: legible on this canvas, at or under the 0.091 chroma ceiling, and not borrowing
 a status hue.
 
-The asset is a **ring-only recolor** of `kwp_logo_short_inverted_navy.png` — glyph pixels and the
-alpha channel are byte-identical, verified pixel by pixel. See `logos/PROVENANCE.md`.
+The asset is a **ring-only recolor** of `logo_short_ring_inv.svg`: one `stroke` attribute on the
+`<circle>`, and the two files are otherwise the same byte for byte. The glyph is a different XML
+element, so a ring recolor *cannot* reach it — what used to need a pixel-by-pixel verification is
+now structural. See `logos/PROVENANCE.md`.
+
+**Do not use a `_ring` file at the hex it ships with.** Upstream's placeholder is `#0026FF` —
+chroma 0.300, 3.3× the ceiling, the loudest value that has ever touched this system.
 
 ### 4.3 The badge is not the attribution
 
@@ -269,8 +284,8 @@ Measured in a render, not estimated:
 4. Both faces report `loaded`. A synthesized Lora is the failure that looks almost right.
 5. Badge image actually loaded (`naturalWidth > 0`) — a broken relative path renders as alt text
    and is easy to miss on a dark card.
-6. Inverted mark on the dark canvas. Never `kwp_logo_short_blue.png` (no alpha — it carries a
-   baked white rectangle).
+6. Inverted mark on the dark canvas, and the ring is `#5fbdb4` — never the `#0026FF` that the
+   upstream `_ring` files ship with.
 7. `kwp` is lowercase everywhere it appears, including alt text.
 8. No italics. No enclosing quotation marks — marks around quoted *terms* are fine, and single.
    No third accent element beyond the opening mark and the ring.
