@@ -19,7 +19,7 @@ No renderer ships in this repo on purpose — `tools/` holds the verifier and th
 math it needs, and stays that size.
 
 The two `@font-face` rules point at `../../fonts/`, and the footer mark at
-`../../logos/kwp_logo_long.png`. Both are relative, so the file only renders
+`../../logos/logo_long.svg`. Both are relative, so the file only renders
 correctly from inside this directory.
 
 ## The letter PDF

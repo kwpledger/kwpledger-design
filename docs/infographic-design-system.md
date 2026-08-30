@@ -385,15 +385,14 @@ The mark is chosen by **register**, and the choice is not optional. The inverted
 
 | Register | Long mark (footer lockup) | Short mark (corner badge) |
 | :-- | :-- | :-- |
-| Light canvas | `kwp_logo_long.png` | `kwp_logo_short.svg` |
-| Dark canvas | `kwp_logo_long_inverted.png` | `kwp_logo_short_inverted_navy.png` |
+| Light canvas | `logo_long.svg` | `logo_short_ring.svg` (or `logo_short.svg`, no ring) |
+| Dark canvas | `logo_long_inv.svg` | `logo_short_ring_inv.svg` (or `logo_short_inv.svg`, no ring) |
 
-Two files that must **not** go on this canvas:
+All eight marks are **true vectors and transparent**, as of the 2026-08-30 rework. The two traps this section used to list — a file with no alpha that dropped a white box on a dark canvas, and an `.svg` that was really a base64 raster — are both gone with the raster set. `logos/PROVENANCE.md` keeps them on the record as superseded; do not reach for them.
 
-- `kwp_logo_short_blue.png` — no alpha channel, so it carries a baked white rectangle. On the dark register that is a white box in your footer.
-- `kwp_logo_short_green.svg` — the extension lies. It is two 496×598 PNGs base64-embedded in an SVG wrapper, and it scales exactly as badly as a 496px raster.
+There is now **a true vector of the long signature**, which there was not before. The old constraint — "the long mark softens past roughly 500px wide, so it is a footer element and never a hero element" — was a resolution limit and it is lifted. Keeping the long mark in the footer is now a *composition* decision, which is a better reason to keep it than the one it replaces.
 
-`kwp_logo_short.svg` is the only true vector in the set, and there is **no true vector of the long signature at all** — the largest is 525×300. That is ample at footer size and will soften past roughly 500px wide, so the long mark is a footer element and never a hero element.
+One new trap, and it is the only one: **the `_ring` files ship with `stroke="#0026FF"`**, an upstream placeholder at chroma 0.300 — 3.3× the system's ceiling and the loudest value that has ever touched this design system. Set the ring deliberately or use a no-ring mark. Never place a `_ring` file at the hex it arrives with.
 
 #### Ring color is not the register switch
 
@@ -403,7 +402,9 @@ Some variants carry a colored ring around the initials. The ring is intended to 
 
 So a dark-register graphic for a green-ringed channel uses the *inverted* mark with the *green* ring — not "the dark-mode version of the green one." Four combinations, not two.
 
-**Which ring color means what is undecided**, so v1 ships without ring semantics: use the plain long mark, or the navy ring if you want the badge form. Navy (`#202a44`, chroma 0.050) is also the only ring under the system's 0.091 chroma ceiling — the rest run 1.3× to 3.3× over it, with bright blue `#0026ff` the worst. That is a conversation about SPEC §10, not something this document settles.
+**Which ring color means what is undecided**, so v1 ships without ring semantics: use the plain long mark, or the navy ring if you want the badge form. Navy (`#202a44`, chroma 0.050) is under the system's 0.091 chroma ceiling, and the brand accent `#5fbdb4` sits exactly at it; every other ring that has been used runs 1.3× to 3.3× over, with the upstream default `#0026ff` the worst. That is a conversation about SPEC §10, not something this document settles.
+
+**Navy is the light-canvas default only.** On a dark canvas it measures 1.30:1 and vanishes — the quote-post format's §4.2 works through why, and lands on the accent instead. A dark-register graphic that wants a ring should read that table rather than inherit this default.
 
 ---
 
@@ -671,7 +672,7 @@ Run this before every export. It is ordered by how often each one actually fails
 8. **If there is a return path**, its label is present, unrotated, and its arrowhead points at step 1.
 9. **Module titles are grammatically parallel.**
 10. **Every receipt is real.** No invented numbers, filenames, or screenshots.
-11. **`kwp` is lowercase, and the mark matches the register** — dark mark on a light canvas, inverted on dark. No generated signature mark. No `kwp_logo_short_blue.png` (baked white box).
+11. **`kwp` is lowercase, and the mark matches the register** — dark mark on a light canvas, inverted on dark. No generated signature mark. No superseded raster from `logos/`, and no `_ring` file left at the `#0026FF` it ships with.
 12. **One register.** No light values on a dark canvas.
 13. **Squint at it at 400px wide.** The headline and the module count should survive. If they don't, nothing else on the canvas matters.
 14. Exported at exactly **1080×1350**.

@@ -79,7 +79,8 @@ Edit → `npm run verify` passes → update SPEC.md and regenerate the PALETTE.m
 
 - No credentials, tokens, or `.env` contents in tracked files.
 - No day-job specifics. This repo is public.
-- **Never redraw the signature marks** in `logos/`. They are traced from Kevin's handwritten signature. Recolor if needed; do not vectorize, retrace, or regenerate the glyph. `logos/PROVENANCE.md` is the authority — which file is a real vector, which register each mark belongs on, and why.
+- **Never redraw the signature marks** in `logos/`. They are traced from Kevin's handwritten signature. Recolor if needed; do not vectorize, retrace, or regenerate the glyph. `logos/PROVENANCE.md` is the authority — which register each mark belongs on, what is superseded, and why.
+- **`logos/logo_*.svg` are vendored, not authored here.** They are byte-identical copies from `kwpledger/logos-and-wordmarks`, checksummed in PROVENANCE. Do not edit one. Artwork changes happen upstream and get re-vendored; the only legal local file is a **ring-color** recolor, and only the ring.
 - **Kevin's initials are lowercase — `kwp`, never `KWP`.** The signature monogram is the reason.
 - Font licenses travel with the font files. If you move `fonts/`, move `OFL-NOTICE.txt` with it.
 

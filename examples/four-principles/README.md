@@ -28,7 +28,7 @@ here: its viewport comes out 87px shorter than `--window-size`, which silently
 crops the footer mark.
 
 The two `@font-face` rules point at `../../fonts/`, and the footer mark at
-`../../logos/kwp_logo_long.png`. Both are relative, so the file only renders
+`../../logos/logo_long.svg`. Both are relative, so the file only renders
 correctly from inside this directory.
 
 ## Preflight (§9)
@@ -46,8 +46,9 @@ Measured in the render, not estimated:
   Both faces are vector: Lora as subset TrueType (Type0), Hanken Grotesk as Type3
   glyph procedures — Chrome converts variable-font instances that way. The Type3
   procs are pure path operators (`m`/`l`/`c`/`h`/`f`), no bitmap glyphs, so they
-  print at printer resolution. The only raster on the page is the signature mark,
-  525×300px placed at 1.33×0.76in — 396 dpi.
+  print at printer resolution. **There are no rasters on the page at all** — the
+  signature mark used to be a 525×300 PNG placed at 1.33×0.76in (396 dpi) and is
+  now `logo_long.svg`. The PDF carries zero image XObjects, down from two.
 - **Printed and confirmed** on an HP Color LaserJet MFP M477fdw, 2026-08-21. The
   pastel slot tints hold and the Type3 body type renders clean, so that question
   is settled empirically, not just structurally.

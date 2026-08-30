@@ -9,7 +9,7 @@ two `REPLACE ME` blocks, set the tier class, re-render.
 | Canvas | **1400×1000**, 7:5 (§0.1) |
 | Register | **Dark** (§3) |
 | Tier | `t-xl` — 20 words (§2.2) |
-| Badge | `kwp_logo_short_inverted_teal.png`, 104px tall, bottom right (§4) |
+| Badge | `logo_short_ring_inv_teal.svg`, 104px tall, bottom right (§4) |
 | Exports | `self-quote.jpg` 1400×1000 q92 |
 
 ## Using it
@@ -47,6 +47,10 @@ relative, so **the file only renders correctly from inside this directory.** Ren
 copy elsewhere, the badge silently becomes alt text on a dark background — which is exactly why
 preflight item 5 checks `naturalWidth > 0` rather than trusting the eye.
 
+The badge is an SVG and the glyph relies on `paint-order="stroke fill"`. **Render it in a real
+browser.** cairosvg ignores `paint-order` without erroring and returns a visibly thinner mark —
+see the tooling note in `logos/PROVENANCE.md`.
+
 ## Preflight (§6)
 
 Measured in the render, not estimated:
@@ -58,8 +62,10 @@ Measured in the render, not estimated:
   `t-m` at 55 words: 7 lines, 446px, 76px clear above and 113px below. 81 words at `t-s` still
   clears with 76px and 114px, which is where the "editorial, not geometric" claim in §2.2
   comes from.
-- Both faces report `loaded`. Badge `naturalWidth` 248, placed at 104px tall / 86.3px wide,
-  flush to the 70px right and bottom margins.
+- Both faces report `loaded`. Badge `naturalWidth` 496, placed at 104px tall / 86.3px wide,
+  flush to the 70px right and bottom margins. The rendered box is unchanged from the raster the
+  card was authored against — both files are the same 0.829 aspect — and only the ink inside it
+  moved, from a 73×86 box to 71×82.
 - Badge ring is `--accent`, measured 8.31:1 against the canvas and 0.091 chroma — legible, and
   at the ceiling rather than over it (§4.2).
 - Nothing read as a sentence below 30px (§2.1). The two attribution lines are 36px and 30px.
@@ -78,9 +84,11 @@ implies but does not generalize.
 **A 2px rule where other formats use 1px.** Same reason: 1px at 1400 canvas width is 0.40 screen
 px. The infographic's §2.1 sets the principle; this applies it (§3.1).
 
-**The badge is placed by height with `width: auto`.** `logos/PROVENANCE.md` forbids depending on
-the marks' current geometry while Kevin reworks them. Height-only sizing is how this layout
-survives that.
+**The badge is placed by height with `width: auto`.** This used to be compliance with a
+`logos/PROVENANCE.md` rule that forbade depending on the marks' geometry at all while Kevin
+reworked them. **That rework has landed** and the geometry is now fixed and documented, so the
+deviation stands on its own reason: the long and short marks have different aspect ratios, and a
+series that pins width breaks the day it switches which mark it uses.
 
 **The canvas uses `--surface`, not `--surface-card`.** The infographic's move #1 is "a frame,
 not a bleed," and this card bleeds. A quote card is one object already; framing an object that
@@ -90,17 +98,25 @@ only division on the canvas.
 ## The ring is not the format's default, and that is deliberate
 
 The infographic format's §5.8 sends a dark canvas to the **navy** ring. This card does not, and
-the reason is measured rather than aesthetic: navy is 1.30:1 against `#0a1420` and renders as a
-~1.6px stroke at badge size, so it is not a subtle ring, it is an absent one. On a light canvas
-the same default is correct.
+the reason is measured rather than aesthetic: navy is 1.30:1 against `#0a1420`, so it is not a
+subtle ring, it is an absent one. On a light canvas the same default is correct.
+
+The reworked vector ring is heavier than the raster's — 2.7px at 104px tall against ~1.6px — which
+helps every ring color and rescues none of the invisible ones. Contrast is the binding
+constraint, not stroke weight.
 
 Every other shipped ring is either invisible too (deep blue, 1.24:1) or 1.3×–2.6× over the 0.091
 chroma ceiling, and three of those borrow a status hue — red sits exactly on danger at h27. The
 brand accent is the only ring that is legible here *and* inside the system, at 8.31:1 and 0.091.
 
-`logos/kwp_logo_short_inverted_teal.png` is a **ring-only recolor** of the navy file: same
-dimensions, alpha channel byte-identical, zero glyph pixels changed, 3,075 ring pixels remapped.
-Full note in [`logos/PROVENANCE.md`](../../logos/PROVENANCE.md) under *Derived variants*.
+`logos/logo_short_ring_inv_teal.svg` is a **ring-only recolor** of `logo_short_ring_inv.svg` —
+one `stroke` attribute on the `<circle>`, the two files otherwise identical byte for byte. The
+glyph lives in a different XML element, so the recolor cannot reach it; the pixel-by-pixel
+verification its raster predecessor needed is now structural. Full note in
+[`logos/PROVENANCE.md`](../../logos/PROVENANCE.md) under *Derived variants*.
+
+**Never place a `_ring` file at the `#0026FF` it ships with** — that is upstream's placeholder,
+chroma 0.300, 3.3× the ceiling.
 
 **The teal ring is provisional.** Kevin's decision, 2026-08-29: whether teal stands for the parent
 identity stays open, and the ring is teal here because it pairs with the opening mark, not because
