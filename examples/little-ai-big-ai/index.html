@@ -1,0 +1,190 @@
+<meta charset="utf-8">
+<title>Little AI vs. Big AI — 1080×1350</title>
+<style>
+  @font-face { font-family:'Lora'; src:url('../../fonts/lora-latin.woff2') format('woff2');
+               font-weight:600; font-style:normal; }
+  @font-face { font-family:'Hanken Grotesk'; src:url('../../fonts/hanken-grotesk-latin.woff2') format('woff2');
+               font-weight:100 900; font-style:normal; }
+
+  :root{
+    /* ---- LIGHT REGISTER. One register per canvas — never mix. §4.1 ---- */
+    --surface:#fbfaf8; --surface-card:#ffffff;
+    --fg:#1a1917; --fg-muted:#5c5a57;
+    --accent:#0d5c58; --border:#e3e0da;
+
+    --data-1-surface:#fbd3cf; --data-1-fg:#5f3531; --data-1-border:#eaaba5;
+    --data-2-surface:#f6d8c0; --data-2-fg:#5a3a1e; --data-2-border:#e2b38d;
+
+    --font-display:'Lora',Georgia,'Iowan Old Style',Palatino,serif;
+    --font-body:'Hanken Grotesk',system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+
+    --step--1:19px; --step-0:23px; --step-1:28px;
+    --step-2:36px;  --step-5:72px;
+
+    --space-2xs:10px; --space-xs:15px; --space-s:20px;
+    --space-m:30px;   --space-l:50px;
+
+    --radius-card:14px; --radius-chip:8px;
+  }
+
+  *{box-sizing:border-box; margin:0;}
+  body{margin:0; background:#555;}
+  /* The #555 body is a viewing backdrop, not part of the graphic. Handout prints on white. */
+  @media print{ body{background:#fff;} }
+
+  .canvas{
+    width:1080px; height:1350px;
+    padding:var(--space-l);
+    background:var(--surface); color:var(--fg);
+    font-family:var(--font-body); font-size:var(--step-0);
+    display:flex; flex-direction:column;
+    overflow:hidden;
+  }
+
+  /* ---- Header §5.1 ---- */
+  .eyebrow{font-size:var(--step--1); font-weight:600; letter-spacing:.10em;
+           line-height:1.2; text-transform:uppercase; color:var(--accent);}
+  h1{font-family:var(--font-display); font-weight:600;
+     font-size:var(--step-5); line-height:1.05; margin-top:var(--space-2xs);}
+  .subhead{font-size:var(--step-1); line-height:1.35;
+           color:var(--fg-muted); margin-top:var(--space-xs);}
+  hr{border:0; border-top:1px solid var(--border); margin:var(--space-m) 0;}
+
+  /* ---- Body: two-column peer comparison — declared deviation, see README ---- */
+  .body{flex:1; display:grid; grid-template-rows:1fr auto; gap:var(--space-s);}
+  .pair{display:grid; grid-template-columns:1fr 1fr; gap:var(--space-s);}
+
+  .module{
+    background:var(--surface-card);
+    border:2px solid var(--edge);
+    border-radius:var(--radius-card);
+    padding:var(--space-s);
+    display:flex; flex-direction:column;
+  }
+  .chip{
+    align-self:start;
+    background:var(--tint); color:var(--ink);
+    border:1px solid var(--edge); border-radius:var(--radius-chip);
+    padding:6px 14px; font-size:var(--step--1); font-weight:600;
+    letter-spacing:.10em; text-transform:uppercase; line-height:1;
+  }
+  .module h2{
+    font-family:var(--font-display); font-weight:600;
+    font-size:var(--step-2); line-height:1.15; color:var(--ink);
+    margin-top:var(--space-xs);
+  }
+  .kicker{font-weight:600; line-height:1.40; margin-top:6px;}
+  .module ul{list-style:none; margin-top:var(--space-s);
+             display:flex; flex-direction:column; gap:var(--space-2xs);}
+  .module li{line-height:1.40; padding-left:20px; position:relative;}
+  .module li::before{content:''; position:absolute; left:0; top:.55em;
+                     width:6px; height:6px; border-radius:50%; background:var(--edge);}
+
+  /* The tell — the same question asked of both columns, answered differently. */
+  .tell{
+    margin-top:var(--space-s); padding-top:var(--space-xs);
+    border-top:1px solid var(--border);
+  }
+  .tell .tag{display:block; color:var(--ink);
+             font-size:var(--step--1); font-weight:600;
+             letter-spacing:.10em; text-transform:uppercase; line-height:1.2;}
+  .tell .val{display:block; margin-top:6px; font-weight:600;
+             color:var(--fg); line-height:1.40;}
+
+  .egs{margin-top:var(--space-s);}
+  .egs .tag{display:block; color:var(--ink);
+            font-size:var(--step--1); font-weight:600;
+            letter-spacing:.10em; text-transform:uppercase; line-height:1.2;}
+  .egs ul{margin-top:var(--space-xs);}
+
+  /* One slot per module, taken in order — §4.3 */
+  .s1{--tint:var(--data-1-surface); --ink:var(--data-1-fg); --edge:var(--data-1-border);}
+  .s2{--tint:var(--data-2-surface); --ink:var(--data-2-fg); --edge:var(--data-2-border);}
+
+  /* Neutral informational callout: --accent on a normal card — §4.6 */
+  .note{
+    background:var(--surface-card); border:1px solid var(--border);
+    border-radius:var(--radius-card); padding:var(--space-xs) var(--space-m);
+  }
+  .note .tag{display:block; color:var(--accent);
+             font-size:var(--step--1); font-weight:600;
+             letter-spacing:.10em; text-transform:uppercase; line-height:1.2;}
+  .note p{font-size:var(--step-1); line-height:1.35; margin-top:var(--space-2xs);}
+
+  /* ---- Footer §5.8 ---- */
+  footer{
+    border-top:1px solid var(--border);
+    margin-top:var(--space-m); padding-top:var(--space-s);
+    display:flex; justify-content:space-between; align-items:center;
+    font-size:var(--step--1);
+  }
+  /* Long mark = the full signature, reads "kwpledger". Placed as-is, never redrawn.
+     Vector, vendored from kwpledger/logos-and-wordmarks. Light canvas -> the black mark. */
+  footer .mark{height:110px; width:auto; display:block;}
+  footer .who{color:var(--fg-muted); letter-spacing:.10em; text-transform:uppercase;
+              font-weight:600;}
+</style>
+
+<div class="canvas">
+  <div class="eyebrow">Know which one you're using</div>
+  <h1>Little AI vs. Big AI</h1>
+  <div class="subhead">Two kinds of AI, and one difference that decides who is accountable for the output.</div>
+  <hr>
+
+  <div class="body">
+    <div class="pair">
+      <article class="module s1">
+        <span class="chip">Traditional</span>
+        <h2>Little AI</h2>
+        <p class="kicker">Rules-based and deterministic</p>
+        <ul>
+          <li>Follows predefined rules and conditions</li>
+          <li>Produces predictable, repeatable results</li>
+        </ul>
+        <div class="tell">
+          <span class="tag">Same input</span>
+          <span class="val">Same output, every time</span>
+        </div>
+        <div class="egs">
+          <span class="tag">Examples</span>
+          <ul>
+            <li>A phone tree routing calls by the button pressed</li>
+            <li>A Power Automate flow triggering actions on conditions</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="module s2">
+        <span class="chip">Modern</span>
+        <h2>Big AI</h2>
+        <p class="kicker">Generative and probabilistic</p>
+        <ul>
+          <li>Produces output from learned patterns, not fixed rules</li>
+          <li>Handles ambiguous or open-ended requests</li>
+        </ul>
+        <div class="tell">
+          <span class="tag">Same input</span>
+          <span class="val">Potentially a different output</span>
+        </div>
+        <div class="egs">
+          <span class="tag">Examples</span>
+          <ul>
+            <li>Claude answering a question in natural language</li>
+            <li>An AI synthesizing documents into a first draft</li>
+          </ul>
+        </div>
+      </article>
+    </div>
+
+    <div class="note">
+      <span class="tag">Why it matters</span>
+      <p>Little AI executes decisions already encoded in the system. Big AI generates
+         new output &mdash; so people must judge, verify, and remain accountable for it.</p>
+    </div>
+  </div>
+
+  <footer>
+    <img class="mark" src="../../logos/logo_long.svg" alt="kwpledger">
+    <span class="who">AI implementation in regulated environments</span>
+  </footer>
+</div>
