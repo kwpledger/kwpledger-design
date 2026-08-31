@@ -10,7 +10,7 @@ rebuilt in the kwp system so it stops looking like a screenshot of something els
 | Register | **Light** (§4.2). Same register as `policy-to-practice` and `four-principles`; the series stays in it. |
 | Slots | `--data-1`, `--data-2`, in order (§4.3) |
 | Card mode | Neutral (§4.4) — chip carries the tint |
-| Word count | **137** (§7.4 budget 120–180) |
+| Word count | **139** (§7.4 budget 120–180) |
 | Exports | `little-ai-big-ai.jpg` 1080×1350 q92 · `little-ai-big-ai-letter.pdf` US Letter |
 
 ## Rendering it
@@ -34,11 +34,11 @@ Measured in the render, not estimated:
 
 - Canvas 1080×1350, `scrollHeight − height = 0` and `scrollWidth − width = 0`.
   Nothing overflows. Exported JPG confirmed at exactly 1080×1350.
-- Word count 137, counted from the markup with tags stripped.
+- Word count 139, counted from the markup with tags stripped.
 - No text read as a sentence below 23px. The chips, the eyebrow, the three
   section labels and the footer line are the only step--1 elements.
 - Slots 1–2, in order, no gaps, no repeats. No status colors anywhere — see below.
-- Grayscale: both modules still identified by their `TRADITIONAL` / `MODERN` chip and their title,
+- Grayscale: both modules still identified by their `TYPE A` / `TYPE B` chip and their title,
   and the two `SAME INPUT` answers differ in words, not only in tint.
 - Squint at 400px wide: the headline and the two-column shape both survive.
 - Both cards render at exactly 630.8px, and all eight bullets wrap to exactly two
@@ -69,20 +69,37 @@ exactly wrong for this content: these are peer categories, not outcomes, and
 categorical slots 1 and 2 and the comparison-block geometry, which is the
 combination §6 does not currently name. Additive; no shipped token redefined.
 
-**Chips carry a category word, not an ordinal.** §5.2 specifies that a chip
-"contains the ordinal and nothing else" — `STEP 3`, `LAYER 5`. That rule serves
-an enumerated spine, where the ordinal is the reader's position in a sequence.
-There is no sequence here, and `KIND 1` / `KIND 2` — the first draft of this
-graphic — labelled the modules without telling the reader anything. `TRADITIONAL`
-and `MODERN` are one word each, well inside the three-word cap, and they are what
-makes §4.7's grayscale requirement do real work rather than merely pass it.
+**Chips read `TYPE A` / `TYPE B`, not the `STEP n` form §5.2 shows.** Within
+the letter of the rule — an ordinal, one word plus a letter, well under the
+three-word cap — but worth recording how it got here, because two other
+pairings were tried and rejected and the reasons generalize.
 
-The tradeoff, recorded because it is a live one: chronology reads as progress,
-so `TRADITIONAL` can be heard as "the one you should be moving off." That is not
-the claim — the closing band argues Big AI is the one that needs the judgment.
-The pairing was chosen anyway, because it is the framing the intended audience
-already uses, and because the columns are otherwise symmetrical enough to keep
-them reading as peers. Reverting to ordinals is a two-word edit if it lands wrong.
+`KIND 1` / `KIND 2` was first. Correct and inert, and it reads as Thing 1 and
+Thing 2 to anyone who has been near a Dr. Seuss book.
+
+`TRADITIONAL` / `MODERN` was second, and it is the instructive failure. It made
+the chip carry meaning, which felt like an upgrade, but the meaning it carried
+was chronology, and chronology reads as progress: *traditional* becomes the one
+you should be moving off. That is not the claim. Part of the argument this
+graphic supports is that lower-tech is sometimes the better tech — a
+deterministic system you can audit beats a probabilistic one you cannot, for
+plenty of real tasks — and a chip implying otherwise argues against its own
+canvas.
+
+`TYPE 1` / `TYPE 2` was considered and rejected outright. "Type 1 and Type 2
+processing" are the terms of art in dual-process theory, and they map backwards
+onto this content: Type 1 processing is fast, associative and non-symbolic,
+which is Big AI, while Type 2 is slow and rule-following, which is Little AI.
+A reader who knows that literature reads the chips inverted. Type I / Type II
+error is separately live vocabulary for a risk-and-safety audience. Letters
+carry no such freight.
+
+The conclusion worth keeping: **a neutral chip is correct in this layout, not a
+missed opportunity.** The chip sits directly above the module name, and the
+kicker one line below it — "Rules-based and deterministic" — already carries the
+meaning. A chip that also carries meaning competes with the line beneath it.
+This is what §5.2's ordinal rule is protecting, and it holds even where the
+ordinal is a letter rather than a number.
 
 **The `tell` row is a new module internal.** A hairline `--border` rule, a
 `SAME INPUT` label at step--1 in `--data-n-fg`, and the answer at step-0 600 in
