@@ -1,0 +1,53 @@
+<!-- @dsCard group="Spacing" name="Spacing scale" subtitle="Seven steps derived from 4px, plus the two width limits" -->
+<meta charset="utf-8">
+<title>Spacing — kwp design</title>
+<link rel="stylesheet" href="../_lib/card.css">
+
+<div class="card-head">
+  <h1>Spacing</h1>
+  <p>Seven steps derived from a 4px base. Expressed in <code>rem</code>, so the whole scale
+     responds to the reader's browser font size rather than overriding it.</p>
+</div>
+
+<div class="rule">
+  <strong>Pick a step; never type a pixel value.</strong> The scale is coarse on purpose — seven
+  options force a decision about hierarchy instead of nudging by twos. If nothing fits, the layout
+  is usually the problem, not the scale.
+</div>
+
+<section>
+  <h2>The steps</h2>
+  <div class="stack" style="max-width:var(--page)">
+    <div style="display:flex; align-items:center; gap:var(--space-s)"><div style="width:var(--space-2xs); height:28px; background:var(--accent); flex:none"></div><code class="token">--space-2xs</code><span class="role">0.5rem · 8px</span></div>
+    <div style="display:flex; align-items:center; gap:var(--space-s)"><div style="width:var(--space-xs); height:28px; background:var(--accent); flex:none"></div><code class="token">--space-xs</code><span class="role">0.75rem · 12px</span></div>
+    <div style="display:flex; align-items:center; gap:var(--space-s)"><div style="width:var(--space-s); height:28px; background:var(--accent); flex:none"></div><code class="token">--space-s</code><span class="role">1rem · 16px</span></div>
+    <div style="display:flex; align-items:center; gap:var(--space-s)"><div style="width:var(--space-m); height:28px; background:var(--accent); flex:none"></div><code class="token">--space-m</code><span class="role">1.5rem · 24px</span></div>
+    <div style="display:flex; align-items:center; gap:var(--space-s)"><div style="width:var(--space-l); height:28px; background:var(--accent); flex:none"></div><code class="token">--space-l</code><span class="role">2.5rem · 40px</span></div>
+    <div style="display:flex; align-items:center; gap:var(--space-s)"><div style="width:var(--space-xl); height:28px; background:var(--accent); flex:none"></div><code class="token">--space-xl</code><span class="role">4rem · 64px</span></div>
+    <div style="display:flex; align-items:center; gap:var(--space-s)"><div style="width:var(--space-2xl); height:28px; background:var(--accent); flex:none"></div><code class="token">--space-2xl</code><span class="role">6rem · 96px</span></div>
+  </div>
+</section>
+
+<section>
+  <h2>Width limits</h2>
+  <p class="note">Two, and the second is exactly twice the first.</p>
+  <div class="stack">
+    <div style="max-width:var(--measure); padding:var(--space-xs); background:var(--surface-card); border:1px solid var(--border); border-radius:6px">
+      <code class="token">--measure</code> <span class="role">34rem — body copy</span></div>
+    <div style="max-width:var(--page); padding:var(--space-xs); background:var(--surface-card); border:1px solid var(--border); border-radius:6px">
+      <code class="token">--page</code> <span class="role">68rem — full-width layout</span></div>
+  </div>
+</section>
+
+<section>
+  <h2>Rhythm in practice</h2>
+  <p class="note">Related things share the smaller step; a boundary between ideas takes the larger
+     one. Proximity is the grouping signal — a heading close to its paragraph and far from the
+     previous one needs no rule, box, or color to read as attached.</p>
+  <div style="max-width:var(--measure); padding:var(--space-m); background:var(--surface-card); border:1px solid var(--border); border-radius:8px">
+    <h3 style="margin:0 0 var(--space-2xs); font-family:var(--font-display); font-weight:var(--fw-display); font-size:var(--step-1)">First idea</h3>
+    <p style="margin:0">Attached to its heading by <code>--space-2xs</code>.</p>
+    <h3 style="margin:var(--space-l) 0 var(--space-2xs); font-family:var(--font-display); font-weight:var(--fw-display); font-size:var(--step-1)">Second idea</h3>
+    <p style="margin:0">Separated from the block above by <code>--space-l</code>.</p>
+  </div>
+</section>

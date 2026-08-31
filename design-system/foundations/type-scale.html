@@ -1,0 +1,64 @@
+<!-- @dsCard group="Type" name="Type scale" subtitle="Lora 600 display, Hanken Grotesk variable body, six fluid steps" -->
+<meta charset="utf-8">
+<title>Type scale — kwp design</title>
+<link rel="stylesheet" href="../_lib/card.css">
+
+<div class="card-head">
+  <h1>Type</h1>
+  <p>The pairing settled for both YouTube channels, which is what makes every surface read as the
+     same family. Latin subset only, ~56KB total — self-hosted, so no third-party request and no
+     dependency on an external host staying up.</p>
+</div>
+
+<div class="rule">
+  <strong>Lora ships at weight 600 only.</strong> It is a static face; Hanken Grotesk is variable
+  (100–900). Ask Lora for any other weight and the browser fakes it — a synthesized bold that does
+  not match the real one. That is what <code>--fw-display</code> exists to prevent: use
+  <code>var(--fw-display)</code>, never a literal.
+</div>
+
+<section>
+  <h2>The two faces</h2>
+  <div class="stack" style="max-width:var(--page)">
+    <div style="padding:var(--space-s); background:var(--surface-card); border:1px solid var(--border); border-radius:8px">
+      <div style="font-family:var(--font-display); font-weight:var(--fw-display); font-size:var(--step-3); line-height:1.15">Lora — the display face</div>
+      <code class="token" style="margin-top:var(--space-2xs); color:var(--fg-muted)">--font-display · --fw-display: 600</code>
+      <p style="margin:var(--space-2xs) 0 0; color:var(--fg-muted); font-size:var(--step--1)">Headings, pull quotes, the signature moments. Serif, with enough contrast to carry a large canvas.</p>
+    </div>
+    <div style="padding:var(--space-s); background:var(--surface-card); border:1px solid var(--border); border-radius:8px">
+      <div style="font-size:var(--step-3); line-height:1.2">Hanken Grotesk — the body face</div>
+      <code class="token" style="margin-top:var(--space-2xs); color:var(--fg-muted)">--font-body · variable 100–900</code>
+      <p style="margin:var(--space-2xs) 0 0; color:var(--fg-muted); font-size:var(--step--1)">Everything else. Any weight in range is real, not synthesized.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Six fluid steps</h2>
+  <p class="note">Each step is a <code>clamp()</code> that interpolates on viewport width, so the
+     ladder holds its proportions from phone to desktop without breakpoints. Sizes below are live —
+     resize the frame and they move.</p>
+  <div class="stack" style="max-width:var(--page)">
+    <div><span style="font-family:var(--font-display); font-weight:var(--fw-display); font-size:var(--step-4); line-height:1.1">Step 4 — the page's one big thing</span><br><code class="token" style="color:var(--fg-muted)">--step-4</code></div>
+    <div><span style="font-family:var(--font-display); font-weight:var(--fw-display); font-size:var(--step-3); line-height:1.15">Step 3 — section heading</span><br><code class="token" style="color:var(--fg-muted)">--step-3</code></div>
+    <div><span style="font-family:var(--font-display); font-weight:var(--fw-display); font-size:var(--step-2); line-height:1.2">Step 2 — subsection</span><br><code class="token" style="color:var(--fg-muted)">--step-2</code></div>
+    <div><span style="font-size:var(--step-1); line-height:1.3">Step 1 — lead paragraph, standfirst</span><br><code class="token" style="color:var(--fg-muted)">--step-1</code></div>
+    <div><span style="font-size:var(--step-0); line-height:1.5">Step 0 — body text, the default</span><br><code class="token" style="color:var(--fg-muted)">--step-0</code></div>
+    <div><span style="font-size:var(--step--1); line-height:1.5">Step −1 — captions, metadata, fine print</span><br><code class="token" style="color:var(--fg-muted)">--step--1</code> <span style="color:var(--fg-muted)">(note the double hyphen)</span></div>
+  </div>
+</section>
+
+<section>
+  <h2>Measure</h2>
+  <p class="note"><code>--measure</code> is 34rem and <code>--page</code> is 68rem — exactly double.
+     Body copy sits at the measure; full-width layout sits at the page.</p>
+  <p style="max-width:var(--measure); padding:var(--space-s); background:var(--surface-card); border:1px solid var(--border); border-radius:8px; margin:0">
+     This paragraph is capped at <code>var(--measure)</code>. Line length is a legibility
+     constraint, not a stylistic preference — past roughly 75 characters the eye loses its place
+     returning to the next line, and the reader's comprehension drops before they notice anything
+     is wrong.</p>
+</section>
+
+<p class="register">Fonts are reached relatively here. In production <code>tokens/fonts.css</code>
+   points at <code>/fonts/</code> absolutely — copy the <code>fonts/</code> directory to your host's
+   served root, <code>OFL-NOTICE.txt</code> included. The license travels with the files.</p>

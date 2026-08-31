@@ -1,0 +1,58 @@
+<!-- @dsCard group="Formats" name="Infographic" subtitle="1080×1350 · light register · categorical slots in order" -->
+<meta charset="utf-8">
+<title>Infographic format — kwp design</title>
+<link rel="stylesheet" href="../_lib/card.css">
+<style>
+  .shots { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:var(--space-m); max-width:var(--page); }
+  .shot img { width:100%; height:auto; display:block; border:1px solid var(--border); border-radius:6px; }
+  .shot figcaption { margin-top:var(--space-2xs); color:var(--fg-muted); font-size:var(--step--1); }
+  .spec { border-collapse:collapse; max-width:var(--measure); font-size:var(--step--1); }
+  .spec td { padding:6px 0; border-bottom:1px solid var(--border); vertical-align:top; }
+  .spec td:first-child { padding-right:var(--space-s); color:var(--fg-muted); white-space:nowrap; }
+</style>
+
+<div class="card-head">
+  <h1>Infographic — 1080×1350</h1>
+  <p>A layer-3 consumer format. Portrait 4:5, sized for a social feed and for printing to US Letter
+     from the same source. Two examples ship as working references.</p>
+</div>
+
+<div class="rule">
+  <strong>Light register, pinned.</strong> A fixed-size export cannot respond to
+  <code>prefers-color-scheme</code>, so the canvas picks one register and hardcodes it. The series
+  stays in light — a graphic that switches register mid-series stops reading as a series.
+</div>
+
+<figure class="shots" style="margin:var(--space-m) 0 0">
+  <div class="shot"><img src="../../examples/four-principles/four-principles.jpg"
+       alt="Four Principles for Responsible AI Use — a four-row stacked infographic">
+    <figcaption><strong>Four Principles for Responsible AI Use</strong> — layout A, 4 rows, 132 words.
+      Handout for The Learning Guild's AI &amp; Learning Design Online Conference.</figcaption></div>
+  <div class="shot"><img src="../../examples/policy-to-practice/policy-to-practice.jpg"
+       alt="From AI Policy to AI Practice — a seven-row stacked infographic">
+    <figcaption><strong>From AI Policy to AI Practice</strong> — layout A, 7 rows, 109 words.
+      The first graphic built against the format.</figcaption></div>
+</figure>
+
+<section>
+  <h2>The spec in short</h2>
+  <table class="spec">
+    <tr><td>Canvas</td><td>1080×1350 (4:5). Exports JPG q92, plus a US Letter PDF.</td></tr>
+    <tr><td>Register</td><td>Light (§4.2), pinned for the whole series.</td></tr>
+    <tr><td>Layout</td><td>A — stack. Rows scale to content; 4 and 7 are both proven.</td></tr>
+    <tr><td>Slots</td><td><code>--data-1</code> onward, <strong>in order</strong> (§4.3). Never
+      skip or reorder to get a hue you prefer — the numbering is the contract.</td></tr>
+    <tr><td>Card mode</td><td>Neutral (§4.4) — the chip carries the tint, not the card.</td></tr>
+    <tr><td>Word budget</td><td>120–180 (§7.4). Both examples come in under it.</td></tr>
+    <tr><td>Footer</td><td><code>logo_long.svg</code>, the black mark — light canvas.</td></tr>
+  </table>
+</section>
+
+<div class="rule">
+  <strong>Every row carries a text label.</strong> The categorical tint reinforces the grouping; it
+  never carries it alone.
+</div>
+
+<p class="register">Authority: <code>docs/infographic-design-system.md</code>. Working sources:
+   <code>examples/four-principles/</code> and <code>examples/policy-to-practice/</code> — copy a
+   directory and swap the content rather than starting from a blank canvas.</p>

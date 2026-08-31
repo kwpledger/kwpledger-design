@@ -1,0 +1,71 @@
+<!-- @dsCard group="Colors" name="Categorical scale" subtitle="--data-1 … --data-8, three roles each, no inherent meaning" -->
+<meta charset="utf-8">
+<title>Categorical scale — kwp design</title>
+<link rel="stylesheet" href="../_lib/card.css">
+
+<div class="card-head">
+  <h1>Categorical scale</h1>
+  <p>Eight slots for equal-weight categories. Within a register every slot shares one lightness and
+     one chroma; only hue changes. Equal lightness in OKLCH means equal <em>perceived</em>
+     lightness, which is what makes eight colors read as peers rather than as a ranking.</p>
+</div>
+
+<div class="rule">
+  <strong>Slots are numbered, never named for their hue.</strong> <code>--data-1</code> is the first
+  slot, not "the red one". Consumers define domain tokens on top
+  (<code>--meal-breakfast: var(--data-1-surface)</code>); this system must never learn what a meal
+  type is.
+</div>
+
+<section>
+  <h2>Three values per slot</h2>
+  <p class="note">Categorized UI is built from pale filled cards with dark text on them, not from
+     text colors. Each slot ships the surface it is filled with, the foreground legible on that
+     fill, and the border that edges it. Ship one value and the consumer derives its own tint
+     immediately — the same drift by a slower route.</p>
+  <div class="grid" style="grid-template-columns:repeat(4,1fr)">
+    <div class="filled" style="background:var(--data-1-surface); color:var(--data-1-fg); border-color:var(--data-1-border)">
+      <span class="label">Slot 1</span><code class="token">--data-1-*</code></div>
+    <div class="filled" style="background:var(--data-2-surface); color:var(--data-2-fg); border-color:var(--data-2-border)">
+      <span class="label">Slot 2</span><code class="token">--data-2-*</code></div>
+    <div class="filled" style="background:var(--data-3-surface); color:var(--data-3-fg); border-color:var(--data-3-border)">
+      <span class="label">Slot 3</span><code class="token">--data-3-*</code></div>
+    <div class="filled" style="background:var(--data-4-surface); color:var(--data-4-fg); border-color:var(--data-4-border)">
+      <span class="label">Slot 4</span><code class="token">--data-4-*</code></div>
+    <div class="filled" style="background:var(--data-5-surface); color:var(--data-5-fg); border-color:var(--data-5-border)">
+      <span class="label">Slot 5</span><code class="token">--data-5-*</code></div>
+    <div class="filled" style="background:var(--data-6-surface); color:var(--data-6-fg); border-color:var(--data-6-border)">
+      <span class="label">Slot 6</span><code class="token">--data-6-*</code></div>
+    <div class="filled" style="background:var(--data-7-surface); color:var(--data-7-fg); border-color:var(--data-7-border)">
+      <span class="label">Slot 7</span><code class="token">--data-7-*</code></div>
+    <div class="filled" style="background:var(--data-8-surface); color:var(--data-8-fg); border-color:var(--data-8-border)">
+      <span class="label">Slot 8</span><code class="token">--data-8-*</code></div>
+  </div>
+</section>
+
+<section>
+  <h2>Color is reinforcement, never the sole carrier</h2>
+  <p class="note">Every color-coded axis carries a text label beside it. Accessibility requirement
+     and a documented rule — and it is what makes these values safe to change later.</p>
+  <div class="stack" style="max-width:var(--measure)">
+    <div class="filled" style="background:var(--data-3-surface); color:var(--data-3-fg); border-color:var(--data-3-border); min-height:0; display:flex; align-items:center; gap:var(--space-2xs)">
+      <span class="label">Correct —</span> the category is named in text, and the fill agrees with it.
+    </div>
+    <div style="padding:var(--space-xs); border:1px dashed var(--border); border-radius:6px; color:var(--fg-muted); font-size:var(--step--1)">
+      Wrong — a bare swatch with no label. Invisible to a colorblind reader, and unreadable to
+      anyone who has not been told the key.
+    </div>
+  </div>
+</section>
+
+<div class="rule" style="margin-top:var(--space-l)">
+  <strong>Hue placement avoids two bands.</strong> Nothing sits at 178–202 (brand teal, where
+  <code>--accent</code> lives) or 238–262 (the navy surface family). A category that looks like the
+  accent reads as interactive; one that looks like navy reads as chrome. Both are meaning
+  collisions. <strong>The count is eight and is not meant to grow.</strong>
+</div>
+
+<p class="register">This card renders in your current register. Peak chroma is 0.075, under the
+   0.091 ceiling. Both registers are authored independently in
+   <code>tokens/categorical.css</code> — the lightness that keeps eight hues in sRGB differs
+   between them.</p>

@@ -1,0 +1,100 @@
+<!-- @dsCard group="Brand" name="Signature marks" subtitle="Eight vendored SVGs — choose by register, size by height" -->
+<meta charset="utf-8">
+<title>Signature marks — kwp design</title>
+<link rel="stylesheet" href="../_lib/card.css">
+<style>
+  /* These two tiles pin palette values on purpose. The rule they demonstrate
+     is "black mark on a light ground, inverted mark on a dark ground", and
+     that needs BOTH grounds visible at once regardless of the viewer's
+     register. Reaching layer 1 is legal in a specimen of the palette; it
+     would not be legal in a component. */
+  .ground { padding:var(--space-m); display:flex; flex-direction:column; justify-content:center; border-radius:8px; border:1px solid var(--border); text-align:center; }
+  .ground.light { background:var(--paper-50); }
+  .ground.dark  { background:var(--navy-900); }
+  .ground img   { height:88px; width:auto; display:block; margin:0 auto var(--space-2xs); }
+  .ground .cap  { font-size:var(--step--1); white-space:nowrap; font-family:ui-monospace,Menlo,Consolas,monospace; }
+  .ground.light .cap { color:#5c5a57; }
+  .ground.dark  .cap { color:#9aabbb; }
+  .wrong { position:relative; }
+  .wrong::after {
+    content:"✕ never"; position:absolute; top:8px; right:10px;
+    font-size:var(--step--1); font-weight:600; color:var(--danger-fg);
+    background:var(--danger-surface); border:1px solid var(--danger-border);
+    border-radius:4px; padding:1px 7px;
+  }
+</style>
+
+<div class="card-head">
+  <h1>The signature marks</h1>
+  <p>Kevin's short-form signature, written in Sharpie on a 3×5 index card in 2013 and scanned. Eight
+     SVGs, vendored byte-identically from <code>kwpledger/logos-and-wordmarks</code>. Naming runs
+     broad to narrow: <code>logo_{long|short}[_ring][_inv].svg</code>.</p>
+</div>
+
+<div class="rule">
+  <strong>Never redraw, vectorize, retrace, auto-trace, "clean up," or regenerate the glyph.</strong>
+  The mark's authority comes from being an actual signature. A regenerated version is a drawing
+  <em>of</em> a signature — a different and much weaker thing, and the difference is visible to
+  people who cannot say why.
+</div>
+
+<section>
+  <h2>Choose by register. This is not optional.</h2>
+  <p class="note">Measured as the share of the mark's ink box reaching ≥3:1 against the ground.
+     The correct pairings measure <strong>17.7%</strong> and <strong>17.9%</strong>. The black mark on a
+     dark canvas measures <strong>0.0%</strong> and peaks at 1.1:1 — it does not read as faint, it
+     disappears. The inverted mark on light manages 6.1%, so it reads as a smudge rather than a
+     mark.</p>
+  <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr))">
+    <div class="ground light"><img src="../../logos/logo_long.svg" alt="kwpledger">
+      <span class="cap">logo_long.svg ✓</span></div>
+    <div class="ground dark"><img src="../../logos/logo_long_inv.svg" alt="kwpledger">
+      <span class="cap">logo_long_inv.svg ✓</span></div>
+    <div class="ground dark wrong"><img src="../../logos/logo_long.svg" alt="kwpledger">
+      <span class="cap">logo_long.svg · 0.0%</span></div>
+    <div class="ground light wrong"><img src="../../logos/logo_long_inv.svg" alt="kwpledger">
+      <span class="cap">logo_long_inv.svg · 6.1%</span></div>
+  </div>
+</section>
+
+<section>
+  <h2>The short mark, and the ring</h2>
+  <p class="note">The <code>_inv</code> suffix marks the <em>register</em>, not the ring — the two
+     axes are independent. The signature deliberately overflows the circle and the ring center sits
+     slightly up and right of the ink center. That is what makes the overflow read as intentional.
+     Do not recenter it.</p>
+  <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">
+    <div class="ground light"><img src="../../logos/logo_short.svg" alt="kwp" style="height:104px">
+      <span class="cap">logo_short.svg</span></div>
+    <div class="ground dark"><img src="../../logos/logo_short_inv.svg" alt="kwp" style="height:104px">
+      <span class="cap">logo_short_inv.svg</span></div>
+    <div class="ground dark"><img src="../../logos/logo_short_ring_inv_teal.svg" alt="kwp" style="height:104px">
+      <span class="cap">…_ring_inv_teal.svg</span></div>
+  </div>
+</section>
+
+<div class="rule">
+  <strong>The glyph is always black, or white with a black outline. Only the ring color varies.</strong>
+  Do not tint the initials to an accent, a channel hue, or anything else. And never ship a
+  <code>_ring</code> file at the <code>#0026FF</code> it arrives with — that is chroma 0.300,
+  <strong>3.3× this system's 0.091 ceiling</strong>, the loudest value anywhere near it. It is an
+  upstream placeholder meant to be swapped per channel, not a default.
+</div>
+
+<div class="rule">
+  <strong>Size by height; leave width to the file</strong> (<code>width: auto</code>). The long and
+  short marks have different aspects, so a series that pins width breaks the moment it switches
+  which mark it uses.
+</div>
+
+<section>
+  <h2>Two things that look like mistakes and are not</h2>
+  <p class="note">A small isolated stroke below the <code>g</code> and a 4×7px speck beside it —
+     artifacts of the pen lifting in 2013, and deliberate keeps. Each picks up its own outline in
+     the inverted variants; that is correct. Same for the ~2° of ring showing through the
+     <code>p</code>-descender gap in the circled black-ink files. Never clean any of it up.</p>
+</section>
+
+<p class="register"><code>logos/PROVENANCE.md</code> is the authority — checksums, geometry, and the
+   superseded raster set. The eight SVGs are vendored, not authored here; artwork changes happen
+   upstream and get re-vendored. The only legal local file is a ring-color recolor.</p>
