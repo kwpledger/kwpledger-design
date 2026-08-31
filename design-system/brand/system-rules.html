@@ -1,0 +1,78 @@
+<!-- @dsCard group="Brand" name="System rules" subtitle="The constraints every surface inherits — read before generating anything" -->
+<meta charset="utf-8">
+<title>System rules — kwp design</title>
+<link rel="stylesheet" href="../_lib/card.css">
+
+<div class="card-head">
+  <h1>System rules</h1>
+  <p>These are the constraints, not preferences. Each one has a failure mode attached, because a
+     rule whose consequence is invisible gets "tidied" by the next person through.</p>
+</div>
+
+<section>
+  <h2>Three layers, each reaching exactly one down</h2>
+  <p class="note">Palette → semantic → domain. A domain token maps onto a semantic or categorical
+     token, never past it to a raw value.</p>
+  <div class="stack" style="max-width:var(--measure)">
+    <div style="padding:var(--space-xs); background:var(--surface-card); border:1px solid var(--border); border-radius:6px">
+      <strong>1 · Palette</strong> — <code>--teal-700</code>, <code>--navy-900</code>.
+      Named for what they are. <em>Not for use in components.</em></div>
+    <div style="padding:var(--space-xs); background:var(--surface-card); border:1px solid var(--border); border-radius:6px">
+      <strong>2 · Semantic</strong> — <code>--accent</code>, <code>--surface</code>, <code>--fg</code>.
+      Named for their job. <em>This is the layer you consume.</em></div>
+    <div style="padding:var(--space-xs); background:var(--surface-card); border:1px solid var(--border); border-radius:6px">
+      <strong>3 · Domain</strong> — <code>--meal-breakfast</code>, <code>--macro-carbs</code>.
+      <em>Lives in the consuming repo, never in the design system.</em></div>
+  </div>
+  <div class="rule"><strong>Failure mode:</strong> the moment an app writes
+    <code>--meal-breakfast: var(--teal-700)</code>, the abstraction is dead and re-theming means
+    editing every consumer.</div>
+</section>
+
+<section>
+  <h2>Stately, not neon — chroma ceiling 0.091</h2>
+  <p class="note">Set by <code>--teal-300</code>, the most saturated brand color. Nothing exceeds it.
+     The categorical scale peaks at 0.075, status at 0.085 — status is authored <em>louder</em> than
+     categorical per role, which is what stops an error reading as an ordinary category at the same
+     hue. It is a number a script checks, not a matter of taste.</p>
+  <div class="rule"><strong>Failure mode:</strong> a value that clips out of sRGB is silently no
+    longer at its authored lightness, which breaks perceptual parity with no warning.</div>
+</section>
+
+<section>
+  <h2>Color is reinforcement, never the sole carrier of meaning</h2>
+  <p class="note">Every color-coded axis carries a text label. Accessibility requirement — and it is
+     what makes these values safe to change later.</p>
+</section>
+
+<section>
+  <h2>Author light and dark together</h2>
+  <p class="note">Neither register is derivable from the other: the lightness that keeps eight hues
+     inside sRGB differs between them. In light the binding hues are 25 and 274; in dark it is 216.
+     Retrofitting reliably breaks the equal-weight property in one register or the other.</p>
+  <div class="rule"><strong>Light/dark is user preference. Channel or section identity is not.</strong>
+    Never wire them to the same switch — dark mode must not make the portal silently wear a
+    channel's uniform.</div>
+</section>
+
+<section>
+  <h2>One register per fixed canvas</h2>
+  <p class="note">An exported PNG cannot respond to <code>prefers-color-scheme</code>, so a
+     1080×1350 infographic or a 1400×1000 quote card picks one register and pins it. That is why the
+     format examples hardcode their values while these foundation cards import the live tokens — the
+     difference is deliberate, not an inconsistency to clean up.</p>
+</section>
+
+<section>
+  <h2>Naming</h2>
+  <p class="note">Categorical slots are <strong>numbered, never named for their hue</strong>. Status
+     tokens are <strong>named for their meaning, never numbered</strong>. The inverse rule, for the
+     same reason: slots are reassignable, meanings are not.</p>
+  <p class="note"><strong>Kevin's initials are lowercase — <code>kwp</code>, never
+     <code>KWP</code>.</strong> The signature monogram is the reason. Not the domain, and not his
+     name in prose.</p>
+</section>
+
+<p class="register"><code>docs/SPEC.md</code> is the settled contract and the authority for all of
+   the above. Removing or renaming a token is a major bump; the categorical count, hue placement,
+   the layering contract, the chroma ceiling, and the text-label rule are not unilateral changes.</p>

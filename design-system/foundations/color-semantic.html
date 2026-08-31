@@ -1,0 +1,56 @@
+<!-- @dsCard group="Colors" name="Semantic color" subtitle="The seven roles components are allowed to use" -->
+<meta charset="utf-8">
+<title>Semantic color — kwp design</title>
+<link rel="stylesheet" href="../_lib/card.css">
+
+<div class="card-head">
+  <h1>Semantic color</h1>
+  <p>Layer 2. These seven roles are the <em>only</em> colors a component may reference. They remap
+     between light and dark; the palette underneath them does not.</p>
+</div>
+
+<div class="rule">
+  <strong>Never reference a palette value.</strong> <code>--teal-700</code> is layer 1 and is not
+  yours to use. Write <code>var(--accent)</code>. The moment a component names a raw color,
+  re-theming means editing every component.
+</div>
+
+<div class="grid" style="margin-top:var(--space-m)">
+  <div class="swatch"><div class="chip" style="background:var(--surface)"></div>
+    <div class="meta"><code class="token">--surface</code><span class="role">Page ground</span></div></div>
+  <div class="swatch"><div class="chip" style="background:var(--surface-card)"></div>
+    <div class="meta"><code class="token">--surface-card</code><span class="role">Raised panel</span></div></div>
+  <div class="swatch"><div class="chip" style="background:var(--fg)"></div>
+    <div class="meta"><code class="token">--fg</code><span class="role">Body text</span></div></div>
+  <div class="swatch"><div class="chip" style="background:var(--fg-muted)"></div>
+    <div class="meta"><code class="token">--fg-muted</code><span class="role">Secondary text</span></div></div>
+  <div class="swatch"><div class="chip" style="background:var(--accent)"></div>
+    <div class="meta"><code class="token">--accent</code><span class="role">Interactive</span></div></div>
+  <div class="swatch"><div class="chip" style="background:var(--accent-hover)"></div>
+    <div class="meta"><code class="token">--accent-hover</code><span class="role">Interactive, hovered</span></div></div>
+  <div class="swatch"><div class="chip" style="background:var(--border)"></div>
+    <div class="meta"><code class="token">--border</code><span class="role">Hairlines, edges</span></div></div>
+</div>
+
+<section>
+  <h2>In use</h2>
+  <p class="note">The roles are named for their job, not their appearance, which is what lets a
+     future section remap them on one wrapper without touching a component.</p>
+  <div style="padding:var(--space-m); background:var(--surface-card); border:1px solid var(--border); border-radius:8px; max-width:var(--measure)">
+    <h3 style="margin:0 0 var(--space-2xs); font-family:var(--font-display); font-weight:var(--fw-display); font-size:var(--step-2)">Most systems don't fit</h3>
+    <p style="margin:0 0 var(--space-s); color:var(--fg-muted)">Secondary text sits at <code>--fg-muted</code> and still clears AA against the card.</p>
+    <a href="#" style="color:var(--accent); font-weight:600; text-decoration:none; border-bottom:2px solid var(--accent)">An interactive thing</a>
+  </div>
+</section>
+
+<section>
+  <h2>The teal is the thread</h2>
+  <p class="note">Both YouTube channels accent in teal (KPLS <code>#4aa3ac</code>, MPSAS
+     <code>#2f8079</code>). The portal sits in the same family without copying either — that is what
+     makes it read as the parent rather than a third sibling. <code>--teal-300</code> at chroma
+     0.091 is the most saturated color in the system and sets the ceiling everything else stays
+     under.</p>
+</section>
+
+<p class="register">This card renders in your current register. Both registers are authored
+   independently in <code>tokens/base.css</code> — dark is not derived from light.</p>

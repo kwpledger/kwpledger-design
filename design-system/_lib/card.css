@@ -1,0 +1,165 @@
+/*
+ * kwp design — shared chrome for the Claude Design system cards.
+ *
+ * THIS FILE IS NOT A TOKEN FILE AND DEFINES NO DESIGN VALUES. It is the
+ * presentation of the gallery itself: the frame around a swatch, not the
+ * swatch. Every actual value on every card comes from tokens/ via the
+ * imports below. If you find yourself typing a hex code in here, stop —
+ * that is the drift this whole arrangement exists to prevent.
+ *
+ * WHY NOT tokens/index.css. index.css pulls fonts.css, whose @font-face
+ * src paths are absolute (/fonts/) by convention. Nothing serves a
+ * design-system project from a domain root, so those would 404. fonts.css
+ * documents this exact escape hatch: import the token files directly and
+ * declare the faces yourself. That is what happens below.
+ *
+ * PATHS ASSUME THE BUNDLE SITS AT THE REPO ROOT alongside tokens/, fonts/
+ * and logos/, and that the sync uploads all four preserving that layout.
+ * See design-system/README.md.
+ */
+
+@import url('../../tokens/base.css');
+@import url('../../tokens/categorical.css');
+@import url('../../tokens/status.css');
+
+/* Local faces — same files fonts.css points at, reached relatively. */
+@font-face {
+  font-family: 'Lora';
+  src: url('../../fonts/lora-latin.woff2') format('woff2');
+  font-weight: 600; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Hanken Grotesk';
+  src: url('../../fonts/hanken-grotesk-latin.woff2') format('woff2');
+  font-weight: 100 900; font-style: normal; font-display: swap;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: var(--space-l);
+  background: var(--surface);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.5;
+}
+
+/* ---- Card header. Every card says what it is and where it comes from. ---- */
+
+.card-head { margin-bottom: var(--space-m); max-width: var(--page); }
+
+.card-head h1 {
+  margin: 0 0 var(--space-2xs);
+  font-family: var(--font-display);
+  font-weight: var(--fw-display);
+  font-size: var(--step-3);
+  line-height: 1.15;
+}
+
+.card-head p {
+  margin: 0;
+  max-width: var(--measure);
+  color: var(--fg-muted);
+  font-size: var(--step--1);
+}
+
+.card-head p + p { margin-top: var(--space-2xs); }
+
+/* The rule a card is enforcing, stated on the card. These are load-bearing
+   constraints, not decoration — Design reads them as instructions. */
+.rule {
+  margin-top: var(--space-s);
+  padding: var(--space-xs) var(--space-s);
+  border-left: 3px solid var(--accent);
+  background: var(--surface-card);
+  font-size: var(--step--1);
+}
+
+.rule strong { font-weight: 600; }
+
+/* ---- Layout primitives ---- */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: var(--space-s);
+  max-width: var(--page);
+}
+
+.stack > * + * { margin-top: var(--space-s); }
+
+section { margin-top: var(--space-l); max-width: var(--page); }
+
+section > h2 {
+  margin: 0 0 var(--space-2xs);
+  font-family: var(--font-display);
+  font-weight: var(--fw-display);
+  font-size: var(--step-1);
+}
+
+section > h2 + .note { margin-top: 0; }
+
+.note {
+  margin: 0 0 var(--space-s);
+  max-width: var(--measure);
+  color: var(--fg-muted);
+  font-size: var(--step--1);
+}
+
+/* ---- Swatches ---- */
+
+.swatch {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--surface-card);
+}
+
+.swatch .chip { height: 76px; }
+
+.swatch .meta {
+  padding: var(--space-2xs) var(--space-xs) var(--space-xs);
+  border-top: 1px solid var(--border);
+}
+
+/* Token names are code and are set as code — they are exact strings a
+   consumer types, and a proportional face invites transcription errors. */
+code, .token {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 0.82em;
+}
+
+.token { display: block; word-break: break-all; }
+
+.role {
+  display: block;
+  margin-top: 2px;
+  color: var(--fg-muted);
+  font-size: var(--step--1);
+}
+
+/* A filled categorical/status card: the real shape these tokens ship for —
+   a pale fill, legible text on it, an edging border. Not a text color. */
+.filled {
+  padding: var(--space-xs);
+  border: 1px solid;
+  border-radius: 6px;
+  min-height: 92px;
+}
+
+.filled .label { font-weight: 600; font-size: var(--step--1); }
+.filled .token { margin-top: 4px; opacity: 0.85; }
+
+/* ---- Register notice ----
+   Cards render in the viewer's register. Saying so beats implying parity
+   that isn't visible on screen. */
+.register {
+  margin-top: var(--space-l);
+  padding-top: var(--space-s);
+  border-top: 1px solid var(--border);
+  max-width: var(--page);
+  color: var(--fg-muted);
+  font-size: var(--step--1);
+}

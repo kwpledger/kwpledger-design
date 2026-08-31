@@ -1,0 +1,64 @@
+<!-- @dsCard group="Colors" name="Status" subtitle="success / warning / danger — named for meaning, never numbered" -->
+<meta charset="utf-8">
+<title>Status — kwp design</title>
+<link rel="stylesheet" href="../_lib/card.css">
+
+<div class="card-head">
+  <h1>Status</h1>
+  <p>Three outcomes with fixed meanings: a form that saved, an input that will cause trouble, an
+     operation that failed. Same three roles per token as the categorical scale.</p>
+</div>
+
+<div class="rule">
+  <strong>Never map a status onto <code>--data-n</code>, or the reverse.</strong> Numbered slots are
+  reassignable by design; meanings are not. Point <code>--danger</code> at <code>--data-1</code> and
+  error becomes re-themeable to whatever hue slot 1 happens to be next year — an error state that
+  quietly stops looking like one.
+</div>
+
+<div class="grid" style="margin-top:var(--space-m)">
+  <div class="filled" style="background:var(--success-surface); color:var(--success-fg); border-color:var(--success-border)">
+    <span class="label">Saved</span><code class="token">--success-*</code></div>
+  <div class="filled" style="background:var(--warning-surface); color:var(--warning-fg); border-color:var(--warning-border)">
+    <span class="label">Check this</span><code class="token">--warning-*</code></div>
+  <div class="filled" style="background:var(--danger-surface); color:var(--danger-fg); border-color:var(--danger-border)">
+    <span class="label">Failed</span><code class="token">--danger-*</code></div>
+</div>
+
+<section>
+  <h2>Louder than categorical, on purpose</h2>
+  <p class="note">Danger sits at hue 27 against <code>--data-1</code> at 25; success at 150 against
+     <code>--data-4</code> at 150. The collision is deliberate — conventional hues are too deeply
+     learned to renumber for internal tidiness. They are separated by <em>chroma</em> instead: every
+     status token is authored at higher chroma than the categorical token in the same role, and the
+     verifier fails if that stops being true.</p>
+  <div class="grid">
+    <div class="filled" style="background:var(--data-1-surface); color:var(--data-1-fg); border-color:var(--data-1-border)">
+      <span class="label">Category</span><code class="token">--data-1-* · hue 25</code></div>
+    <div class="filled" style="background:var(--danger-surface); color:var(--danger-fg); border-color:var(--danger-border)">
+      <span class="label">Danger</span><code class="token">--danger-* · hue 27</code></div>
+    <div class="filled" style="background:var(--data-4-surface); color:var(--data-4-fg); border-color:var(--data-4-border)">
+      <span class="label">Category</span><code class="token">--data-4-* · hue 150</code></div>
+    <div class="filled" style="background:var(--success-surface); color:var(--success-fg); border-color:var(--success-border)">
+      <span class="label">Success</span><code class="token">--success-* · hue 150</code></div>
+  </div>
+  <p class="note" style="margin-top:var(--space-s)">A warning <em>should</em> out-shout a category:
+     grabbing attention is its whole job, where a categorical slot's job is to sit quietly and be
+     equal to its peers.</p>
+</section>
+
+<section>
+  <h2>There is no <code>--info</code></h2>
+  <p class="note">Informational messaging is the brand accent — use <code>--accent</code> and
+     <code>--surface-card</code>. A fourth status meaning "nothing has gone wrong" invites consumers
+     to reach for it as a second accent.</p>
+</section>
+
+<div class="rule" style="margin-top:var(--space-l)">
+  <strong>Status always carries text, usually an icon.</strong> An error indicated only by a red
+  border is invisible to a colorblind user and to anyone who has not learned the convention. This is
+  the layer where that rule matters most.
+</div>
+
+<p class="register">This card renders in your current register. Peak chroma is 0.085 — louder than
+   the categorical scale, still under the 0.091 brand ceiling.</p>
