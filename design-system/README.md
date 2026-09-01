@@ -1,7 +1,7 @@
 # design-system/ — the Claude Design card bundle
 
 Preview cards that teach [Claude Design](https://claude.ai/design) this system. Nine HTML files,
-grouped into four sections in the Design System pane.
+grouped into five sections in the Design System pane.
 
 **This directory adds nothing to the design system and decides nothing.** It is a *view* of
 `tokens/`, `logos/` and `docs/`. If a card and a token disagree, the token is right and the card is
