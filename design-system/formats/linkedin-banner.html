@@ -1,0 +1,85 @@
+<!-- @dsCard group="Formats" name="LinkedIn banner" subtitle="1584×396 (4:1) · dark register · left third reserved" -->
+<meta charset="utf-8">
+<title>LinkedIn banner format — kwp design</title>
+<link rel="stylesheet" href="../_lib/card.css">
+<style>
+  .shot img { width:100%; height:auto; display:block; border:1px solid var(--border); border-radius:6px; }
+  .shot figcaption { margin-top:var(--space-2xs); color:var(--fg-muted); font-size:var(--step--1); }
+  .shot + .shot { margin-top:var(--space-m); }
+  .spec { border-collapse:collapse; max-width:var(--measure); font-size:var(--step--1); }
+  .spec td { padding:6px 0; border-bottom:1px solid var(--border); vertical-align:top; }
+  .spec td:first-child { padding-right:var(--space-s); color:var(--fg-muted); white-space:nowrap; }
+  /* A 4:1 strip showing where the reserve falls. Proportional, not to scale. */
+  .zones { display:flex; height:64px; border:1px solid var(--border); border-radius:6px; overflow:hidden; max-width:var(--page); }
+  .zones div { display:flex; align-items:center; justify-content:center; font-size:var(--step--1); font-weight:600; }
+  .z-reserve { flex:0 0 33.33%; background:var(--data-1-surface); color:var(--data-1-fg); }
+  .z-text    { flex:1;          background:var(--data-5-surface); color:var(--data-5-fg); }
+  .z-mark    { flex:0 0 13%;    background:var(--data-4-surface); color:var(--data-4-fg); }
+</style>
+
+<div class="card-head">
+  <h1>LinkedIn banner — 1584×396</h1>
+  <p>A layer-3 consumer format at 4:1. LinkedIn's native profile-header size, so it uploads with
+     no resampling at all — unlike the quote card's 7:5, which is native nowhere.</p>
+</div>
+
+<div class="rule">
+  <strong>The left 528px carries no content. Ever.</strong> The profile photo covers the lower
+  left, and the mobile crop trims that edge first. 528 is one exact third, and it is deliberately
+  more conservative than LinkedIn's current chrome requires — a survivability margin, not a
+  measurement. Nobody gets a notification when a header starts clipping.
+</div>
+
+<div class="zones" style="margin-top:var(--space-m)">
+  <div class="z-reserve">Reserve · 528</div>
+  <div class="z-text">Text · 793</div>
+  <div class="z-mark">Mark</div>
+</div>
+<p class="note" style="margin-top:var(--space-2xs)">The empty third is not wasted space — the
+   avatar <em>is</em> the left-third composition. Judge the banner with a photo overlaid, never
+   on its own.</p>
+
+<section>
+  <h2>Two modes</h2>
+  <figure class="shot" style="margin:0">
+    <img src="../../examples/linkedin-banner/linkedin-banner-event.jpg"
+         alt="Event banner: eyebrow, title, subtitle and a date row, with the kwpledger mark at right">
+    <figcaption><strong>A — event.</strong> Four slots. Title up to two lines; subtitle exactly
+      one, which is a hard limit rather than a guideline.</figcaption>
+  </figure>
+  <figure class="shot" style="margin:0">
+    <img src="../../examples/linkedin-banner/linkedin-banner-standing.jpg"
+         alt="Standing banner: the positioning line in Lora over a muted second line">
+    <figcaption><strong>B — standing.</strong> What sits there between events, carrying the
+      settled positioning line. No eyebrow, so no accent at all — a standing banner is not
+      announcing anything.</figcaption>
+  </figure>
+</section>
+
+<section>
+  <h2>The spec in short</h2>
+  <table class="spec">
+    <tr><td>Canvas</td><td>1584×396 (4:1). Exports JPG q92.</td></tr>
+    <tr><td>Register</td><td>Dark (§3), pinned. Chosen, not inherited — a light-bordered profile
+      photo separates from a dark header without a stroke.</td></tr>
+    <tr><td>Budget</td><td>300px of content height. Mode A measures 273, Mode B 196.</td></tr>
+    <tr><td>Accent</td><td>The eyebrow, once. The meta rule is <code>--border</code>, so teal
+      never appears twice.</td></tr>
+    <tr><td>Mark</td><td><code>logo_long_inv.svg</code>, 96px tall, width auto. <strong>No
+      ring</strong> — that is the quote card's badge, and repeating it would make two formats
+      look like one artifact.</td></tr>
+    <tr><td>Copy</td><td>Title ≤ 9 words, subtitle ≤ 12. Read while scrolling, at maybe half
+      this size.</td></tr>
+  </table>
+</section>
+
+<div class="rule">
+  <strong>Mode B is the resting state, not a fallback.</strong> A banner still advertising a
+  conference that already happened is worse than one advertising nothing, so switching back is
+  part of finishing an event rather than a separate task.
+</div>
+
+<p class="register">Authority: <code>docs/linkedin-banner-design-system.md</code>. Template:
+   <code>examples/linkedin-banner/</code> — both modes live in the one file; swap the four
+   <code>REPLACE ME</code> blocks and re-render. Add <code>class="guides"</code> to see the
+   reserve, and never export with it on.</p>

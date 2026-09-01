@@ -1,0 +1,143 @@
+<meta charset="utf-8">
+<title>LinkedIn banner — 1584×396, dark register</title>
+<style>
+  @font-face { font-family:'Lora'; src:url('../../fonts/lora-latin.woff2') format('woff2');
+               font-weight:600; font-style:normal; }
+  @font-face { font-family:'Hanken Grotesk'; src:url('../../fonts/hanken-grotesk-latin.woff2') format('woff2');
+               font-weight:100 900; font-style:normal; }
+
+  :root{
+    /* ---- DARK REGISTER. One register per canvas — never mix. Infographic §4.1/§4.2 ---- */
+    --surface:#0a1420; --surface-card:#10202f;
+    --fg:#e6ecf2; --fg-muted:#9aabbb;
+    --accent:#5fbdb4; --border:#1e3245;
+
+    --font-display:'Lora',Georgia,'Iowan Old Style',Palatino,serif;
+    --font-body:'Hanken Grotesk',system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+
+    /* Everything derives from these three. See the spec, §1. */
+    --b-pad:48px;        /* outer margin */
+    --b-reserve:528px;   /* left third — the avatar's, plus the mobile crop. Never put content here. */
+    --b-gap:48px;        /* text block to mark */
+
+    /* Type floors are canvas-derived, not copied from the quote card's ladder.
+       This canvas is 396px tall and displays small. See spec §2. */
+    --b-eyebrow:24px;
+    --b-title:50px;
+    --b-sub:30px;
+    --b-meta:25px;
+  }
+
+  *{box-sizing:border-box; margin:0;}
+  body{margin:0; background:#555;}
+  /* The #555 body is a viewing backdrop, not part of the banner. */
+
+  .canvas{
+    width:1584px; height:396px;      /* 4:1 exactly. Spec §0.1. */
+    background:var(--surface); color:var(--fg);
+    font-family:var(--font-body);
+    display:flex; align-items:stretch;
+    overflow:hidden;
+    position:relative;
+  }
+
+  /* ---- The reserved left third. Deliberately empty: the profile photo sits
+         here on desktop and the mobile crop bites here first. The avatar IS
+         the left-third composition. Spec §1.1. ---- */
+  .reserve{ width:var(--b-reserve); flex:none; }
+
+  .content{
+    flex:1; min-width:0;
+    padding:var(--b-pad) var(--b-pad) var(--b-pad) 0;
+    display:flex; align-items:center; justify-content:space-between; gap:var(--b-gap);
+  }
+
+  .text{ min-width:0; }
+
+  /* ---- Eyebrow. The one accent element on the canvas. Spec §3. ---- */
+  .eyebrow{
+    font-size:var(--b-eyebrow); font-weight:600; line-height:1;
+    letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:16px;
+  }
+
+  .title{
+    font-family:var(--font-display); font-weight:600;
+    font-size:var(--b-title); line-height:1.14;
+    color:var(--fg);
+    text-wrap:balance;   /* a 2-line title should break evenly, not 9 words then 1 */
+    hyphens:none;        /* never hyphenate, never justify */
+  }
+
+  .sub{
+    margin-top:14px;
+    font-size:var(--b-sub); font-weight:400; line-height:1.3;
+    color:var(--fg);
+    text-wrap:pretty;
+  }
+
+  .meta{
+    margin-top:18px; padding-top:16px;
+    border-top:2px solid var(--border);   /* the 2px rule, per quote-post §3.1 */
+    font-size:var(--b-meta); font-weight:500; line-height:1.2;
+    color:var(--fg-muted);
+  }
+
+  /* ---- The mark. Dark canvas -> the inverted file. Sized by HEIGHT, width auto,
+         because the long and short marks have different aspects. PROVENANCE. ---- */
+  .mark{ height:96px; width:auto; flex:none; display:block; }
+
+  /* ---- Mode B — standing. No event on the calendar: the positioning line
+         instead, and the meta rule drops. Spec §4.2. ---- */
+  .canvas.standing .eyebrow{ display:none; }
+  .canvas.standing .meta{ display:none; }
+  .canvas.standing .title{ font-size:44px; }
+  .canvas.standing .sub{ margin-top:18px; color:var(--fg-muted); text-wrap:balance; }
+
+  /* ---- Dev guides. Toggle by adding class="guides" to .canvas.
+         NEVER export with this on. Spec §5, preflight item 2. ---- */
+  .canvas.guides::before{
+    content:""; position:absolute; left:0; top:0;
+    width:var(--b-reserve); height:100%;
+    background:rgba(95,189,180,0.10);
+    border-right:1px dashed var(--accent);
+    pointer-events:none;
+  }
+  .canvas.guides::after{
+    content:"avatar + mobile crop — keep empty";
+    position:absolute; left:16px; bottom:12px;
+    font:600 14px var(--font-body); color:var(--accent); opacity:0.8;
+    pointer-events:none;
+  }
+</style>
+
+<!-- ========================================================================
+     MODE A — EVENT. Swap the four REPLACE ME blocks and re-render.
+     ===================================================================== -->
+<div class="canvas">
+  <div class="reserve"></div>
+  <div class="content">
+    <div class="text">
+      <div class="eyebrow">REPLACE ME — eyebrow</div>
+      <div class="title">REPLACE ME — the event, two lines at most</div>
+      <div class="sub">REPLACE ME — the talk title, one line</div>
+      <div class="meta">REPLACE ME — date · venue</div>
+    </div>
+    <img class="mark" src="../../logos/logo_long_inv.svg" alt="kwpledger">
+  </div>
+</div>
+
+<!-- ========================================================================
+     MODE B — STANDING. What sits there between events.
+     ===================================================================== -->
+<div class="canvas standing" style="margin-top:24px">
+  <div class="reserve"></div>
+  <div class="content">
+    <div class="text">
+      <div class="title">Most systems don’t fit the people who have to use them.</div>
+      <div class="sub">I find out why, build a better way through, and then explain it.</div>
+    </div>
+    <img class="mark" src="../../logos/logo_long_inv.svg" alt="kwpledger">
+  </div>
+</div>
