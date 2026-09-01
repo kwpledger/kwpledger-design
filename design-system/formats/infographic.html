@@ -14,7 +14,7 @@
 <div class="card-head">
   <h1>Infographic — 1080×1350</h1>
   <p>A layer-3 consumer format. Portrait 4:5, sized for a social feed and for printing to US Letter
-     from the same source. Two examples ship as working references.</p>
+     from the same source. Three examples ship as working references.</p>
 </div>
 
 <div class="rule">
@@ -32,6 +32,10 @@
        alt="From AI Policy to AI Practice — a seven-row stacked infographic">
     <figcaption><strong>From AI Policy to AI Practice</strong> — layout A, 7 rows, 109 words.
       The first graphic built against the format.</figcaption></div>
+  <div class="shot"><img src="../../examples/little-ai-big-ai/little-ai-big-ai.jpg"
+       alt="Little AI vs. Big AI — a two-column peer comparison infographic">
+    <figcaption><strong>Little AI vs. Big AI</strong> — two-column peer comparison, 139 words.
+      Replaced a reused PowerPoint screenshot.</figcaption></div>
 </figure>
 
 <section>
@@ -39,7 +43,10 @@
   <table class="spec">
     <tr><td>Canvas</td><td>1080×1350 (4:5). Exports JPG q92, plus a US Letter PDF.</td></tr>
     <tr><td>Register</td><td>Light (§4.2), pinned for the whole series.</td></tr>
-    <tr><td>Layout</td><td>A — stack. Rows scale to content; 4 and 7 are both proven.</td></tr>
+    <tr><td>Layout</td><td>A — stack (rows scale to content; 4 and 7 are both proven), or a
+      two-column peer comparison. The latter is <strong>not</strong> one of the three layouts in
+      §6 — <code>little-ai-big-ai</code> declares it in its own README. Check that file before
+      assuming the spec covers a layout.</td></tr>
     <tr><td>Slots</td><td><code>--data-1</code> onward, <strong>in order</strong> (§4.3). Never
       skip or reorder to get a hue you prefer — the numbering is the contract.</td></tr>
     <tr><td>Card mode</td><td>Neutral (§4.4) — the chip carries the tint, not the card.</td></tr>
@@ -54,5 +61,6 @@
 </div>
 
 <p class="register">Authority: <code>docs/infographic-design-system.md</code>. Working sources:
-   <code>examples/four-principles/</code> and <code>examples/policy-to-practice/</code> — copy a
-   directory and swap the content rather than starting from a blank canvas.</p>
+   <code>examples/four-principles/</code>, <code>examples/policy-to-practice/</code> and
+   <code>examples/little-ai-big-ai/</code> — copy a directory and swap the content rather than
+   starting from a blank canvas. All three pin the light register; the series stays in it.</p>
