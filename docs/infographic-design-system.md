@@ -318,15 +318,15 @@ For a framework where the last step feeds back into the first — a feedback loo
    810px                          150px
 ```
 
-**Geometry.** The channel takes 150px off the right of the content width, with the standard 20px gap, so modules narrow from 980px to **810px**. Horizontal internals still fit comfortably: a 280px chip-and-title column, 20px gap, a 510px body column. Row heights and the §2.4 count table are unchanged — the channel is horizontal cost only.
+**Geometry.** The channel takes 150px off the right of the content width, with the standard 20px gap, so modules narrow from 980px to **810px**. Horizontal internals still fit comfortably: a 280px chip-and-title column, 20px gap, a **466px** body column. Those are *interior* figures — 810px of module less its 2px borders and `--space-s` padding on each side leaves 766px to divide, not 810. Row heights and the §2.4 count table are unchanged — the channel is horizontal cost only.
 
 **The arc.** Leaves the vertical center of the origin module's right edge, bows into the channel, and ends in a solid arrowhead at the vertical center of the target module's right edge.
 
 **Styling deviates from §5.5 on purpose.** The arc is dashed 2px in **`--fg-muted`**, not `--border`. A §5.5 connector links two adjacent modules a reader can already see are adjacent; this one spans the whole graphic and carries a labeled concept of its own. `--border` at 1.19:1 against the page is reinforcement weight, and this is not reinforcement — it is one of the things the graphic is claiming. The arrowhead still follows §5.5: solid, in the target module's `--data-n-border`.
 
-**The label** is required — §4.7 applies to an arc exactly as it does to a card. Set it at `--ig-step--1`, uppercase, `0.10em` tracking, `--fg-muted`, stacked on two short lines and vertically centered in the channel, with a small padded knockout in the canvas color so the arc does not run through the type. **Never rotate it.** Rotated 19px type is unreadable at feed scale, and the channel is sized so it does not need to be.
+**The label** is required — §4.7 applies to an arc exactly as it does to a card. Set it at `--ig-step--1`, uppercase, `0.10em` tracking, `--fg-muted`, stacked on two or three short lines and vertically centered in the channel, with a small padded knockout in the canvas color so the arc does not run through the type. **Never rotate it.** Rotated 19px type is unreadable at feed scale, and the channel is sized so it does not need to be.
 
-Keep the label to **two or three words**. Any explanation of what the loop does belongs in the subhead or in the body line of the module the arc leaves from — the channel is too narrow for a sentence.
+Keep the label to **two or three words**. At 19px with `0.10em` tracking the channel holds about **11 characters per line**, so a three-word label usually needs three lines — "FEEDBACK FOR REFINEMENT" does not fit on two, because `FEEDBACK FOR` alone measures 159px. Set the breaks yourself rather than letting it wrap. Any explanation of what the loop does belongs in the subhead or in the body line of the module the arc leaves from — the channel is too narrow for a sentence.
 
 **One return path per graphic.** Two arcs in one channel is a wiring diagram, and this format is not one.
 

@@ -98,11 +98,26 @@ fixed size; if that is wrong, this is the line to change.
 **The footer places the long mark alone**, no typeset `kwp` beside it — following
 the precedent `../policy-to-practice/` set. Still worth resolving in §5.8 itself.
 
-## One note for the spec, not fixed here
+## The label
 
-§5.6 says the 810px module splits into "a 280px chip-and-title column, 20px gap,
-a 510px body column." Those sum to 810, which is the module's **outer** width —
-it leaves nothing for the card's own `20px` padding either side or its `2px`
-borders. The real body column measures **466px**. The layout is fine and the 280px
-figure is right; only the 510 is. Flagging rather than editing: §5.6 is not a
-guest's to change.
+Reads **FEEDBACK FOR REFINEMENT**, on three lines. The channel holds about 11
+characters at 19px with `0.10em` tracking, so the three words do not fit on two
+lines: `FEEDBACK FOR` alone measures 159px against a 150px channel. The breaks are
+set explicitly rather than left to wrap.
+
+## Two §5.6 corrections, made in this repo with Kevin's approval
+
+Both were found by building against the section, and both were numbers that do not
+survive contact with a render:
+
+1. **The body column is 466px, not 510px.** §5.6 gave `280 + 20 + 510`, which sums
+   to the module's *outer* width and leaves nothing for its own `--space-s` padding
+   either side or its `2px` borders. 810 less borders and padding is 766 to divide,
+   so 280 + 20 + **466**.
+2. **The label takes two *or three* short lines.** §5.6 said two, while also
+   allowing three-word labels — which the 150px channel cannot hold on two lines at
+   the type size the same paragraph mandates.
+
+The arc's `y` values also come from the render rather than the §5.6 snippet: that
+snippet assumes the §2.3 budget's 833px body, and this graphic's footer lockup is
+taller than the 80px §2.3 budgets, so the real body zone is **823**.
