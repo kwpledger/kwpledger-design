@@ -112,9 +112,9 @@ light one.
 
 # Part 2 — The block to paste
 
-Everything below the rule is written for the generator. Paste it whole. If a size is needed,
-say which: **1080×1350 (4:5)** to sit with the LinkedIn series, or **1400×1000 (7:5)** for a
-blog header.
+Everything below the rule is written for the generator. Paste it whole, and **ask for
+1400×1000 (7:5)** — the reasoning is in §2.5. Do not use the 1080×1350 infographic canvas for
+this; see §2.5 for why the two formats want different shapes.
 
 ---
 
@@ -173,9 +173,10 @@ length, so it is always seen against green rather than against the background.
   isometric extrusion.
 - **Geometric.** Straight edges, right angles, one clean diagonal. The footpath's edge
   irregularity is the only organic line in the image and it should be subtle.
-- **Generous negative space.** At least 15% clear margin on all four sides. The lawn and the
-  two routes should occupy roughly the middle two-thirds. Do not fill the corners with
-  scenery.
+- **Generous negative space**, but the subject still commands the frame. Keep a clear margin
+  of roughly 10–15% on all four sides and let the lawn and the two routes run confidently
+  across the width. Do not fill the corners with scenery — but equally, do not render a small
+  drawing marooned in a large empty rectangle.
 - Minimal scenery. At most two or three simple flat shapes for trees or benches, in
   `#9ccca4` or `#e3e0da`, and only if the composition feels empty without them. Zero is an
   acceptable answer.
@@ -244,7 +245,61 @@ check on the dark render separately — it is not implied by the light one passi
 
 ---
 
-## 2.5 What this file does not do
+## 2.5 Destination: a Substack article
+
+**Ask for 1400×1000 (7:5), not 1080×1350.** The 4:5 canvas is right for the infographics and
+wrong for this, for two reasons — the second is the one that decides it.
+
+**The idea is horizontal.** The whole graphic is a right triangle: a two-leg dogleg against
+its hypotenuse. Portrait shortens the legs and steepens the diagonal, which is the one
+relationship the illustration exists to show. Width is not a preference here, it is the
+content.
+
+**An illustration is punctuation; an infographic is the destination.** That is the real
+difference, and it is why the existing habit was correct for the infographics and does not
+transfer. A reader *stops* at an infographic — a full screen of it in the email is the point.
+An illustration sits inside prose and the reader passes through it. At Substack's reading
+column, 4:5 renders roughly a full phone screen tall, so the reader scrolls a screen of
+picture to rejoin the sentence they were in. 7:5 at the same column is a comfortable inline
+figure.
+
+7:5 also already exists in this system — it is the quote-post canvas (§0.1 of
+[quote-post-design-system.md](quote-post-design-system.md)) — so this is not a new size, just
+a second use of one.
+
+**Upload at 1400px wide.** Comfortably above any column width Substack will display it at, so
+it stays sharp on a retina screen without shipping a needlessly large file.
+
+### Let it bleed, and accept what that costs in dark mode
+
+The illustration's background is `#fbfaf8`, which is also the Substack page background
+(PALETTE.md, *How to use this with Substack*). In light mode the picture therefore has no
+visible edge — it reads as drawn directly on the page rather than pasted onto it. That is the
+right register for an illustration inside prose. **Do not add a frame.** The infographic
+system's move #1 is "a frame, not a bleed" (§1.1 of
+[infographic-design-system.md](infographic-design-system.md)); it is correct there and wrong
+here, for the same punctuation-vs-destination reason.
+
+**The cost, stated plainly:** a reader in Substack's dark mode gets a bright rectangle. That
+is unavoidable for any fixed-canvas image and is exactly why SPEC commits each canvas to one
+register rather than pretending an image can respond to `prefers-color-scheme`. It is not a
+defect to design around — but it *is* the reason the negative-space instruction was tightened
+from "at least 15%" to "roughly 10–15%, subject commands the frame." A generous light margin
+that looks like air in light mode looks like an empty white slab in dark mode. Filling the
+frame is what keeps it reading as a picture in both.
+
+If a dark render is ever wanted for a dark-mode-first destination, §2.4 has the values. It is
+a second render, not a filter.
+
+### The article header is a separate job
+
+If this also needs to be the post's header or social-share image, crop or re-render it wide
+rather than reusing this file. A 7:5 inline figure scaled into a header slot will letterbox
+or centre-crop the diagonal, and the diagonal is the graphic.
+
+---
+
+## 2.6 What this file does not do
 
 It does not add, change, or rename a token, and it does not bump a version. It spends
 existing values on one illustration and records the arithmetic so the next person does not
