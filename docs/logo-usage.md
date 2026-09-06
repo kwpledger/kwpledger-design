@@ -31,9 +31,11 @@ same honest reason — "which color means what is undecided," so a colored ring 
 identity nobody had handed out. That reasoning was correct and it is now spent: the unassigned
 case has a color.
 
-**What is still open:** which color belongs to which aspect, beyond the default and the two
-channels in §4. That question is narrower than it was, and it no longer blocks anything from
-shipping.
+**What is still open:** which color belongs to which aspect. The default is settled and
+shippable today. **The two channel rings are not** — measured, they are not distinguishable from
+the default ring or from each other (§4.2), which is a defect this file introduced by assigning
+each channel's ring to be that channel's accent. The channel *palettes* are fine; the assignment
+was wrong. Nothing else in this document waits on the fix.
 
 ---
 
@@ -132,16 +134,18 @@ hue, and it is the brand's own thread — `tokens/base.css` describes teal as th
 channels sit inside without either dominating. A default ring should read as the parent, and
 this one does.
 
-**Semi-permanent — the channels.** Kevin, 2026-09-06: *"let's just call the current ring color
-scheme semi-permanent… it will be trivial to change and explain later."* Use these. Do not
-treat them as blocked, and do not wait for a better answer before shipping a channel mark.
+**The channels — do not ship these yet.** Kevin called the scheme *semi-permanent* on
+2026-09-06, and an earlier revision of this file recorded them as shippable on that basis. **That
+was wrong, and §4.2 is why:** measured, these two rings are not distinguishable from the default
+ring, so they cannot carry the identity §2 asks them to carry.
 
-| Aspect | Ring | Light hex | Dark hex |
-| :-- | :-- | :-- | :-- |
-| MPSAS | dark green | `#2f8079` | `#2f8079` |
-| KPLS | dark blue | **none yet** — see below | `#4aa3ac` |
+| Aspect | Ring | Light hex | Dark hex | Status |
+| :-- | :-- | :-- | :-- | :-- |
+| MPSAS | dark green | `#2f8079` | `#2f8079` | **Blocked — §4.2** |
+| KPLS | dark blue | none yet | `#4aa3ac` | **Blocked — §4.2** |
 
-Both are the channel accents already on record in `tokens/base.css`.
+Both are the channel accents already on record in `tokens/base.css`. The default teal ring is
+unaffected and remains shippable; this blocks channel-ringed marks only.
 
 ### 4.1 Why these two behave differently, and why that is not an accident
 
@@ -164,12 +168,52 @@ Two consequences:
 
 - **A KPLS mark cannot go on a light canvas yet.** `#4aa3ac` measures 2.83:1 there and fails the
   §3 floor. When one is needed, it is a darker partner at the same hue (h204) and one `sed` —
-  but the value is Kevin's to set, and he has deferred it (§4.2).
+  but the value is Kevin's to set, and he has deferred it (§4.4).
 - **"Dark blue" and `#4aa3ac` still do not obviously describe the same color.** `#4aa3ac` is a
   mid-lightness blue-teal. Recorded as the shipping value; flagged as a thing to confirm rather
   than resolved here.
 
-### 4.2 The origin is not permission to wire aspect to register
+### 4.2 Measured: all three assigned rings are the same color
+
+This is the defect, and it was introduced by this file rather than found in Kevin's palettes.
+
+`tokens/base.css` says teal is *"the thread — both channels accent in teal… the portal sits in
+the same family without copying either."* **That is deliberate and it is good brand work.** The
+channels are supposed to look related.
+
+§4 then assigned each channel's ring to be that channel's accent, which seemed tidy. It is not:
+it points the identity carrier at a family built to be similar. Measured in OKLab —
+
+| Pair | ΔOKLab | Hue+chroma only | Δhue |
+| :-- | :-- | :-- | :-- |
+| default teal (light) vs MPSAS | 0.119 | **0.0086** | **2°** |
+| default teal (dark) vs MPSAS | 0.190 | **0.0122** | **0°** |
+| default teal (dark) vs KPLS | 0.078 | 0.0267 | 17° |
+| MPSAS vs KPLS | 0.119 | 0.0253 | 17° |
+
+**MPSAS sits at h187 — the same hue as the default teal**, at effectively the same chroma. The
+system's own adjacent-tint gate is ΔOKLab ≥ 0.02 (SPEC §7); on hue and chroma these clear
+0.0086. The pairs differ almost entirely in **lightness**.
+
+That is the fatal part, and it is worse than a near-miss on a gate:
+
+**Lightness is already spoken for.** §3 says a ring is two hexes that differ in lightness,
+because that is how it clears 3:1 in both registers. So "MPSAS vs the default" and "light canvas
+vs dark canvas" would be encoded on *the same visual channel* — and read off a 2.7px stroke at
+badge size. A viewer meeting `#2f8079` cannot tell whether it means *MPSAS* or *the default ring,
+light-register variant*. The ring stops being identity and becomes noise.
+
+KPLS at 17° is better but not clear, and it inherits the missing-light-hex problem in §4.1.
+
+**The fix is not to change the channel palettes.** Their reasoning is sound and settled: warm
+paper and daylight for MPSAS, navy and polish for KPLS. The fix is to drop the assumption that
+**a channel's ring must be that channel's accent.** The ring is signage, not a palette echo —
+and precisely *because* the palettes are all deliberately inside the teal family, the rings that
+distinguish them have to come from outside it.
+
+Kevin's decision to make. §5.1 records what the bars leave available.
+
+### 4.3 The origin is not permission to wire aspect to register
 
 This is the misreading to guard against, and it is an easy one to fall into: *"MPSAS is the
 light basis and KPLS is the dark basis"* is a fact about **where the palettes came from.** It is
@@ -182,7 +226,7 @@ A dark-register MPSAS graphic is still MPSAS. A light-register KPLS page is stil
 precisely the case that needs the missing hex, and the answer is to author the hex, never to let
 the surface become MPSAS because it is light. **Four combinations, not two**, exactly as §2 says.
 
-### 4.3 Reconsidering the channel palettes is a live thread, and it is Kevin's
+### 4.4 Reconsidering the channel palettes is a live thread, and it is Kevin's
 
 Kevin has raised revisiting the MPSAS and KPLS schemes now that the system has grown past the
 two channels it started as, and now that the feedback-loop thinking has somewhere to land. He
@@ -217,6 +261,24 @@ Before an aspect gets a ring, its color clears four:
 Bar 2 is the one with give in it. SPEC §10 permits deviation justified by function, and a logo
 is identity rather than data — but that is a **conversation with Kevin**, not something a
 consuming format decides on its own. Nothing so far has needed it.
+
+### 5.1 What the four bars actually leave available
+
+Swept in 5° steps: chroma capped at 0.091, ≥3:1 in **both** registers, ≥20° from any status hue,
+≥25° from the default teal. **41 of 72 hues survive**, so the constraint is real but not tight.
+
+Two bands are worth knowing about before choosing anything:
+
+- **h215–h245 — one hex serves both registers.** `#047689` (h215) measures 5.09:1 light and
+  3.49:1 dark; `#006f87` (h220) is 5.56:1 and 3.20:1. A ring here needs no register pair at all,
+  which quietly solves §4.1's missing-hex problem. It is also nearer Kevin's own words —
+  *"dark blue for KPLS"* — than the recorded `#4aa3ac` is.
+- **h95–h130 — the olive-green band**, e.g. `#3f4c02` / `#5a6827` at h120. Reads as "dark green"
+  and is 25–35° clear of both the default teal and `--success`.
+
+Recorded as measurements, **not as a proposal.** Which hue means which channel is Kevin's, and
+these two bands are where the arithmetic says the room is — not an argument that he should want
+either one.
 
 **Never ship a `_ring` file at the hex it arrives with.** Upstream ships all four circled files
 `stroke="#0026FF"` as a placeholder meant to be swapped. It is not a neutral default; it is the
