@@ -132,22 +132,67 @@ hue, and it is the brand's own thread — `tokens/base.css` describes teal as th
 channels sit inside without either dominating. A default ring should read as the parent, and
 this one does.
 
-**Provisional — the channels.** Kevin: *"mostly finalized"*, which is not the same as finalized.
+**Semi-permanent — the channels.** Kevin, 2026-09-06: *"let's just call the current ring color
+scheme semi-permanent… it will be trivial to change and explain later."* Use these. Do not
+treat them as blocked, and do not wait for a better answer before shipping a channel mark.
 
 | Aspect | Ring | Light hex | Dark hex |
 | :-- | :-- | :-- | :-- |
 | MPSAS | dark green | `#2f8079` | `#2f8079` |
-| KPLS | dark blue | **undecided** | `#4aa3ac` |
+| KPLS | dark blue | **none yet** — see below | `#4aa3ac` |
 
-Both hexes are the channel accents already on record in `tokens/base.css`. Two caveats, and
-they are the reason this table says provisional:
+Both are the channel accents already on record in `tokens/base.css`.
 
-- **KPLS has no light-register hex.** `#4aa3ac` measures 2.83:1 on a light canvas and fails the
-  §3 floor. A darker partner at the same hue (h204) is needed before a KPLS mark can go on
-  paper. That is Kevin's call, not a session's.
-- **"Dark blue" and `#4aa3ac` are not obviously the same description.** `#4aa3ac` is a
-  mid-lightness blue-teal. If the intended KPLS ring is a genuinely dark blue, this row is
-  wrong and the value is a new one rather than the existing accent.
+### 4.1 Why these two behave differently, and why that is not an accident
+
+MPSAS's accent clears the §3 floor on both canvases. KPLS's clears it only on dark. That looked
+like an oversight when this file was first written. It is not, and the reason is the order these
+things were made in.
+
+**Kevin, 2026-09-06: MPSAS is the explicit basis for the light form of the design, and KPLS is
+the explicit basis for the dark form.** Both channel schemes were built in Claude Design *before*
+the website was a thought — at the time the only things that were going to exist in this scheme
+were the two YouTube channels and the site, with the apps and games walled off on their own
+subdomains and no crossover intended. The design system grew outward from those two palettes
+later, when the site started linking to the apps.
+
+So KPLS's accent has no light-register partner because **KPLS was never authored for a light
+canvas.** It is a dark-form palette doing exactly what it was made to do. The gap is inherited
+from the origin, not a mistake in the value.
+
+Two consequences:
+
+- **A KPLS mark cannot go on a light canvas yet.** `#4aa3ac` measures 2.83:1 there and fails the
+  §3 floor. When one is needed, it is a darker partner at the same hue (h204) and one `sed` —
+  but the value is Kevin's to set, and he has deferred it (§4.2).
+- **"Dark blue" and `#4aa3ac` still do not obviously describe the same color.** `#4aa3ac` is a
+  mid-lightness blue-teal. Recorded as the shipping value; flagged as a thing to confirm rather
+  than resolved here.
+
+### 4.2 The origin is not permission to wire aspect to register
+
+This is the misreading to guard against, and it is an easy one to fall into: *"MPSAS is the
+light basis and KPLS is the dark basis"* is a fact about **where the palettes came from.** It is
+not a mapping, and it must never become one.
+
+> Light/dark is user preference; channel or section identity is not. Never wire them to the same
+> switch. — SPEC §9
+
+A dark-register MPSAS graphic is still MPSAS. A light-register KPLS page is still KPLS — that is
+precisely the case that needs the missing hex, and the answer is to author the hex, never to let
+the surface become MPSAS because it is light. **Four combinations, not two**, exactly as §2 says.
+
+### 4.3 Reconsidering the channel palettes is a live thread, and it is Kevin's
+
+Kevin has raised revisiting the MPSAS and KPLS schemes now that the system has grown past the
+two channels it started as, and now that the feedback-loop thinking has somewhere to land. He
+has put that behind some thought on his part; the original pair took a couple of weeks in Claude
+Design, and he expects a redo to go faster.
+
+**Nothing in this file waits on it.** That is what "semi-permanent" buys: the rings above are
+shippable today, and when the palettes move, what changes is a `stroke` attribute in two files
+and the two rows in §4 — the placement rules, the register pairing in §3, and the bars in §5 all
+survive unchanged. **Do not pre-emptively redesign the channel colors to get ahead of this.**
 
 **Open.** Every other aspect. Red, orange, and the rest of the raster set's hexes are
 **unassigned** — a file existing in `logos/` at some hex has never been evidence of a meaning,
