@@ -47,7 +47,7 @@ the canvas is not yours.
 | **Reserve** | **528** | Nothing. See §1.1. |
 | Text block | 793 | Eyebrow, title, subtitle, meta |
 | Gap | 48 | |
-| Mark | 167 | `logo_long_inv.svg` at 96px tall |
+| Mark | 149 | `logo_short_ring_inv_teal.svg` at 180px tall |
 | Right margin | 48 | |
 
 Vertically: 48px top and bottom margins leave a **300px content budget**, and everything derives
@@ -113,8 +113,15 @@ rather than inherited: a profile photo is usually a light-bordered circle, and i
 a dark header without needing a stroke around it.
 
 **One accent element: the eyebrow.** The rule above the meta row is `--border`, not `--accent`,
-specifically so the teal appears exactly once. In Mode B, which has no eyebrow, the canvas
-carries no accent at all and that is correct — a standing banner is not announcing anything.
+specifically so the teal appears exactly once *as an accent*. In Mode B, which has no eyebrow,
+the canvas carries no accent at all and that is correct — a standing banner is not announcing
+anything.
+
+**The ring is not an accent element and does not spend that budget.** It is identity — see
+[`logo-usage.md`](logo-usage.md) §2 — and it is teal because teal is the default ring, not
+because this canvas chose a color. Mode A therefore carries the same teal at both ends of a
+diagonal, eyebrow to mark, which is the quote card's composition and is deliberate. **Do not add
+a third teal element** to make it feel balanced.
 
 **No gradients, no shadows, no glow**, per the infographic format §4.8.
 
@@ -144,16 +151,38 @@ over, the banner is stale that day.
 
 ## 5. The mark
 
-`logo_long_inv.svg` — the **inverted** long mark, because the canvas is dark. Measured at 167×96
-in the reference.
+`logo_short_ring_inv_teal.svg` — the **inverted, ringed short** mark. Inverted because the
+canvas is dark; ringed because that is the default placement. Renders 149×180 in the reference.
 
 **Sized by height, width auto.** The long and short marks have different aspects, so pinning
 width breaks a series that switches between them. **Never redraw it, and never recolor the
 glyph** — it is white with a black outline in this register, and that is the file, not a
 treatment you apply. [`logos/PROVENANCE.md`](../logos/PROVENANCE.md) is the authority.
 
-No ring on this canvas. The ring is the quote card's badge treatment; repeating it here would
-make two formats look like the same artifact.
+### 5.1 This section used to forbid the ring
+
+It said: *"No ring on this canvas. The ring is the quote card's badge treatment; repeating it
+here would make two formats look like the same artifact."*
+
+**That is reversed, 2026-09-06.** The premise was wrong rather than the conclusion: the ring was
+never the quote card's badge treatment, it is the default placement for the mark everywhere, and
+[`logo-usage.md`](logo-usage.md) is now the authority on that. Two formats sharing the ring is
+two formats sharing a signature, which is the point of having one.
+
+The ring is `#5fbdb4` (`--teal-300`) — the default ring's dark-register hex, measuring 8.31:1
+against `#0a1420`. **Never the `#0026FF` the upstream `_ring` files ship with.**
+
+### 5.2 Why 180px and not 96px
+
+The long mark occupied a 167px-wide slot at 96px tall. The short mark is a narrower shape, so
+matching its *height* to the old mark would have handed the right side of the canvas to
+something visually half the size. 180px tall renders 149px wide — close to the slot the long
+mark held, so the composition does not shift when the mark does.
+
+It fits: 180px inside the 300px content budget leaves 120px, and the mark is vertically centred
+rather than stacked with anything.
+
+**This number is tunable, the ratio is not.** Size by height and let the width follow.
 
 ---
 
@@ -190,7 +219,7 @@ Measured in a render, not estimated:
 5. Both faces report `loaded`. A synthesized Lora is the failure that looks almost right.
 6. Mark actually loaded (`naturalWidth > 0`) — a broken relative path renders as alt text and is
    easy to miss on a dark canvas.
-7. Inverted mark, and no ring.
+7. Inverted mark, ringed, and the ring is `#5fbdb4` — not the `#0026FF` the file ships with.
 8. `kwp` is lowercase everywhere it appears, including alt text.
 9. Typographic apostrophes (`’`), not straight quotes.
 10. Overlay a circle at the lower left at profile-photo size. The composition must still read.

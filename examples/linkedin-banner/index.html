@@ -84,9 +84,12 @@
     color:var(--fg-muted);
   }
 
-  /* ---- The mark. Dark canvas -> the inverted file. Sized by HEIGHT, width auto,
-         because the long and short marks have different aspects. PROVENANCE. ---- */
-  .mark{ height:96px; width:auto; flex:none; display:block; }
+  /* ---- The mark. Dark canvas -> the inverted file; ringed, because that is the
+         default placement (docs/logo-usage.md). Sized by HEIGHT, width auto,
+         because the long and short marks have different aspects. PROVENANCE.
+         180px tall renders 149px wide -- close to the 167px the long mark held,
+         so the composition does not shift. See banner spec 5.2. ---- */
+  .mark{ height:180px; width:auto; flex:none; display:block; }
 
   /* ---- Mode B — standing. No event on the calendar: the positioning line
          instead, and the meta rule drops. Spec §4.2. ---- */
@@ -124,7 +127,7 @@
       <div class="sub">REPLACE ME — the talk title, one line</div>
       <div class="meta">REPLACE ME — date · venue</div>
     </div>
-    <img class="mark" src="../../logos/logo_long_inv.svg" alt="kwpledger">
+    <img class="mark" src="../../logos/logo_short_ring_inv_teal.svg" alt="kwpledger">
   </div>
 </div>
 
@@ -138,6 +141,6 @@
       <div class="title">Most systems don’t fit the people who have to use them.</div>
       <div class="sub">I find out why, build a better way through, and then explain it.</div>
     </div>
-    <img class="mark" src="../../logos/logo_long_inv.svg" alt="kwpledger">
+    <img class="mark" src="../../logos/logo_short_ring_inv_teal.svg" alt="kwpledger">
   </div>
 </div>

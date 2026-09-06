@@ -208,11 +208,19 @@ For comparison, the brand's own teals sit at 0.070–0.091, and the two channel 
 
 Only **navy** and **accent teal** are usable without that conversation, and navy is invisible on a dark canvas (1.30:1 against `#0a1420`).
 
-## Ring semantics are still undecided
+## Ring semantics — settled enough to ship (2026-09-06)
 
-The ring is intended to carry **channel or section identity** — a different color per aspect of the brand — and it is the only part of the mark whose color varies.
+The ring carries **channel or section identity** — a different color per aspect of the brand — and it is the only part of the mark whose color varies.
 
-**Which color means what is not decided.** Treat every ring hex in this file as unassigned.
+**This section used to say the whole question was undecided and that every ring hex here was unassigned.** That is no longer true of the default case. Kevin's decision, 2026-09-06:
+
+- **The ringed mark is the default placement** — short at 75–80% of use, long at 15–20%, ringless the exception.
+- **The unassigned case has a color: teal.** `#0d5c58` (`--teal-700`) on a light canvas, `#5fbdb4` (`--teal-300`) on a dark one. A surface with no aspect of its own is no longer a reason to drop the ring.
+- **A ring color is a pair of hexes, one per register**, for the same reason the tokens are authored light and dark together — no single hex clears 3:1 on both canvases unless it sits near L 0.52–0.55.
+
+**Which color means what beyond that default is still open**, and every other ring hex in this file remains unassigned — a file existing here at some hex has never been evidence of a meaning. The two channel accents (KPLS `#4aa3ac`, MPSAS `#2f8079`) are the leading candidates for their own channels and are recorded as provisional.
+
+The placement rules, the measured contrast table, and the bars a new ring color must clear live in [`docs/logo-usage.md`](../docs/logo-usage.md), which is the authority on placement. This file stays the authority on the assets.
 
 ---
 
@@ -222,7 +230,10 @@ Files produced from a vendored original by **recoloring the ring only**. The rul
 
 | File | Derived from | Ring | Why it exists |
 | :-- | :-- | :-- | :-- |
-| `logo_short_ring_inv_teal.svg` | `logo_short_ring_inv.svg` | `#5fbdb4` — `--accent` | The quote-post badge. See `docs/quote-post-design-system.md` §4.2. |
+| `logo_short_ring_inv_teal.svg` | `logo_short_ring_inv.svg` | `#5fbdb4` — `--teal-300` | The quote-post badge, and the dark-register default short mark. See `docs/logo-usage.md` §6. |
+| `logo_short_ring_teal.svg` | `logo_short_ring.svg` | `#0d5c58` — `--teal-700` | The light-register default short mark. `#5fbdb4` measures 2.14:1 on a light canvas and cannot serve there. |
+| `logo_long_ring_teal.svg` | `logo_long_ring.svg` | `#0d5c58` — `--teal-700` | The light-register default long mark. |
+| `logo_long_ring_inv_teal.svg` | `logo_long_ring_inv.svg` | `#5fbdb4` — `--teal-300` | The dark-register default long mark. |
 
 **How it was made, and how to make the next one:** change the `stroke` hex on the `<circle>`, and nothing else. The whole diff is one attribute on line 7 — the two files are the same byte count and differ nowhere else. That is the entire recipe; it needs no tool and no session.
 
@@ -241,6 +252,8 @@ An earlier draft argued the ring should read as *teal = the parent identity*. **
 The ring is teal on the quote card because it pairs with the accent-colored opening mark on the same card — the card then carries one chromatic color, stated twice, at the two ends of the diagonal. That is a compositional reason, not a semantic one, and it is the whole of the argument. He has said the color there is **retconnable** once color-topic distribution is settled.
 
 So, plainly: **this file existing is not evidence that teal means anything.** When the assignment is finally made, the thing to revisit is whatever is using a ringed mark at that point — today that is `examples/self-quote/` and nothing else.
+
+**Follow-up, 2026-09-06:** the assignment has since been made for the default case, and it landed on teal — see the ring-semantics section above. The card's file does not change. Kept on the record unedited because the reasoning was sound when it was written and the outcome was a coincidence, not a vindication: teal was chosen there compositionally and is now the default for separate reasons. **It is still not evidence that teal means anything on that card.**
 
 Teal is also the only ring color on record that sits **at or under the 0.091 chroma ceiling while still being legible on a dark canvas** — it measures exactly 0.091, the chroma of `--teal-300`. Navy is under the ceiling but invisible there; everything else is visible but 1.3× to 3.3× over it.
 

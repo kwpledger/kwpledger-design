@@ -385,8 +385,10 @@ The mark is chosen by **register**, and the choice is not optional. The inverted
 
 | Register | Long mark (footer lockup) | Short mark (corner badge) |
 | :-- | :-- | :-- |
-| Light canvas | `logo_long.svg` | `logo_short_ring.svg` (or `logo_short.svg`, no ring) |
-| Dark canvas | `logo_long_inv.svg` | `logo_short_ring_inv.svg` (or `logo_short_inv.svg`, no ring) |
+| Light canvas | `logo_long_ring_teal.svg` | `logo_short_ring_teal.svg` |
+| Dark canvas | `logo_long_ring_inv_teal.svg` | `logo_short_ring_inv_teal.svg` |
+
+**The ringed mark is the default**, at the default teal ring, per [`docs/logo-usage.md`](logo-usage.md). The ringless files (`logo_long.svg`, `logo_short_inv.svg`, and their pairs) are the exception and need a stated reason — §1.1 of that document lists the two known-good ones. The five graphics in `examples/` predate this and still carry a bare `logo_long.svg`; they are stale rather than wrong, and get re-marked when each is next touched.
 
 All eight marks are **true vectors and transparent**, as of the 2026-08-30 rework. The two traps this section used to list — a file with no alpha that dropped a white box on a dark canvas, and an `.svg` that was really a base64 raster — are both gone with the raster set. `logos/PROVENANCE.md` keeps them on the record as superseded; do not reach for them.
 
@@ -402,9 +404,11 @@ Some variants carry a colored ring around the initials. The ring is intended to 
 
 So a dark-register graphic for a green-ringed channel uses the *inverted* mark with the *green* ring — not "the dark-mode version of the green one." Four combinations, not two.
 
-**Which ring color means what is undecided**, so v1 ships without ring semantics: use the plain long mark, or the navy ring if you want the badge form. Navy (`#202a44`, chroma 0.050) is under the system's 0.091 chroma ceiling, and the brand accent `#5fbdb4` sits exactly at it; every other ring that has been used runs 1.3× to 3.3× over, with the upstream default `#0026ff` the worst. That is a conversation about SPEC §10, not something this document settles.
+**The default ring is teal**, and it is a pair of hexes rather than one: `#0d5c58` (`--teal-700`) on a light canvas, `#5fbdb4` (`--teal-300`) on a dark one. Neither serves both — `#5fbdb4` measures 2.14:1 on paper and `#0d5c58` measures 2.37:1 on a dark canvas. [`docs/logo-usage.md`](logo-usage.md) §3 carries the measurements and the reasoning.
 
-**Navy is the light-canvas default only.** On a dark canvas it measures 1.30:1 and vanishes — the quote-post format's §4.2 works through why, and lands on the accent instead. A dark-register graphic that wants a ring should read that table rather than inherit this default.
+Which ring means which *channel* is still open beyond that default, and a graphic that has no channel of its own uses the default rather than waiting for the answer.
+
+**Navy is retired as a default, 2026-09-06.** This section used to default a light canvas to the navy ring and send dark-canvas graphics to the quote-post format's §4.2 table instead. Navy was only ever the least-bad choice available while the default was undecided: it is under the chroma ceiling but it vanishes at 1.30:1 on a dark canvas, so it could never be the answer for both registers, and a default that only works on paper is half a default. Teal is under the ceiling in both registers and is the brand's own thread. Navy remains a legal ring color; it is no longer the one you get by not choosing.
 
 ---
 
@@ -672,7 +676,7 @@ Run this before every export. It is ordered by how often each one actually fails
 8. **If there is a return path**, its label is present, unrotated, and its arrowhead points at step 1.
 9. **Module titles are grammatically parallel.**
 10. **Every receipt is real.** No invented numbers, filenames, or screenshots.
-11. **`kwp` is lowercase, and the mark matches the register** — dark mark on a light canvas, inverted on dark. No generated signature mark. No superseded raster from `logos/`, and no `_ring` file left at the `#0026FF` it ships with.
+11. **`kwp` is lowercase, the mark matches the register, and it is ringed** — dark mark on a light canvas, inverted on dark; teal ring, `#0d5c58` light or `#5fbdb4` dark. A ringless mark needs a reason from `docs/logo-usage.md` §1.1. No generated signature mark. No superseded raster from `logos/`, and no `_ring` file left at the `#0026FF` it ships with.
 12. **One register.** No light values on a dark canvas.
 13. **Squint at it at 400px wide.** The headline and the module count should survive. If they don't, nothing else on the canvas matters.
 14. Exported at exactly **1080×1350**.
