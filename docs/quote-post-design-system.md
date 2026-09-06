@@ -230,6 +230,18 @@ What the choice actually rests on is the table above, and any replacement ring h
 same three bars: legible on this canvas, at or under the 0.091 chroma ceiling, and not borrowing
 a status hue.
 
+##### Follow-up, 2026-09-06: the file does not change, and the reason does
+
+Teal is now the **default ring** for any surface without a channel of its own, and this card is
+one — see [`logo-usage.md`](logo-usage.md) §4. So `logo_short_ring_inv_teal.svg` is correct
+twice over: it was chosen here for the compositional reason above, and it is what the placement
+rules would hand this card today.
+
+**That is a coincidence, not a vindication.** Everything above stays true: this format is a
+consumer of the color decision and never a precedent for it, and nothing here may be cited as
+evidence that teal means something. What has changed is only that the ring on this card no
+longer needs a local justification — it inherits one.
+
 The asset is a **ring-only recolor** of `logo_short_ring_inv.svg`: one `stroke` attribute on the
 `<circle>`, and the two files are otherwise the same byte for byte. The glyph is a different XML
 element, so a ring recolor *cannot* reach it — what used to need a pixel-by-pixel verification is

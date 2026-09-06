@@ -10,8 +10,17 @@ four `REPLACE ME` blocks in Mode A, re-render.
 | Register | **Dark** (§3) |
 | Reserve | **Left 528px carries no content** (§1.1). The avatar sits there. |
 | Modes | **A — event** (four slots) · **B — standing** (between events) |
-| Mark | `logo_long_inv.svg`, 96px tall, right side. No ring. |
-| Exports | `linkedin-banner-event.jpg` · `linkedin-banner-standing.jpg`, both 1584×396 q92 |
+| Mark | `logo_short_ring_inv_teal.svg`, 180px tall, right side. Teal ring (§5). |
+| Exports | `linkedin-banner-event.jpg` · `linkedin-banner-standing.jpg`, both 1584×396 q92 — **stale, see below** |
+
+## The exports are stale
+
+`index.html` moved to the ringed short mark on 2026-09-06 (see the format spec §5). **The two
+JPEGs still show the old ringless long mark** and need one re-render.
+
+They were left rather than regenerated for one reason: the mark height is set to 180px and that
+number is still Kevin's to settle — §5.2 explains where it came from and says it is tunable.
+Re-export once the height is final, rather than twice.
 
 ## The two modes are both in this one file
 
@@ -31,7 +40,8 @@ purpose — `tools/` holds the verifier and the math it needs, and stays that si
 
 Both exports came from that one file: a 1584×396 element screenshot at scale 1, JPEG quality 92.
 
-The two `@font-face` rules point at `../../fonts/`, and the mark at `../../logos/logo_long_inv.svg`.
+The two `@font-face` rules point at `../../fonts/`, and the mark at
+`../../logos/logo_short_ring_inv_teal.svg`.
 Both are relative, so the file only renders correctly from inside this directory.
 
 ## Seeing what you are protecting
