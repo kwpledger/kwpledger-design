@@ -218,7 +218,11 @@ The ring carries **channel or section identity** — a different color per aspec
 - **The unassigned case has a color: teal.** `#0d5c58` (`--teal-700`) on a light canvas, `#5fbdb4` (`--teal-300`) on a dark one. A surface with no aspect of its own is no longer a reason to drop the ring.
 - **A ring color is a pair of hexes, one per register**, for the same reason the tokens are authored light and dark together — no single hex clears 3:1 on both canvases unless it sits near L 0.52–0.55.
 
-**Which color means what beyond that default is still open**, and every other ring hex in this file remains unassigned — a file existing here at some hex has never been evidence of a meaning. The two channel accents (KPLS `#4aa3ac`, MPSAS `#2f8079`) are the leading candidates for their own channels and are recorded as provisional.
+**Which color means what beyond that default is still open**, and every other ring hex in this file remains unassigned — a file existing here at some hex has never been evidence of a meaning.
+
+**Corrected 2026-09-07:** an earlier revision named the two channel accents (KPLS `#4aa3ac`, MPSAS `#2f8079`) as the leading candidates for their own channels. **They were never candidates.** The channels' own `brand-tokens.css` has always carried dedicated ring tokens separate from the accents — `--ring-kpls #1a1f8f`, `--ring-mpsas #1c7a3f`, `--ring-spare #c0392b`. Those three are not shippable either: all break the 0.091 chroma ceiling, MPSAS lands 1° off `--success` and the spare 3° off `--danger`, and KPLS reads 1.44:1 on a dark canvas. Kevin declined a SPEC §10 identity exemption on 2026-09-07, so replacements come under the system.
+
+**Until then every aspect uses the default teal ring, channels included.** `docs/logo-usage.md` §4 is the authority and carries the measurements.
 
 The placement rules, the measured contrast table, and the bars a new ring color must clear live in [`docs/logo-usage.md`](../docs/logo-usage.md), which is the authority on placement. This file stays the authority on the assets.
 
