@@ -106,8 +106,13 @@ The same applies to the footer's opening border.
 
 ## 3. The lockup
 
-**Mark left, wordmark right, baseline-aligned, `--space-2xs` between them.** The pair is one unit
-and one link, pointing at `https://kwpledger.com` (or `/` when the surface *is* kwpledger.com).
+**Mark left, wordmark right, vertically centered on each other, `--space-2xs` between them.** The
+pair is one unit and one link, pointing at `https://kwpledger.com` (or `/` when the surface *is*
+kwpledger.com).
+
+Centered, not baseline-aligned: the mark stands ~2× the wordmark's height (§3.2), and sitting that
+on the text baseline throws it upward off the optical center of the row. Baseline alignment is the
+right instinct for two runs of type and the wrong one for a badge beside a word.
 
 ### 3.1 One link, and the image is decorative
 
