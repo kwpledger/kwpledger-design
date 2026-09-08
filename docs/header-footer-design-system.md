@@ -28,7 +28,8 @@ color, type, or spacing. Where this document and SPEC.md disagree, SPEC.md wins;
 | How big? | Canvas height **2.5rem** default, **never below 2.4rem**. | §3.2 |
 | Mark or wordmark first? | Mark, then wordmark, left to right. | §2 |
 | One link or two? | **One.** The image is decorative; the text carries the name. | §3.1 |
-| How does light/dark work? | Two files shipped, swapped by a CSS media query. Never `<picture>`. | §4 |
+| How does light/dark work? | Both files ship; CSS hides one. | §4.1 |
+| What if a reader force-darkens the page? | It breaks, and that is accepted. Declare `color-scheme` and stop. | §4.2 |
 | Does the rule span the page or the column? | **The page.** Full-bleed, every time. | §2.2 |
 | What if the consumer can't do any of this? | Tiered. Do what the surface allows, in order. | §5 |
 
@@ -124,7 +125,7 @@ right instinct for two runs of type and the wrong one for a badge beside a word.
 </a>
 ```
 
-Both marks ship and CSS hides one — §4.1 is the mechanism and §4.2 is why it is not a `<picture>`.
+Both marks ship and CSS hides one — §4.1 is the mechanism.
 
 **`alt=""` is required, not a shortcut.** The adjacent text already names the link. Giving the image
 alt text as well produces an accessible name of "Kevin Pledger Kevin Pledger," which is exactly the
@@ -186,7 +187,7 @@ That is the measured 119.61 vs 100.66 width delta, and it is a one-line fix.
 
 ---
 
-## 4. Register is two files, and it is not a CSS problem
+## 4. Register is two files
 
 **Dark mark on light backgrounds, inverted mark on dark backgrounds.** From
 [PROVENANCE](../logos/PROVENANCE.md): the black mark on `#0a1420` measures **0.0%** of its ink box
@@ -216,10 +217,20 @@ its own toggle:
 ```
 
 A surface with an explicit theme toggle swaps the media query for whatever selector drives the rest
-of its theme (`:root[data-theme="dark"]`, a `.dark` class). Nothing else changes.
+of its theme (`:root[data-theme="dark"]`, a `.dark` class). Nothing else changes — which is the
+whole argument for this shape over the alternative.
 
-**Cost: the unused file is fetched anyway**, about 8KB. Accept it. It buys a mechanism that behaves
-the same everywhere, and it is a rounding error next to the two woff2 faces on the same page.
+**`<picture>` with a `prefers-color-scheme` source is not wrong**, and it fetches only the file it
+uses. It is simply narrower: its `media` cannot see a `[data-theme]` attribute or a `.dark` class,
+so a surface with its own toggle needs the two-image form anyway. One mechanism documented once
+beats two mechanisms chosen per surface. Use `<picture>` if a surface only ever follows system
+preference and the extra fetch matters there.
+
+*(An earlier revision of this section claimed `<picture>` was outright broken in WebKit. It is not
+— see §4.2.1.)*
+
+**Cost: the unused file is fetched anyway**, about 8KB. It is a rounding error next to the two woff2
+faces on the same page.
 
 **Do not put `display` on the shared class.** `.lockup__mark { display: block }` sits at the same
 specificity as the register rules and, if it comes later in the file, silently beats their
@@ -227,25 +238,64 @@ specificity as the register rules and, if it comes later in the file, silently b
 declaration buys nothing. This is not hypothetical — it happened in the reference implementation
 within an hour of the rule being written.
 
-### 4.2 `<picture>` is the obvious answer and it is wrong
+### 4.2 A force-dark extension defeats this rule, and nothing in CSS can stop it
 
-A `<picture>` with `<source media="(prefers-color-scheme: dark)">` is the shape everyone reaches for
-first. It was in the first draft of this document.
+**The register mechanism only works when the browser tells the truth about the register.** A
+force-dark browser extension — Noir, Dark Reader, and the several like them — darkens the *rendered
+page* without touching `prefers-color-scheme`. The page is still in light mode as far as every media
+query, `<picture>` source, and script can tell. So the light-register mark is correctly served, and
+lands on a background the extension has made dark.
 
-**Source selection runs when the image loads, and WebKit does not re-run it when the OS theme
-changes under a page that is already open.** Load in light, switch the phone to dark, and the black
-mark stays — on a dark canvas, at 0.0% of its ink box above 3:1.
+That is the 0.0%-of-ink-box case, reached without anything being wrong in the page.
 
-Measured on Kevin's phone, 2026-09-08, on the reference implementation: dark mode was unambiguously
-active (the accent had swapped to `--teal-300`, sampled at the lede) while the ring still measured
-`#0d5c58` and the glyph was still pure black. `<picture>` had served the light-register file to a
-dark page.
+**How to recognize it, because it looks exactly like a broken register swap.** Sample any two
+colours and convert to OKLCH. Under force-darkening, **hue is preserved and lightness is inverted**,
+because that is how these extensions work. Under a real dark mode, the values are simply the dark
+tokens, which in this system are a different hue family entirely.
 
-**The testing lesson is the more useful half.** A test that creates a fresh browser context per
-register and loads the page in each one *passes* — that is precisely the path `<picture>` gets
-right. The failure only appears when the scheme changes **on an already-loaded page**. Any check of
-this rule must toggle live, in both directions, and must assert on **which element is visible**
-rather than on the `src` of an element that may be hidden.
+Measured on Kevin's phone, 2026-09-08, on the reference implementation with Noir set to "always
+darken":
+
+| | light token | measured | this system's dark token |
+| :-- | :-- | :-- | :-- |
+| Surface | H 85 | **H 86** | `--navy-900`, H 255 |
+| Body text | H 85 | **H 74** | `--navy-50`, H 248 |
+| Accent | H 189 | **H 191** | `--teal-300`, H 187 |
+| The ring | H 189, L 32% | **H 189, L 32%** | — |
+
+Every value is a light token with its lightness flipped. Nothing is in the navy family. And the ring
+is *bit-identical* to `--teal-700`, because these extensions recolor CSS but not the contents of an
+image — which is the tell, and also the reason the mark is the thing that looks wrong when this
+happens.
+
+**What a consumer should do:**
+
+- **Declare the page's support explicitly:** `<meta name="color-scheme" content="light dark">` in
+  the head, in addition to the `color-scheme` property the tokens already set. It is the standard
+  signal that the page handles both registers, it applies before CSS parses, and it is what a
+  well-behaved extension checks before deciding to intervene.
+- **Nothing else.** There is no reliable detection and no workaround worth building. A reader who
+  has installed a force-dark extension has asked for its behavior over the site's.
+
+**This is a limit of the rule, stated so nobody re-debugs it.** A page can be perfectly conformant
+and still show a black signature on a dark ground in this configuration.
+
+### 4.2.1 What this cost, and the testing lesson
+
+The first version of this section asserted that WebKit does not re-run `<picture>` source selection
+when the OS theme changes under an open page, and presented the phone screenshots as proof. **That
+was wrong.** The screenshots showed Noir, the OS was never in dark mode, and no `<picture>` bug was
+involved. The claim was reasoning backwards from a symptom to a plausible cause and then writing it
+down as fact.
+
+Two things survive from it, both real:
+
+- **Assert on which element is visible, not on the `src` of an element that may be hidden.** A check
+  written the second way passes while both marks are on screen at once — which is a bug that did
+  happen here (§4.1).
+- **Sample the pixels before naming a cause,** and convert to OKLCH rather than eyeballing a phone
+  screenshot. A colour cast, a force-dark extension, and a genuinely broken swap all look alike at a
+  glance and are trivially separable by hue.
 
 ### 4.3 Three more mechanisms that do not work
 
