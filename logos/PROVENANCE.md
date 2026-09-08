@@ -8,7 +8,7 @@
 
 This directory used to warn that the marks were provisional and that no spec or layout could depend on their geometry. **That is over.** Kevin finished the Inkscape/potrace rework and the result is the eight `logo_*.svg` files below.
 
-Everything about them is now stable and specifiable: canvas, path counts, ring center and radius, ink bounding boxes. **KWP-16 (a shared header/footer lockup) was sequenced behind this and is no longer blocked on it.**
+Everything about them is now stable and specifiable: canvas, path counts, ring center and radius, ink bounding boxes. **KWP-16 (a shared header/footer lockup) was sequenced behind this and is no longer blocked on it.** It landed on 2026-09-08 — [`docs/header-footer-design-system.md`](../docs/header-footer-design-system.md). The geometry below is what let it specify a real minimum size rather than a taste.
 
 The no-redraw rule is unaffected and still absolute. *Kevin* reworking his own signature is not the same act as a session auto-tracing it.
 
