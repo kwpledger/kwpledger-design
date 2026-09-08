@@ -28,7 +28,7 @@ color, type, or spacing. Where this document and SPEC.md disagree, SPEC.md wins;
 | How big? | Canvas height **2.5rem** default, **never below 2.4rem**. | §3.2 |
 | Mark or wordmark first? | Mark, then wordmark, left to right. | §2 |
 | One link or two? | **One.** The image is decorative; the text carries the name. | §3.1 |
-| How does light/dark work? | Two files, swapped by register. Not CSS. | §4 |
+| How does light/dark work? | Two files shipped, swapped by a CSS media query. Never `<picture>`. | §4 |
 | Does the rule span the page or the column? | **The page.** Full-bleed, every time. | §2.2 |
 | What if the consumer can't do any of this? | Tiered. Do what the surface allows, in order. | §5 |
 
@@ -118,13 +118,13 @@ right instinct for two runs of type and the wrong one for a badge beside a word.
 
 ```html
 <a class="lockup" href="https://kwpledger.com">
-  <picture>
-    <source srcset="/logos/logo_short_ring_inv_teal.svg" media="(prefers-color-scheme: dark)">
-    <img src="/logos/logo_short_ring_teal.svg" alt="" width="496" height="598">
-  </picture>
+  <img class="lockup__mark lockup__mark--light" src="/logos/logo_short_ring_teal.svg"     alt="" width="496" height="598">
+  <img class="lockup__mark lockup__mark--dark"  src="/logos/logo_short_ring_inv_teal.svg" alt="" width="496" height="598">
   <span>Kevin Pledger</span>
 </a>
 ```
+
+Both marks ship and CSS hides one — §4.1 is the mechanism and §4.2 is why it is not a `<picture>`.
 
 **`alt=""` is required, not a shortcut.** The adjacent text already names the link. Giving the image
 alt text as well produces an accessible name of "Kevin Pledger Kevin Pledger," which is exactly the
@@ -196,7 +196,58 @@ above 3:1 and peaks at 1.1:1. It does not degrade — it disappears.
 | :-- | :-- | :-- |
 | Header/footer default | `logo_short_ring_teal.svg` | `logo_short_ring_inv_teal.svg` |
 
-**Three mechanisms that do not work, all of which look like they should:**
+### 4.1 The mechanism: ship both, let CSS choose
+
+**One mechanism, for every surface that can run CSS** — whether it follows system preference or has
+its own toggle:
+
+```html
+<img class="lockup__mark lockup__mark--light" src="…/logo_short_ring_teal.svg"     alt="" width="496" height="598">
+<img class="lockup__mark lockup__mark--dark"  src="…/logo_short_ring_inv_teal.svg" alt="" width="496" height="598">
+```
+
+```css
+.lockup__mark--dark { display: none; }
+
+@media (prefers-color-scheme: dark) {
+  .lockup__mark--light { display: none; }
+  .lockup__mark--dark  { display: block; }
+}
+```
+
+A surface with an explicit theme toggle swaps the media query for whatever selector drives the rest
+of its theme (`:root[data-theme="dark"]`, a `.dark` class). Nothing else changes.
+
+**Cost: the unused file is fetched anyway**, about 8KB. Accept it. It buys a mechanism that behaves
+the same everywhere, and it is a rounding error next to the two woff2 faces on the same page.
+
+**Do not put `display` on the shared class.** `.lockup__mark { display: block }` sits at the same
+specificity as the register rules and, if it comes later in the file, silently beats their
+`display: none` and puts **both** marks on screen at once. Flex items are blockified anyway, so the
+declaration buys nothing. This is not hypothetical — it happened in the reference implementation
+within an hour of the rule being written.
+
+### 4.2 `<picture>` is the obvious answer and it is wrong
+
+A `<picture>` with `<source media="(prefers-color-scheme: dark)">` is the shape everyone reaches for
+first. It was in the first draft of this document.
+
+**Source selection runs when the image loads, and WebKit does not re-run it when the OS theme
+changes under a page that is already open.** Load in light, switch the phone to dark, and the black
+mark stays — on a dark canvas, at 0.0% of its ink box above 3:1.
+
+Measured on Kevin's phone, 2026-09-08, on the reference implementation: dark mode was unambiguously
+active (the accent had swapped to `--teal-300`, sampled at the lede) while the ring still measured
+`#0d5c58` and the glyph was still pure black. `<picture>` had served the light-register file to a
+dark page.
+
+**The testing lesson is the more useful half.** A test that creates a fresh browser context per
+register and loads the page in each one *passes* — that is precisely the path `<picture>` gets
+right. The failure only appears when the scheme changes **on an already-loaded page**. Any check of
+this rule must toggle live, in both directions, and must assert on **which element is visible**
+rather than on the `src` of an element that may be hidden.
+
+### 4.3 Three more mechanisms that do not work
 
 - **`filter: invert()`** — inverts the ring too, and the inverted mark is a white glyph *with a
   black border*, which is a different drawing rather than this one recolored.
@@ -204,14 +255,6 @@ above 3:1 and peaks at 1.1:1. It does not degrade — it disappears.
   forbidden absolutely. Legal on the `<circle>` stroke only, and only if a consumer inlines the SVG
   rather than placing it as `<img>`.
 - **One file for both registers** — see the 0.0% above.
-
-**`<picture>` + `prefers-color-scheme` is the mechanism** for a surface that follows system
-preference, as in §3.1.
-
-**The trap for a surface with its own theme toggle:** `<picture>`'s `media` cannot see a
-`[data-theme]` attribute or a `.dark` class. A consumer with an explicit toggle ships **both
-`<img>`s** and hides one with CSS driven by the same selector that drives the rest of its theme.
-Getting this wrong fails silently in exactly one register, which is the hardest kind to notice.
 
 ---
 
