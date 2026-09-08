@@ -379,8 +379,12 @@ sound when it was written.
 
 ## 8. Out of scope
 
-- **A shared header/footer lockup.** Still KWP-16, still out of scope per SPEC §12. This file
-  says which mark and which ring; it does not say how a header is built. **Do not invent one.**
+- ~~**A shared header/footer lockup.**~~ **Written 2026-09-08** —
+  [header-footer-design-system.md](header-footer-design-system.md). The split still holds: this
+  file says which mark and which ring, that one says how a header is built. It takes the ringed
+  short teal mark from §1 and §4 here and adds only placement, order, and sizing. Its 2.4rem
+  minimum canvas height is derived from the ring stroke in PROVENANCE and is the one number it
+  contributes back — below it the ring goes sub-pixel and soft.
 - **The remaining aspect assignments.** §4 leaves them open deliberately. Adding one is a
   conversation with Kevin plus a row in that table, not a file dropped in `logos/`.
 - **Recoloring the glyph.** Not now, not ever, not for any aspect. PROVENANCE is the authority
