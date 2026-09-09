@@ -75,6 +75,14 @@ docs/quote-post-design-system.md    # the 1400x1000 (7:5) quote-card format — 
 - **Do not change or subtract.** Tokens, the rules above, `docs/SPEC.md`, and the contrast gates are not yours to edit. If your task seems to need a token changed, that is a conversation with Kevin, not a commit.
 - **Do not bump the version or cut a tag.** Version bumps originate from the site line. Pinning only means something if one line of succession decides when a version exists — two sessions bumping independently produce two different claims about what `v0.3.0` contains.
 
+**How to tell whether you are the site line** (Kevin, 2026-09-09). It is a checkable test, not a judgement call:
+
+> **You are the site line if and only if `kwpledger-site` is attached to this session** — its `AGENTS.md` loaded, carrying the line *"This session line owns that repo's versions and tags."* If it is not attached, you are a guest here: add freely, change nothing, bump nothing.
+
+That is why `kwpledger-site` gets attached to multi-repo tasks that might touch a version — the authority travels with the task rather than being assumed. Nothing about the *repo* confers it; a repo cannot own anything. It is the line of succession that decides when a version exists, and attaching `site` is what puts a session in that line. Think gatekeeper rather than owner.
+
+Both misreadings cost something, which is why the test is written down rather than left to inference: a guest who thinks it is the site line bumps a version that was not its to bump, and a site-line session that thinks it is a guest stalls on Kevin for a decision already delegated to it.
+
 **Who may move which digit** (Kevin, 2026-09-09). Kevin owns **major `x.`** and **minor `x.y`** — those claim the system changed, and that is his call. The site line of sessions may increment the **patch `x.y.z`** on its own for a fix that leaves every token value alone: a verifier or tooling defect, a docs correction. If a token value, a gate threshold, or a rule in this file moved, it is not a patch, and it is not yours.
 
 This file is a handoff to the **next** session and to whatever **parallel** session is in here right now. Write it for both.
@@ -85,7 +93,9 @@ Edit → `npm run verify` and `npm test` pass → update SPEC.md and regenerate 
 
 **You do not cut the tag by hand, and you cannot.** A session has no way to create a git ref — pushing a tag and POSTing to the refs API are both blocked. `.github/workflows/release.yml` cuts it on merge to `main`, whenever `package.json`'s version has no tag yet. **So a bumped version IS the release**; merging is what publishes it.
 
-**A local `git tag` proves nothing about this repo.** Clones here arrive without tags, so the command prints an empty list whether or not releases exist — and `v0.1.0`, `v0.2.0` and `v0.3.0` all do. Reading that emptiness as "this repo has never been tagged" is a mistake already made once, and it got written into another repo's docs as a migration blocker. Use `git ls-remote --tags origin`.
+**A local `git tag` proves nothing about this repo.** Clones here arrive without tags, so the command prints an empty list whether or not releases exist. They do exist. Reading that emptiness as "this repo has never been tagged" is a mistake already made once, and it got written into another repo's docs as a migration blocker. **`git ls-remote --tags origin` is the check** — it asks the remote, which is what the question was about.
+
+Note this paragraph deliberately does **not** list the tags. An earlier version did, and was out of date within the hour: it named three, and the release job cut a fourth right after it merged. A warning about stale claims that carries its own stale claim teaches the wrong half. Run the command. (For orientation only, and already a snapshot: four tags as of 2026-09-09, latest `v0.3.1`.)
 
 **Removing or renaming a token is a major bump**, even if nothing appears to use it. The delivery model assumes pinning; a silent rename is exactly what pinning exists to prevent.
 
