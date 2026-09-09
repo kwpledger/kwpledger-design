@@ -8,6 +8,7 @@ One source of truth. Change a color here, bump the pin in a consumer, and it pro
 - **[docs/PALETTE.md](docs/PALETTE.md)** — every value as plain hex, for tools you can only *tell* the colors to (Base44, Unity, slide templates).
 - **[docs/header-footer-design-system.md](docs/header-footer-design-system.md)** — the shared header/footer rule (KWP-16). Which elements appear, in what order, and how the mark is treated. Binds every surface; the header is the one place SPEC §10 allows no latitude.
 - **[docs/infographic-design-system.md](docs/infographic-design-system.md)** — the 1080×1350 LinkedIn/YouTube infographic format. A layer-3 consumer, written to be pasted into ChatGPT.
+- **[docs/BACKLOG.md](docs/BACKLOG.md)** — open decisions waiting on Kevin. Not a work tracker; only things that need deciding before they can be written.
 - **[docs/quote-post-design-system.md](docs/quote-post-design-system.md)** — the 1400×1000 (7:5) quote-card format. A layer-3 consumer; reference implementation and template in [examples/self-quote/](examples/self-quote/).
 
 ---
