@@ -12,10 +12,18 @@
  */
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { dirname, join } from 'node:path';
+import { dirname, join, resolve } from 'node:path';
 import { oklchToSrgb, hexToRgb, rgbToHex, contrast, inGamut, srgbToOklab } from './color.mjs';
 
-const root = join(dirname(fileURLToPath(import.meta.url)), '..');
+/*
+ * Defaults to this repo. An optional path argument points it at another tree —
+ * which is how `test/verify.test.mjs` proves the gates REJECT: it copies the
+ * tokens to a temp dir, breaks one thing, and runs this against the copy.
+ * Nothing else passes an argument, so normal use is unchanged.
+ */
+const root = process.argv[2]
+  ? resolve(process.argv[2])
+  : join(dirname(fileURLToPath(import.meta.url)), '..');
 const read = (p) => readFileSync(join(root, p), 'utf8');
 
 /* ---- gates ---- */
@@ -29,6 +37,25 @@ const GATES = {
   chromaCeiling: 0.091, // --teal-300; the scale may not out-shout the brand
   semanticText: 4.5, // base.css text pairs
 };
+
+/*
+ * COMPLETENESS, as opposed to correctness. Every gate above checks a value it
+ * finds; these declare what must BE there, and they exist because on
+ * 2026-09-09 a review removed --data-8 and this script still reported "All
+ * gates pass." It checked whichever slots it happened to parse.
+ *
+ * Three ways that failed silently, all now covered: a slot missing from both
+ * themes, a slot missing from ONE theme (the worse case — light and dark are
+ * authored together precisely because neither is derivable from the other),
+ * and a role missing from a slot, which reached a crash instead of a verdict.
+ *
+ * A verifier that cannot fail is not a verifier. `npm test` breaks each of
+ * these on purpose and asserts a non-zero exit.
+ */
+const CATEGORICAL_SLOTS = 8; // --data-1 … --data-8; SPEC.md §4
+const ROLES = ['surface', 'fg', 'border'];
+const THEMES = ['light', 'dark'];
+const SEMANTIC_TOKENS = ['fg', 'fg-muted', 'accent', 'surface', 'surface-card'];
 
 /*
  * The status layer shares the categorical hue space on purpose (red danger at
@@ -109,6 +136,61 @@ const ok = (v, gate) => (v >= gate ? '' : ' ✗');
 
 console.log('kwp design — token verification\n');
 
+/* ---- completeness: what must exist, before checking what it is ---- */
+{
+  const expected = Array.from({ length: CATEGORICAL_SLOTS }, (_, i) => String(i + 1));
+  const seen = {};
+
+  for (const theme of THEMES) {
+    const slots = cat[theme] ?? {};
+    seen[theme] = Object.keys(slots).sort((a, b) => Number(a) - Number(b));
+
+    for (const id of expected) {
+      if (!slots[id]) {
+        fail(`${theme}: --data-${id}-* is missing — the scale is ${CATEGORICAL_SLOTS} slots`);
+        continue;
+      }
+      for (const role of ROLES)
+        if (!slots[id][role]) fail(`${theme} slot ${id}: --data-${id}-${role} is missing`);
+    }
+
+    const extra = seen[theme].filter((id) => !expected.includes(id));
+    if (extra.length)
+      fail(`${theme}: unexpected slot(s) --data-${extra.join(', --data-')} beyond ${CATEGORICAL_SLOTS} — bump CATEGORICAL_SLOTS and SPEC.md together`);
+
+    for (const name of STATUS_NAMES) {
+      const t = (status[theme] ?? {})[name];
+      if (!t) { fail(`${theme}: --${name}-* is missing entirely`); continue; }
+      for (const role of ROLES)
+        if (!t[role]) fail(`${theme}: --${name}-${role} is missing`);
+    }
+
+    for (const tok of SEMANTIC_TOKENS)
+      if (!base[theme]?.[tok]) fail(`${theme}: --${tok} is missing from base.css`);
+  }
+
+  // Light and dark are authored together because neither is derivable from the
+  // other. A slot present in one register and absent from the other is the
+  // failure that looks most like success.
+  if (seen.light.join() !== seen.dark.join())
+    fail(`light declares slots [${seen.light.join(', ')}] but dark declares [${seen.dark.join(', ')}] — both registers must carry the same scale`);
+
+  console.log(
+    `completeness: ${CATEGORICAL_SLOTS} categorical slots x ${ROLES.length} roles x ${THEMES.length} themes, ` +
+      `${STATUS_NAMES.length} status names, ${SEMANTIC_TOKENS.length} semantic tokens\n`
+  );
+}
+
+/*
+ * Anything missing means the value gates below would read `undefined`, which
+ * throws rather than reporting. Stop at the verdict instead of the stack trace.
+ */
+if (failures.length) {
+  console.error(`FAILED — ${failures.length} completeness violation(s):`);
+  for (const f of failures) console.error(`  \u00b7 ${f}`);
+  process.exit(1);
+}
+
 /* base semantic pairs */
 for (const theme of ['light', 'dark']) {
   const s = base[theme];
@@ -145,7 +227,7 @@ for (const theme of ['light', 'dark']) {
 
   for (const id of ids) {
     const s = slots[id];
-    if (!s.surface || !s.fg || !s.border) fail(`${theme} slot ${id}: incomplete triple`);
+    if (!s.surface || !s.fg || !s.border) { fail(`${theme} slot ${id}: incomplete triple`); continue; }
     const [t, f, b] = [s.surface, s.fg, s.border].map(([L, C, H]) => oklchToSrgb(L, C, H));
     const hue = s.surface[2];
 

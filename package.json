@@ -25,7 +25,8 @@
     "docs"
   ],
   "scripts": {
-    "verify": "node tools/verify-contrast.mjs"
+    "verify": "node tools/verify-contrast.mjs",
+    "test": "node --test test/*.test.mjs"
   },
   "repository": {
     "type": "git",

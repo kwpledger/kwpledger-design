@@ -17,10 +17,16 @@ There is **no build**. The CSS in `tokens/` is what ships.
 ## Run it
 
 ```bash
-npm run verify   # contrast, gamut, chroma ceiling, hue bands, parity. Exits non-zero on failure.
+npm run verify   # contrast, gamut, chroma ceiling, hue bands, parity, completeness. Exits non-zero on failure.
+npm test         # proves `verify` REJECTS broken tokens — see SPEC §7.3
 ```
 
-Zero dependencies. Node `>=22.12.0`. Run it before tagging anything.
+Zero dependencies. Node `>=22.12.0`. Run both before tagging anything.
+
+**`verify` checks the tokens; `test` checks `verify`.** It once reported "All
+gates pass" with `--data-8` deleted, because it only checked the slots it found.
+Anything you add to the gates needs a failure case in `test/verify.test.mjs`, or
+you do not know it can fail.
 
 ## Layout
 
@@ -36,6 +42,9 @@ logos/             # the signature marks + PROVENANCE.md. Recolor only, never re
 tools/
   color.mjs             # sRGB <-> OKLab/OKLCH, WCAG contrast. No dependencies.
   verify-contrast.mjs   # parses the CSS and checks it. Does not generate it.
+                        # Takes an optional root path — how the tests aim it at mutated copies.
+test/
+  verify.test.mjs       # failure cases for the verifier. `npm test`.
 docs/SPEC.md       # the contract
 docs/PALETTE.md    # every value as hex, for consumers that can't take a dependency
 docs/header-footer-design-system.md # the shared chrome rule (KWP-16) — binds every surface
