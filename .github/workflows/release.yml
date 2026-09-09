@@ -39,8 +39,15 @@ jobs:
           node-version: '22'
 
       # No install step — the verifier has zero dependencies, by design.
-      - name: Check contrast, gamut, chroma ceiling, hue bands, parity
+      - name: Check contrast, gamut, chroma ceiling, hue bands, parity, completeness
         run: npm run verify
+
+      # `verify` checks the tokens; this checks `verify`. It once reported "All
+      # gates pass" with --data-8 deleted, so the gates are themselves tested
+      # against broken input — see SPEC §7.3. A suite that never runs in CI is
+      # the same hole in a different shape.
+      - name: Prove the gates reject broken tokens
+        run: npm test
 
   release:
     name: Tag if the version changed

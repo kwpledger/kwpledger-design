@@ -17,10 +17,16 @@ There is **no build**. The CSS in `tokens/` is what ships.
 ## Run it
 
 ```bash
-npm run verify   # contrast, gamut, chroma ceiling, hue bands, parity. Exits non-zero on failure.
+npm run verify   # contrast, gamut, chroma ceiling, hue bands, parity, completeness. Exits non-zero on failure.
+npm test         # proves `verify` REJECTS broken tokens — see SPEC §7.3
 ```
 
-Zero dependencies. Node `>=22.12.0`. Run it before tagging anything.
+Zero dependencies. Node `>=22.12.0`. Run both before tagging anything.
+
+**`verify` checks the tokens; `test` checks `verify`.** It once reported "All
+gates pass" with `--data-8` deleted, because it only checked the slots it found.
+Anything you add to the gates needs a failure case in `test/verify.test.mjs`, or
+you do not know it can fail.
 
 ## Layout
 
@@ -36,6 +42,9 @@ logos/             # the signature marks + PROVENANCE.md. Recolor only, never re
 tools/
   color.mjs             # sRGB <-> OKLab/OKLCH, WCAG contrast. No dependencies.
   verify-contrast.mjs   # parses the CSS and checks it. Does not generate it.
+                        # Takes an optional root path — how the tests aim it at mutated copies.
+test/
+  verify.test.mjs       # failure cases for the verifier. `npm test`.
 docs/SPEC.md       # the contract
 docs/PALETTE.md    # every value as hex, for consumers that can't take a dependency
 docs/header-footer-design-system.md # the shared chrome rule (KWP-16) — binds every surface
@@ -66,11 +75,17 @@ docs/quote-post-design-system.md    # the 1400x1000 (7:5) quote-card format — 
 - **Do not change or subtract.** Tokens, the rules above, `docs/SPEC.md`, and the contrast gates are not yours to edit. If your task seems to need a token changed, that is a conversation with Kevin, not a commit.
 - **Do not bump the version or cut a tag.** Version bumps originate from the site line. Pinning only means something if one line of succession decides when a version exists — two sessions bumping independently produce two different claims about what `v0.3.0` contains.
 
+**Who may move which digit** (Kevin, 2026-09-09). Kevin owns **major `x.`** and **minor `x.y`** — those claim the system changed, and that is his call. The site line of sessions may increment the **patch `x.y.z`** on its own for a fix that leaves every token value alone: a verifier or tooling defect, a docs correction. If a token value, a gate threshold, or a rule in this file moved, it is not a patch, and it is not yours.
+
 This file is a handoff to the **next** session and to whatever **parallel** session is in here right now. Write it for both.
 
 ## Changing something
 
-Edit → `npm run verify` passes → update SPEC.md and regenerate the PALETTE.md tables in the same commit if values or rules moved → tag.
+Edit → `npm run verify` and `npm test` pass → update SPEC.md and regenerate the PALETTE.md tables in the same commit if values or rules moved → bump the version.
+
+**You do not cut the tag by hand, and you cannot.** A session has no way to create a git ref — pushing a tag and POSTing to the refs API are both blocked. `.github/workflows/release.yml` cuts it on merge to `main`, whenever `package.json`'s version has no tag yet. **So a bumped version IS the release**; merging is what publishes it.
+
+**A local `git tag` proves nothing about this repo.** Clones here arrive without tags, so the command prints an empty list whether or not releases exist — and `v0.1.0`, `v0.2.0` and `v0.3.0` all do. Reading that emptiness as "this repo has never been tagged" is a mistake already made once, and it got written into another repo's docs as a migration blocker. Use `git ls-remote --tags origin`.
 
 **Removing or renaming a token is a major bump**, even if nothing appears to use it. The delivery model assumes pinning; a silent rename is exactly what pinning exists to prevent.
 

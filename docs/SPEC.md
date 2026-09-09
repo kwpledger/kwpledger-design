@@ -196,6 +196,9 @@ Enforced by `npm run verify`. Failing any gate exits non-zero.
 | **Status louder than categorical** | chroma strictly greater, per role, per theme | §5.4 — the only thing separating a status from a category at the same hue |
 | Status register consistency | one L/C per role across all three | §5.5 |
 | Status parity | ≤ 0.25 | Same measured form as the categorical scale |
+| **Completeness — categorical** | all 8 slots × 3 roles × both themes | §7.3 — the gates above only check what they find |
+| **Completeness — light/dark parity** | both registers declare the same slot set | §7.3, and the "author light and dark together" rule |
+| **Completeness — status & semantic** | 3 status names × 3 roles, 5 semantic tokens, both themes | §7.3 |
 
 **Measured, as of the values in `tokens/`:**
 
@@ -230,6 +233,39 @@ Equal OKLCH lightness gives equal *perceived* lightness. It does **not** give eq
 That is a considered decision, not an oversight. Under §8 every color-coded axis carries a text label, so a categorical element is never identified by its edge — the border is reinforcement on an element already identified by its label. Raising these to 3:1 would put a heavy outline on every card and lose the register the brand actually has: the existing `--border` against `--surface` is 1.19:1.
 
 If a consumer builds something where the boundary *is* the only identifier, that component needs its own stronger stroke and this scale is the wrong tool for it.
+
+### 7.3 Completeness, and why the gates are themselves tested
+
+Every gate in the table above checks a value it finds. Until 2026-09-09 nothing
+checked that the values were *there*. A review deleted `--data-8` from
+`tokens/categorical.css` and `npm run verify` reported **"All gates pass."** It
+had iterated whichever slots it happened to parse.
+
+Three variants failed silently or badly, all now gated:
+
+- a slot missing from **both** themes — passed clean;
+- a slot missing from **one** theme — passed clean, and this is the worse of the
+  two, because §4.5 authors light and dark together precisely so neither is
+  derived from the other. A scale can look complete while only one register
+  carries it;
+- a slot missing one of its three **roles** — reached a `TypeError` rather than
+  a verdict. It exited non-zero, so it gated, but it named a crash instead of
+  the violated rule.
+
+The expected shape is declared as `CATEGORICAL_SLOTS = 8` in the verifier, which
+ties it to §4.1: adding a ninth slot now fails the check until the constant and
+this spec move together, which is the conversation §4.1 requires rather than a
+patch.
+
+**The gates are tested against broken input.** `npm test` copies `tokens/` to a
+temp directory, breaks one thing, and asserts the verifier exits non-zero —
+including a control case proving an unmutated copy still passes, so a green run
+cannot come from a broken harness. Run against the pre-2026-09-09 verifier, 8 of
+those 9 cases fail.
+
+This is a general point, not a one-off repair: **a release check that has never
+failed is not known to work.** Anything added to the gate table should arrive
+with a case that breaks it.
 
 ---
 
