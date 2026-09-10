@@ -329,15 +329,57 @@ badly.
 
 ## 6. The footer
 
-Same shape, inverted:
+Same shape, inverted — a full-bleed opening rule, then **two blocks on one row**.
 
 1. **Full-bleed opening rule** (§2.2).
-2. **`© {year} Kevin Pledger`** — current year, not the year the page was written.
-3. **Contact or return link** — the address on kwpledger.com; on a subdomain, a link back to the
-   parent.
+2. **The identity block, right-aligned.** The contact address, then
+   `© {year} Kevin Pledger` beneath it. Current year, not the year the page was written.
+3. **A context block, left-aligned** *(optional)* — a short note about what the surface is,
+   and a return link to the parent. Subdomains carry it; kwpledger.com leaves that side empty.
 4. **The mark** *(optional)* — §3's rules apply unchanged if present.
 
 Type at `var(--step--1)`, color `var(--fg-muted)`.
+
+### 6.1 Why the identity block is on the right, and why both surfaces moved
+
+**Changed 2026-09-10 on Kevin's instruction.** It was `©` on the left and the contact address
+on the right, and kwpledger.com's footer is now right-aligned to match this.
+
+The trigger is worth recording because it is the reference implementation doing its job. A
+CSS bug on `runbox-mcp` — `flex-basis: 100%` on the footer's note, silently clamped by a
+`max-width` on the same line — let the copyright slide to the right edge at one particular
+window width. Kevin saw it, preferred it, and asked for it deliberately on every surface
+rather than keeping the accident on one.
+
+**Which is the point.** The arrangement was a bug; adopting it on a single surface would have
+been the exact divergence §1 was written from. Adopting it on all of them, in this document,
+is a design decision. The difference between those two is only ever whether the rule moves
+with the change.
+
+**The left side of kwpledger.com's footer is now empty, and that is intended.** A subdomain
+has something to say there — what this page is, and the way back — and the parent does not.
+
+### 6.2 The contact address appears as HTML character entities. Everywhere.
+
+Now that §6 puts the address on **every** surface rather than only kwpledger.com, this stops
+being one site's implementation detail and becomes part of the rule:
+
+> Wherever the contact address is emitted, emit it as HTML character references — in the
+> `href` as well as the text.
+
+The parser decodes them in attribute values and text alike, so the browser sees an ordinary
+link and assistive technology reads the ordinary address. No JavaScript, which matters
+because these surfaces ship none.
+
+**This is a speed bump, not protection.** A determined harvester decodes entities in one
+line; what it stops is the bulk regex sweep, which is most of the problem by volume. The
+actual protection is that the address is disposable — `kwpledger.com` is a catch-all, so any
+`*@kwpledger.com` exists the moment mail arrives for it, and burning one costs a constant
+and a filter.
+
+kwpledger.com's `src/lib/contact.ts` is the reference for the encoding, and its docstring
+carries the reasoning at length. A consumer that cannot do this should carry the return link
+alone rather than ship the address in plaintext.
 
 **At most one mark per page of chrome.** If the header carries it, the footer does not. Two
 signatures on one screen is the mark asking for attention it has already been given, and on a short
