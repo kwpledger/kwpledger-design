@@ -329,15 +329,61 @@ badly.
 
 ## 6. The footer
 
-Same shape, inverted:
+Same shape, inverted — a full-bleed opening rule, then **two blocks on one row**.
 
 1. **Full-bleed opening rule** (§2.2).
-2. **`© {year} Kevin Pledger`** — current year, not the year the page was written.
-3. **Contact or return link** — the address on kwpledger.com; on a subdomain, a link back to the
-   parent.
+2. **The identity block, right-aligned.** The contact address, then
+   `© {year} Kevin Pledger` beneath it. Current year, not the year the page was written.
+3. **A context block, left-aligned** *(optional)* — a short note about what the surface is,
+   and a return link to the parent. Subdomains carry it; kwpledger.com leaves that side empty.
 4. **The mark** *(optional)* — §3's rules apply unchanged if present.
 
 Type at `var(--step--1)`, color `var(--fg-muted)`.
+
+### 6.1 Why the identity block is on the right, and why both surfaces moved
+
+**Changed 2026-09-10 on Kevin's instruction.** It was `©` on the left and the contact address
+on the right, and kwpledger.com's footer is now right-aligned to match this.
+
+The trigger is worth recording because it is the reference implementation doing its job. A
+CSS bug on `runbox-mcp` — `flex-basis: 100%` on the footer's note, silently clamped by a
+`max-width` on the same line — let the copyright slide to the right edge at one particular
+window width. Kevin saw it, preferred it, and asked for it deliberately on every surface
+rather than keeping the accident on one.
+
+**Which is the point.** The arrangement was a bug; adopting it on a single surface would have
+been the exact divergence §1 was written from. Adopting it on all of them, in this document,
+is a design decision. The difference between those two is only ever whether the rule moves
+with the change.
+
+**The left side of kwpledger.com's footer is now empty, and that is intended.** A subdomain
+has something to say there — what this page is, and the way back — and the parent does not.
+
+### 6.2 Encode the address where it is free to do so — and do not treat it as protection
+
+Where a surface controls its own markup, emit the contact address as HTML character
+references, in the `href` as well as the text. The parser decodes them in attribute values
+and text alike, so the browser sees an ordinary link and assistive technology reads the
+ordinary address, with no JavaScript — which matters, because these surfaces ship none.
+kwpledger.com's `src/lib/contact.ts` is the reference implementation.
+
+**This is a convention, not a requirement, and the distinction is deliberate.** It stops the
+bulk regex sweep and nothing else; a determined harvester decodes entities in one line. A
+surface that cannot do it — no markup access, a hosted editor — should ship the address
+plainly rather than drop it or contort around this.
+
+**Do not build anything on top of it.** The address is *disposable*, and that is the actual
+answer to the problem entities only nibble at: `kwpledger.com` is a Runbox catch-all, so every
+`*@kwpledger.com` exists the moment mail arrives for it and none of them need provisioning. If
+`hello@` ever drowns, block it and move to a new one — a constant here, a filter there, no
+setup anywhere.
+
+*(Recorded 2026-09-10. An earlier draft of this section made the encoding a hard requirement
+on all four surfaces, on the reasoning that putting the address on more of them raised the
+harvesting risk. Kevin's correction, and it is the right one: with a catch-all the address was
+never worth defending, so a rule that constrains every surface to defend it is priced wrong.
+Kept as a convention because it is free where markup is available, not because it is load-
+bearing.)*
 
 **At most one mark per page of chrome.** If the header carries it, the footer does not. Two
 signatures on one screen is the mark asking for attention it has already been given, and on a short
