@@ -359,27 +359,31 @@ with the change.
 **The left side of kwpledger.com's footer is now empty, and that is intended.** A subdomain
 has something to say there — what this page is, and the way back — and the parent does not.
 
-### 6.2 The contact address appears as HTML character entities. Everywhere.
+### 6.2 Encode the address where it is free to do so — and do not treat it as protection
 
-Now that §6 puts the address on **every** surface rather than only kwpledger.com, this stops
-being one site's implementation detail and becomes part of the rule:
+Where a surface controls its own markup, emit the contact address as HTML character
+references, in the `href` as well as the text. The parser decodes them in attribute values
+and text alike, so the browser sees an ordinary link and assistive technology reads the
+ordinary address, with no JavaScript — which matters, because these surfaces ship none.
+kwpledger.com's `src/lib/contact.ts` is the reference implementation.
 
-> Wherever the contact address is emitted, emit it as HTML character references — in the
-> `href` as well as the text.
+**This is a convention, not a requirement, and the distinction is deliberate.** It stops the
+bulk regex sweep and nothing else; a determined harvester decodes entities in one line. A
+surface that cannot do it — no markup access, a hosted editor — should ship the address
+plainly rather than drop it or contort around this.
 
-The parser decodes them in attribute values and text alike, so the browser sees an ordinary
-link and assistive technology reads the ordinary address. No JavaScript, which matters
-because these surfaces ship none.
+**Do not build anything on top of it.** The address is *disposable*, and that is the actual
+answer to the problem entities only nibble at: `kwpledger.com` is a Runbox catch-all, so every
+`*@kwpledger.com` exists the moment mail arrives for it and none of them need provisioning. If
+`hello@` ever drowns, block it and move to a new one — a constant here, a filter there, no
+setup anywhere.
 
-**This is a speed bump, not protection.** A determined harvester decodes entities in one
-line; what it stops is the bulk regex sweep, which is most of the problem by volume. The
-actual protection is that the address is disposable — `kwpledger.com` is a catch-all, so any
-`*@kwpledger.com` exists the moment mail arrives for it, and burning one costs a constant
-and a filter.
-
-kwpledger.com's `src/lib/contact.ts` is the reference for the encoding, and its docstring
-carries the reasoning at length. A consumer that cannot do this should carry the return link
-alone rather than ship the address in plaintext.
+*(Recorded 2026-09-10. An earlier draft of this section made the encoding a hard requirement
+on all four surfaces, on the reasoning that putting the address on more of them raised the
+harvesting risk. Kevin's correction, and it is the right one: with a catch-all the address was
+never worth defending, so a rule that constrains every surface to defend it is priced wrong.
+Kept as a convention because it is free where markup is available, not because it is load-
+bearing.)*
 
 **At most one mark per page of chrome.** If the header carries it, the footer does not. Two
 signatures on one screen is the mark asking for attention it has already been given, and on a short
