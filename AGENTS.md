@@ -83,6 +83,10 @@ That is why `kwpledger-site` gets attached to multi-repo tasks that might touch 
 
 Both misreadings cost something, which is why the test is written down rather than left to inference: a guest who thinks it is the site line bumps a version that was not its to bump, and a site-line session that thinks it is a guest stalls on Kevin for a decision already delegated to it.
 
+**Authorized is not acting** (Kevin, 2026-09-11). The test above says who *may* act here, not who *is*. Two sessions can pass it at once. That happened on 2026-09-09: one session had `site` attached for a header/footer change in this repo, and an unrelated session had `site` attached for work in `kwpledger-site` and `plankvoice`. Both passed. Neither could learn of the other from the test.
+
+**You are the acting session only if your task names a change in this repo.** If `site` is attached but your task is about some other repo, you are authorized and not acting: add freely, but no commit, no bump, no tag here. Attachment travels with the task — it does not make every repo in the session yours to change. The 2026-09-09 session got this right by judgement; this paragraph is what makes it the rule.
+
 **Who may move which digit** (Kevin, 2026-09-09). Kevin owns **major `x.`** and **minor `x.y`** — those claim the system changed, and that is his call. The site line of sessions may increment the **patch `x.y.z`** on its own for a fix that leaves every token value alone: a verifier or tooling defect, a docs correction. If a token value, a gate threshold, or a rule in this file moved, it is not a patch, and it is not yours.
 
 This file is a handoff to the **next** session and to whatever **parallel** session is in here right now. Write it for both.
