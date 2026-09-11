@@ -99,7 +99,7 @@ Edit → `npm run verify` and `npm test` pass → update SPEC.md and regenerate 
 
 **A local `git tag` proves nothing about this repo.** Clones here arrive without tags, so the command prints an empty list whether or not releases exist. They do exist. Reading that emptiness as "this repo has never been tagged" is a mistake already made once, and it got written into another repo's docs as a migration blocker. **`git ls-remote --tags origin` is the check** — it asks the remote, which is what the question was about.
 
-Note this paragraph deliberately does **not** list the tags. An earlier version did, and was out of date within the hour: it named three, and the release job cut a fourth right after it merged. A warning about stale claims that carries its own stale claim teaches the wrong half. Run the command. (For orientation only, and already a snapshot: four tags as of 2026-09-09, latest `v0.3.1`.)
+Note this paragraph deliberately does **not** list the tags, and that is now load-bearing. An earlier version did, and was out of date within the hour: it named three, and the release job cut a fourth right after it merged. The version after that tried to have it both ways — a count kept in parentheses, hedged as "already a snapshot" — and went stale twice in two days. A warning about stale claims that carries its own stale claim teaches the wrong half, and labelling the claim a snapshot does not save it. There is no number here to correct. Run the command.
 
 **Removing or renaming a token is a major bump**, even if nothing appears to use it. The delivery model assumes pinning; a silent rename is exactly what pinning exists to prevent.
 
