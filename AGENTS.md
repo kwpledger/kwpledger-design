@@ -79,17 +79,17 @@ docs/quote-post-design-system.md    # the 1400x1000 (7:5) quote-card format — 
 
 > **You are the site line if and only if `kwpledger-site` is attached to this session** — its `AGENTS.md` loaded, carrying the line *"This session line owns that repo's versions and tags."* If it is not attached, you are a guest here: add freely, change nothing, bump nothing.
 
-That is why `kwpledger-site` gets attached to multi-repo tasks that might touch a version — the authority travels with the task rather than being assumed. Nothing about the *repo* confers it; a repo cannot own anything. It is the line of succession that decides when a version exists, and attaching `site` is what puts a session in that line. Think gatekeeper rather than owner.
+The authority travels with the task rather than being assumed — a repo cannot own anything. Why the test is checkable rather than a judgement call, and what each misreading costs: [docs/OWNERSHIP.md](docs/OWNERSHIP.md).
 
-Both misreadings cost something, which is why the test is written down rather than left to inference: a guest who thinks it is the site line bumps a version that was not its to bump, and a site-line session that thinks it is a guest stalls on Kevin for a decision already delegated to it.
+**Authorized is not acting** (Kevin, 2026-09-11). The test above says who *may* act here, not who *is*, and two sessions can pass it at once. That has happened.
 
-**Authorized is not acting** (Kevin, 2026-09-11). The test above says who *may* act here, not who *is*. Two sessions can pass it at once. That happened on 2026-09-09: one session had `site` attached for a header/footer change in this repo, and an unrelated session had `site` attached for work in `kwpledger-site` and `plankvoice`. Both passed. Neither could learn of the other from the test.
-
-**You are the acting session only if your task names a change in this repo.** If `site` is attached but your task is about some other repo, you are authorized and not acting: add freely, but no commit, no bump, no tag here. Attachment travels with the task — it does not make every repo in the session yours to change. The 2026-09-09 session got this right by judgement; this paragraph is what makes it the rule.
+**You are the acting session only if your task names a change in this repo.** If `site` is attached but your task is about some other repo, you are authorized and not acting: add freely, but no commit, no bump, no tag here.
 
 **Who may move which digit** (Kevin, 2026-09-09). Kevin owns **major `x.`** and **minor `x.y`** — those claim the system changed, and that is his call. The site line of sessions may increment the **patch `x.y.z`** on its own for a fix that leaves every token value alone: a verifier or tooling defect, a docs correction. If a token value, a gate threshold, or a rule in this file moved, it is not a patch, and it is not yours.
 
-This file is a handoff to the **next** session and to whatever **parallel** session is in here right now. Write it for both.
+This file is a handoff to the **next** session and to whatever **parallel** session is in here right now. Write it for both — and keep it short enough to be read by both.
+
+**Four rules govern this file's length** (Kevin, 2026-09-20), the same in every repo of his that has one. **(1) Soft limit 1,350 words** — past it, weigh each addition, and look for what can be cut safely or preserved by moving it to a `docs/` reference. **(2) Hard limit 1,850** — past it, cut or move *now*, not later. **(3) The four-minute rule is _a_ primary decider**, not the only one: if a session will not need it in the first four minutes after handoff, it is a high-tier candidate for preservation by move. **(4) No `docs/` file carries a word limit** — reference, not handoff, so moving costs nothing. A PostToolUse hook measures this file on every write (`.claude/hooks/agents-md-length.mjs`); it reports but cannot block.
 
 ## Changing something
 
@@ -99,7 +99,7 @@ Edit → `npm run verify` and `npm test` pass → update SPEC.md and regenerate 
 
 **A local `git tag` proves nothing about this repo.** Clones here arrive without tags, so the command prints an empty list whether or not releases exist. They do exist. Reading that emptiness as "this repo has never been tagged" is a mistake already made once, and it got written into another repo's docs as a migration blocker. **`git ls-remote --tags origin` is the check** — it asks the remote, which is what the question was about.
 
-Note this paragraph deliberately does **not** list the tags, and that is now load-bearing. An earlier version did, and was out of date within the hour: it named three, and the release job cut a fourth right after it merged. The version after that tried to have it both ways — a count kept in parentheses, hedged as "already a snapshot" — and went stale twice in two days. A warning about stale claims that carries its own stale claim teaches the wrong half, and labelling the claim a snapshot does not save it. There is no number here to correct. Run the command.
+This paragraph deliberately does **not** list the tags, and that is load-bearing: every version of it that named a number went stale, twice within days. There is no number here to correct. Run the command. The three attempts, and the same defect reaching another repo: [docs/OWNERSHIP.md](docs/OWNERSHIP.md).
 
 **Removing or renaming a token is a major bump**, even if nothing appears to use it. The delivery model assumes pinning; a silent rename is exactly what pinning exists to prevent.
 
