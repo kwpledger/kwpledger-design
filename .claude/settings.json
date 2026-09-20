@@ -7,7 +7,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node \"${CLAUDE_PROJECT_DIR}/.claude/hooks/agents-md-length.mjs\" --warn 1350",
+            "command": "node \"${CLAUDE_PROJECT_DIR}/.claude/hooks/agents-md-length.mjs\" --warn 1350 --ceiling 1850",
             "timeout": 10
           }
         ]
