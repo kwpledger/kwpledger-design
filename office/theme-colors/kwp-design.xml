@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+  kwp design - Microsoft Office theme colors.
+
+  Drop this in the Office "Theme Colors" folder and "kwp-design" appears under
+  Custom in Design > Colors. Its companion is office/theme-fonts/kwp-design.xml,
+  which goes in the "Theme Fonts" folder beside it. Install paths, the reasoning
+  behind each slot, and the two places Office will happily take you off-palette:
+
+      docs/office-theme.md
+
+  Office gives twelve slots and no more, so this file is a MAPPING of the
+  system onto them, not a new set of values. Every value below is copied from
+  tokens/ unchanged. If the two ever disagree, tokens/ wins.
+
+  This is a layer-3 consumer: it reads the system, it does not extend it.
+
+  Token names appear below WITHOUT their leading double hyphen, because an XML
+  comment may not contain one. "accent" here means the token of that name.
+
+  If Word ever refuses to list this file, delete this comment block and try
+  again - it is the only part of the file that is not load-bearing.
+-->
+<a:clrScheme xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" name="kwp-design">
+  <!-- Text/Background Dark 1  =  fg (light register)       ink-900  -->
+  <a:dk1><a:srgbClr val="1A1917"/></a:dk1>
+  <!-- Text/Background Light 1 =  surface-card (light)      paper-0  -->
+  <a:lt1><a:srgbClr val="FFFFFF"/></a:lt1>
+  <!-- Text/Background Dark 2  =  surface (dark register)   navy-900 -->
+  <a:dk2><a:srgbClr val="0A1420"/></a:dk2>
+  <!-- Text/Background Light 2 =  border (light register)   sand-200 -->
+  <a:lt2><a:srgbClr val="E3E0DA"/></a:lt2>
+  <!-- Accent 1 = accent (light), teal-700. The brand. NOT a category. -->
+  <a:accent1><a:srgbClr val="0D5C58"/></a:accent1>
+  <!-- Accents 2 to 6 = data-1-fg through data-5-fg, in slot order.
+       Equal weight by construction: all sit at OKLCH L38, chroma 0.062. -->
+  <a:accent2><a:srgbClr val="5F3531"/></a:accent2>
+  <a:accent3><a:srgbClr val="5A3A1E"/></a:accent3>
+  <a:accent4><a:srgbClr val="474419"/></a:accent4>
+  <a:accent5><a:srgbClr val="284C30"/></a:accent5>
+  <a:accent6><a:srgbClr val="0D4A57"/></a:accent6>
+  <!-- Hyperlink = accent. Followed = accent-hover. Keep links underlined. -->
+  <a:hlink><a:srgbClr val="0D5C58"/></a:hlink>
+  <a:folHlink><a:srgbClr val="0A4A47"/></a:folHlink>
+</a:clrScheme>
