@@ -22,7 +22,8 @@
     "tokens",
     "fonts",
     "logos",
-    "docs"
+    "docs",
+    "office"
   ],
   "scripts": {
     "verify": "node tools/verify-contrast.mjs",
