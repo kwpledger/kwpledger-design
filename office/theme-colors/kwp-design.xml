@@ -3,10 +3,11 @@
   kwp design - Microsoft Office theme colors.
 
   Drop this in the Office "Theme Colors" folder and "kwp-design" appears under
-  Custom in Design > Colors. Install paths, the reasoning behind each slot, and
-  the two places Office will happily take you off-palette:
+  Custom in Design > Colors. Its companion is office/theme-fonts/kwp-design.xml,
+  which goes in the "Theme Fonts" folder beside it. Install paths, the reasoning
+  behind each slot, and the two places Office will happily take you off-palette:
 
-      docs/office-theme-colors.md
+      docs/office-theme.md
 
   Office gives twelve slots and no more, so this file is a MAPPING of the
   system onto them, not a new set of values. Every value below is copied from

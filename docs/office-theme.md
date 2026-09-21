@@ -1,40 +1,49 @@
 # kwp design in Microsoft Office
 
-**A theme-colors file for Word, PowerPoint and Excel on the desktop.** Install it once and the twelve swatches at the top of every color menu in Office become the design system instead of Office's default blues.
+**Two files that put the design system into Word, PowerPoint and Excel on the desktop.** Install them once and the swatches at the top of every color menu, plus the `+Headings` / `+Body` fonts every style resolves through, become this system instead of Office's defaults.
 
-The file is [`office/kwp-design.xml`](../office/kwp-design.xml). It is a **layer-3 consumer**: it reads the system and maps it onto Office's fixed slots. It does not add a value, and nothing else in the repo depends on it.
+| File | Lands in | Gives you |
+| :-- | :-- | :-- |
+| [`office/theme-colors/kwp-design.xml`](../office/theme-colors/kwp-design.xml) | `Theme Colors` | **Design > Colors > kwp-design** |
+| [`office/theme-fonts/kwp-design.xml`](../office/theme-fonts/kwp-design.xml) | `Theme Fonts` | **Design > Fonts > kwp-design** |
 
-> Every value in the file is copied from `tokens/`. **If the two ever disagree, `tokens/` wins** — regenerate this mapping, do not edit around it.
+Both are **layer-3 consumers**: they read the system and map it onto Office's fixed slots. Neither adds a value, and nothing else in the repo depends on them.
+
+> Every value in the color file is copied from `tokens/`. **If the two ever disagree, `tokens/` wins** — regenerate this mapping, do not edit around it.
 
 ---
 
 ## Install
 
-**Windows.** Drop the file in:
+**Windows.** Two folders, both under:
 
 ```
-%AppData%\Microsoft\Templates\Document Themes\Theme Colors\
+%AppData%\Microsoft\Templates\Document Themes\
+    Theme Colors\kwp-design.xml
+    Theme Fonts\kwp-design.xml
 ```
 
-**Mac.** The same folder inside the Office group container:
+The repo folders are named to match: copy the contents of `office/theme-colors/` into `Theme Colors\`, and `office/theme-fonts/` into `Theme Fonts\`. If a folder does not exist, create it.
+
+**Mac.** The same two folders inside the Office group container:
 
 ```
-~/Library/Group Containers/UBF8T346G9.Office/User Content*/Themes/Theme Colors/
+~/Library/Group Containers/UBF8T346G9.Office/User Content*/Themes/
 ```
 
-Some Mac installs suffix those folders with `.localized`. If you cannot find it, use the fallback below — it always works.
+Some Mac installs suffix those folders with `.localized`. If you cannot find them, use the fallback below.
 
-Restart Word. **Design > Colors** now lists **kwp-design** under *Custom*, above the Office sets.
+Restart Word. **Design > Colors** and **Design > Fonts** each list **kwp-design** under *Custom*.
 
-**Fallback, and it is not a lesser option:** **Design > Colors > Customize Colors…** and type the twelve values from the table below into the dialog. Name it `kwp-design`, Save. That is the same file, written by Word instead of by you.
+**Fallback, and it is not a lesser option:** **Customize Colors…** / **Customize Fonts…** and enter the values by hand from the tables here. Name each `kwp-design`, Save. That is the same file, written by Word instead of by you.
 
-**This is desktop only.** Word on the web cannot load custom theme colors — it will render a document made with them correctly, but it cannot offer you the palette.
+**This is desktop only.** Word on the web cannot load custom theme colors or fonts — it will render a document made with them correctly, but it cannot offer you the sets.
 
 ---
 
-## The mapping
+## Colors: the mapping
 
-Office gives **twelve slots and no more**, which forces three decisions. They are recorded here so nobody has to re-derive them.
+Office exposes **twelve slots and no more**, which forces three decisions. They are recorded here so nobody has to re-derive them.
 
 | Office slot | Token | Hex | Contrast on white |
 | :-- | :-- | :-- | --: |
@@ -63,7 +72,7 @@ Each categorical slot ships three values — surface, fg, border. Office takes *
 
 The `fg` value (OKLCH L38) is the only one that survives all of Office's uses: it reads as text on white at ~10:1, it takes white text on top at the same ratio, and Word's table styles — which put white text on the full-strength accent in the header row — work correctly. Hand Office the pale `surface` value instead and that header row becomes white text on a pale pink fill.
 
-The cost: **Word's color menu will not offer you the system's authored surfaces.** See the next section.
+The cost: **Word's color menu will not offer you the system's authored surfaces.** See the trap below.
 
 ### Why Dark 2 is `--navy-900` and there is no dark set
 
@@ -93,11 +102,43 @@ The Darker variants are safe and one of them is free: Word's **Heading 1** style
 
 ---
 
-## What does not come from the palette
+## Fonts: install the right files first
+
+| Office slot | Family to install | Why that one |
+| :-- | :-- | :-- |
+| Heading font (`+Headings`) | **Lora SemiBold** | The system ships Lora at weight 600 and no other weight |
+| Body font (`+Body`) | **Hanken Grotesk** | Regular/italic/bold/bold-italic, so B and I map to real faces |
+
+**The `.woff2` files in `fonts/` will not install.** They are latin-subset web files; Windows and macOS want TTF or OTF. Get the desktop files from Google Fonts — [Lora](https://fonts.google.com/specimen/Lora) and [Hanken Grotesk](https://fonts.google.com/specimen/Hanken+Grotesk) — and install:
+
+- `Lora-SemiBold.ttf` — inside the download's `static/` folder. **Not** the variable `Lora-VariableFont_wght.ttf`: Windows registers a variable font at its default instance, which is Regular 400, and the SemiBold is then unreachable from Word.
+- `HankenGrotesk-Regular.ttf`, `-Italic`, `-Bold`, `-BoldItalic` — the static four, same reasoning.
+
+Install the fonts **before** the theme-fonts file, or Word will resolve the names to a substitute and cache it.
+
+### "Lora SemiBold" is not a typo for "Lora"
+
+The weight 600 face installs under **its own family name**. Ask for `Lora` and you get Lora Regular — a different, lighter design than every other kwp surface, and nobody will be able to say why the document feels off. Office does exactly this itself: its default theme's heading font is *Calibri Light*, not Calibri.
+
+Which leads to the rule that follows from it:
+
+> **Do not bold a heading in this theme.** The weight is already in the face. There is no Lora Bold installed, so Word will *synthesize* one — smearing the SemiBold outline — which is the same fake-weight failure `tokens/fonts.css` exists to prevent, just on the desktop.
+
+If a heading style arrives bold (some templates set it), **Modify > uncheck Bold**. The heading will not get lighter; it will stop being faked.
+
+### Sharing a document
+
+Lora and Hanken Grotesk are **SIL OFL**, which permits embedding. On a machine without them installed, Word substitutes and the document silently stops being on-brand — so for anything leaving your machine: **File > Options > Save > Embed fonts in the file**, with *Embed only the characters used* ticked to keep the size down.
+
+If you copy the TTFs anywhere, **copy `fonts/OFL-NOTICE.txt` with them.** The license travels with the files — same rule as `fonts/` in this repo.
+
+---
+
+## What still does not come from the theme
 
 **Body text stays black until you tell it otherwise.** Word's Normal style uses *Automatic* (pure black), not Text 1. To pick up `--ink-900`: select the Normal style, **Modify > Font color > Text 1**. Do it in a template once rather than per document.
 
-**Fonts are a separate file, not shipped here.** Design > Fonts is its own custom set. Lora and Hanken Grotesk have to be installed as desktop fonts first — the `.woff2` files in `fonts/` are for the web and Windows will not install them. Get the TTFs from Google Fonts. Lora is **SemiBold 600 only** in this system; if a Word style shows Lora Bold, Word is faking the weight.
+**The type scale does not transfer.** `--step--1` through `--step-4` are fluid, clamping between a small-screen and a large-screen size. A Word document has one page width, so there is nothing to clamp between; set point sizes in styles and keep the ratios. The scale is in [PALETTE.md](PALETTE.md).
 
 ---
 
