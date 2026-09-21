@@ -140,3 +140,107 @@ test('still rejects a chroma over the ceiling', () => {
   assert.equal(status, 1, out);
   assert.match(out, /chroma|gamut/);
 });
+
+/*
+ * ---- the register is authored twice ----
+ *
+ * Since v0.6.0 the shape below IS the shape — a media query cannot be driven
+ * by a button, so the dark register exists under both a guarded media query
+ * and an explicit `[data-theme="dark"]` rule.
+ *
+ * The verifier builds `token -> value` by sweeping with a regex, so without a
+ * gate the copy authored LAST silently wins and the other is checked by
+ * nothing. Measured before the gate existed: a chroma of 0.45 — five times the
+ * ceiling and outside sRGB — in the media-query copy reported "All gates pass".
+ */
+
+test('rejects a value broken in only the media-query copy', () => {
+  const { status, out } = runWith(({ edit }) =>
+    edit('categorical.css', (css) => {
+      const i = css.indexOf('@media (prefers-color-scheme: dark)');
+      return (
+        css.slice(0, i) +
+        css
+          .slice(i)
+          .replace('--data-1-surface: oklch(32% 0.052 25)', '--data-1-surface: oklch(32% 0.45 25)')
+      );
+    })
+  );
+  assert.equal(status, 1, out);
+  assert.match(out, /--data-1-surface/);
+});
+
+test('rejects a value broken in only the explicit-choice copy', () => {
+  const { status, out } = runWith(({ edit }) =>
+    edit('categorical.css', (css) => {
+      const i = css.indexOf(':root[data-theme="dark"]');
+      return (
+        css.slice(0, i) +
+        css
+          .slice(i)
+          .replace('--data-1-surface: oklch(32% 0.052 25)', '--data-1-surface: oklch(32% 0.45 25)')
+      );
+    })
+  );
+  assert.equal(status, 1, out);
+  assert.match(out, /--data-1-surface/);
+});
+
+test('rejects a token file with no dark register at all', () => {
+  const { status, out } = runWith(({ edit }) =>
+    edit('status.css', (css) => css.slice(0, css.indexOf('@media (prefers-color-scheme: dark)')))
+  );
+  assert.equal(status, 1, out);
+  assert.match(out, /status\.css has no/);
+});
+
+/*
+ * ---- the two dark blocks must match (v0.6.0) ----
+ *
+ * The register is authored twice because a media query cannot be driven by a
+ * button. These cases pin the gate that keeps the copies honest — including
+ * the one checkDuplicates structurally cannot catch, where a token exists in
+ * only one block and so has nothing to disagree with.
+ */
+
+test('rejects a token present in the explicit block but missing from the media query', () => {
+  const { status, out } = runWith(({ edit }) =>
+    edit('status.css', (css) => {
+      const i = css.indexOf('@media (prefers-color-scheme: dark)');
+      // Drop it from the media-query copy only.
+      return css.slice(0, i) + css.slice(i).replace('    --danger-border: oklch(50% 0.082 27);\n', '');
+    })
+  );
+  assert.equal(status, 1, out);
+  assert.match(out, /--danger-border is in :root\[data-theme="dark"\] but missing from the media-query dark block/);
+});
+
+test('rejects a token present in the media query but missing from the explicit block', () => {
+  const { status, out } = runWith(({ edit }) =>
+    edit('status.css', (css) =>
+      css.replace('\n  --danger-border: oklch(50% 0.082 27);', '')
+    )
+  );
+  assert.equal(status, 1, out);
+  assert.match(out, /--danger-border is in the media-query dark block but missing from :root\[data-theme="dark"\]/);
+});
+
+test('rejects removal of the explicit-choice selector — the toggle capability itself', () => {
+  const { status, out } = runWith(({ edit }) =>
+    edit('categorical.css', (css) =>
+      css.replace(/\n\/\* The same register[\s\S]*?\n:root\[data-theme="dark"\] \{[\s\S]*?\n\}\n/, '\n')
+    )
+  );
+  assert.equal(status, 1, out);
+  assert.match(out, /has nothing to drive/);
+});
+
+test('rejects removal of the :not() guard inside the media query', () => {
+  const { status, out } = runWith(({ edit }) =>
+    edit('categorical.css', (css) =>
+      css.replace(':root:not([data-theme="light"])', ':root')
+    )
+  );
+  assert.equal(status, 1, out);
+  assert.match(out, /has lost its dark register/);
+});

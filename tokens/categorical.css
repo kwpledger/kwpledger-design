@@ -107,7 +107,7 @@
  * raised rather than as a hole punched in the page.
  */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     /* ---- Dark. tint L 32% C 0.052 · fg L 87% C 0.058 · border L 45% C 0.070 ---- */
 
     --data-1-surface: oklch(32% 0.052 25);
@@ -142,4 +142,41 @@
     --data-8-fg: oklch(87% 0.058 345);
     --data-8-border: oklch(45% 0.07 345);
   }
+}
+
+/* The same register, reachable by an explicit choice. Identical by rule. */
+:root[data-theme="dark"] {
+  /* ---- Dark. tint L 32% C 0.052 · fg L 87% C 0.058 · border L 45% C 0.070 ---- */
+
+  --data-1-surface: oklch(32% 0.052 25);
+  --data-1-fg: oklch(87% 0.058 25);
+  --data-1-border: oklch(45% 0.07 25);
+
+  --data-2-surface: oklch(32% 0.052 60);
+  --data-2-fg: oklch(87% 0.058 60);
+  --data-2-border: oklch(45% 0.07 60);
+
+  --data-3-surface: oklch(32% 0.052 105);
+  --data-3-fg: oklch(87% 0.058 105);
+  --data-3-border: oklch(45% 0.07 105);
+
+  --data-4-surface: oklch(32% 0.052 150);
+  --data-4-fg: oklch(87% 0.058 150);
+  --data-4-border: oklch(45% 0.07 150);
+
+  --data-5-surface: oklch(32% 0.052 216);
+  --data-5-fg: oklch(87% 0.058 216);
+  --data-5-border: oklch(45% 0.07 216);
+
+  --data-6-surface: oklch(32% 0.052 274);
+  --data-6-fg: oklch(87% 0.058 274);
+  --data-6-border: oklch(45% 0.07 274);
+
+  --data-7-surface: oklch(32% 0.052 310);
+  --data-7-fg: oklch(87% 0.058 310);
+  --data-7-border: oklch(45% 0.07 310);
+
+  --data-8-surface: oklch(32% 0.052 345);
+  --data-8-fg: oklch(87% 0.058 345);
+  --data-8-border: oklch(45% 0.07 345);
 }

@@ -267,6 +267,43 @@ This is a general point, not a one-off repair: **a release check that has never
 failed is not known to work.** Anything added to the gate table should arrive
 with a case that breaks it.
 
+### 7.4 Drift between duplicate declarations
+
+The same failure shape as §7.3, one level down, and gated since **v0.5.2**.
+
+The parsers build `token -> value` by sweeping each register with a regex, so a
+token declared **twice in the same register** silently resolves to whichever
+copy is authored last. The other copy is never read by any gate. Verified: a
+`--data-1-surface` at chroma `0.45` — five times the §4.6 ceiling and well
+outside sRGB — sitting in the media-query block reported **"All gates pass"**
+and exited `0`.
+
+That is not idle. `@media (prefers-color-scheme: dark)` cannot be overridden by
+a button, so a consumer with its own theme toggle needs a **selector** to drive,
+and this repo ships none. The shape
+[header-footer-design-system.md](header-footer-design-system.md) §4.1 already
+assumes — swapping the media query for `:root[data-theme="dark"]` or a `.dark`
+class — implies a second dark block beside the media query, because a rule
+inside a media query and a rule outside one cannot be the same rule. **Two
+copies of one register is a drift surface by construction.**
+
+So the gate is on *disagreement*, not on duplication: identical copies pass,
+diverging copies fail and name the token and both values.
+
+**v0.6.0 adopted that shape** (§9.1), which added a second failure the first
+gate structurally cannot catch: a token declared in only ONE of the two blocks
+has nothing to disagree with. That is the likelier drift — a slot added to the
+explicit-choice block and forgotten in the media query hands every toggle user
+a value system-preference users never get. So the blocks are also compared as
+**sets**, in both directions, and the absence of either selector is itself a
+failure, because otherwise deleting one block would remove a capability with
+nothing to report it.
+
+The split between registers is also no longer recomputed per parser. A file
+with no dark block used to slice as "everything but the last character" —
+§4.5 authors both registers together, so one register is now a hard failure
+naming the file.
+
 ---
 
 ## 8. Color is reinforcement, never the sole carrier of meaning
@@ -294,6 +331,30 @@ It is an accessibility requirement first. It also has a practical payoff that is
 - Wire light/dark to the same switch as section or channel identity — see *Three layers* in `kwpledger-site/docs/SITE-POSITIONING.md`
 
 **Light/dark is user preference. Channel and section identity is not.** Dark mode must never make the portal silently wear KPLS's uniform.
+
+### 9.1 Driving the theme from a toggle
+
+**Shipped in v0.6.0.** Before it, the system supported exactly one theming model — follow the OS — because every dark block lived in `@media (prefers-color-scheme: dark)` and a media query cannot be overridden by a button. A consumer that wanted a toggle had no selector to drive, and the only local route was redefining all 40 dark tokens itself: a hand-copy of this repo's register, pinned to a tag, diverging silently on the next bump. Exactly the skew pinning exists to make visible.
+
+Each dark register is now authored under **two** selectors:
+
+```css
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { /* … */ }
+}
+
+:root[data-theme="dark"] { /* the same values */ }
+```
+
+- **Set nothing** and the media query governs, as before. A consumer that never touches `data-theme` is completely unaffected — the `:not()` guard only bites once an explicit light override exists.
+- **Set `data-theme="dark"`** to force dark against a light OS; **`data-theme="light"`** to force light against a dark one.
+- `base.css` also pins `color-scheme` under both explicit values, so a toggled page gets matching form controls, scrollbars and canvas rather than dark tokens behind a light scrollbar.
+
+**The duplication is deliberate and is not to be "fixed".** A rule inside a media query and a rule outside one cannot be the same rule, so the register cannot be expressed once in this notation. `light-dark()` can express it once and was considered; it was declined for now because it rewrites the notation of all three files against SPEC §6 and only reaches Baseline *widely available* around November 2026. That remains the obvious revisit. Reasoning and the rejected alternatives: [theme-toggle-capability.md](theme-toggle-capability.md).
+
+**What keeps the duplication honest is a gate, not discipline** — §7.4. The two blocks are compared as sets and as values, and either selector going missing is itself a failure, so losing the capability cannot happen quietly.
+
+**A consumer's chrome does not wait on this.** The lockup's register swap is one media query around two rules, so adopting the selector is a one-line change in one file. Build the header under the media query and convert it whenever.
 
 ---
 
