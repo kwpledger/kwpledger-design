@@ -148,3 +148,40 @@ A plausible shape, if it helps: the control is **required where the platform can
 run its own CSS and JS**, and the tier language §10.1 already uses for
 conformance ("a strict subset chain rather than alternatives") carries it for
 the platforms that cannot.
+
+## 7. This does not block a consumer's header
+
+**A consumer building chrome for the first time should not wait for §4 to be
+decided,** and reading §2 as a reason to wait gets it backwards. The two halves
+have opposite costs.
+
+The expensive half is the **40-token redefinition**, and that is the half a
+consumer should not build at all — §2. The half that actually changes when a
+selector lands is the lockup's register swap, which is one media query around
+two rules:
+
+```css
+.lockup__mark--dark { display: none; }
+
+@media (prefers-color-scheme: dark) {
+  .lockup__mark--light { display: none; }
+  .lockup__mark--dark  { display: block; }
+}
+```
+
+Whichever option wins, converting that is **a one-line change to the `@media`
+line** in a single file. Build the header now under the media query: it is the
+correct shape today, it is what §4.1 already specifies, and it is close to the
+cheapest thing in the system to revise later.
+
+`kwpledger-site/src/layouts/BaseLayout.astro` is the reference implementation
+and the thing to copy — **including its comments**, which record three traps
+already paid for once each:
+
+- `display` on the shared `.lockup__mark` class sits at the same specificity as
+  the register rules and puts **both** marks on screen at once;
+- a force-dark browser extension looks exactly like a broken register swap, and
+  no CSS can detect it (§4.2 of the header/footer doc has the OKLCH test that
+  tells them apart);
+- the Astro compiler follows a tag name out of an HTML comment and silently
+  drops the markup after it.
