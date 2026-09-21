@@ -78,7 +78,7 @@
  * danger at 27 that runs out of sRGB first, in dark it is warning at 75.
  */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     /* ---- Dark. surface L 35% C 0.062 · fg L 86% C 0.068 · border L 50% C 0.082 ---- */
 
     --danger-surface: oklch(35% 0.062 27);
@@ -93,4 +93,21 @@
     --success-fg: oklch(86% 0.068 150);
     --success-border: oklch(50% 0.082 150);
   }
+}
+
+/* The same register, reachable by an explicit choice. Identical by rule. */
+:root[data-theme="dark"] {
+  /* ---- Dark. surface L 35% C 0.062 · fg L 86% C 0.068 · border L 50% C 0.082 ---- */
+
+  --danger-surface: oklch(35% 0.062 27);
+  --danger-fg: oklch(86% 0.068 27);
+  --danger-border: oklch(50% 0.082 27);
+
+  --warning-surface: oklch(35% 0.062 75);
+  --warning-fg: oklch(86% 0.068 75);
+  --warning-border: oklch(50% 0.082 75);
+
+  --success-surface: oklch(35% 0.062 150);
+  --success-fg: oklch(86% 0.068 150);
+  --success-border: oklch(50% 0.082 150);
 }

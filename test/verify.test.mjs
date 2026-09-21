@@ -142,52 +142,48 @@ test('still rejects a chroma over the ceiling', () => {
 });
 
 /*
- * ---- duplicate dark blocks ----
+ * ---- the register is authored twice ----
  *
- * A consumer with its own theme toggle needs a selector to drive, and the
- * media query cannot be one. The shape implied by
- * docs/header-footer-design-system.md §4.1 therefore puts a second dark block
- * beside the media query, so the register is authored twice.
+ * Since v0.6.0 the shape below IS the shape — a media query cannot be driven
+ * by a button, so the dark register exists under both a guarded media query
+ * and an explicit `[data-theme="dark"]` rule.
  *
- * The verifier builds `token -> value` by sweeping with a regex, so the copy
- * authored LAST silently wins and the other is never checked by any gate.
- * These three cases pin the behaviour that makes the shape safe: drift fails,
- * agreement passes.
+ * The verifier builds `token -> value` by sweeping with a regex, so without a
+ * gate the copy authored LAST silently wins and the other is checked by
+ * nothing. Measured before the gate existed: a chroma of 0.45 — five times the
+ * ceiling and outside sRGB — in the media-query copy reported "All gates pass".
  */
 
-/** The dark `:root` body of a token file, duplicated into a second selector. */
-const duplicateDarkBlock = (css) => {
-  const i = css.indexOf('@media (prefers-color-scheme: dark)');
-  const body = /@media \(prefers-color-scheme: dark\) \{\s*:root \{([\s\S]*?)\n  \}\n\}/.exec(
-    css.slice(i)
-  )[1];
-  return (
-    css.slice(0, i) +
-    `@media (prefers-color-scheme: dark) {\n  :root:not([data-theme="light"]) {${body}\n  }\n}\n\n` +
-    `:root[data-theme="dark"] {${body}\n}\n`
-  );
-};
-
-test('rejects duplicate dark blocks whose copies disagree', () => {
+test('rejects a value broken in only the media-query copy', () => {
   const { status, out } = runWith(({ edit }) =>
-    edit('categorical.css', (css) =>
-      // Break ONLY the media-query copy. Before this gate existed the
-      // attribute copy won the parse and this reported "All gates pass",
-      // with a chroma five times the ceiling and outside sRGB.
-      duplicateDarkBlock(css).replace(
-        '--data-1-surface: oklch(32% 0.052 25)',
-        '--data-1-surface: oklch(32% 0.45 25)'
-      )
-    )
+    edit('categorical.css', (css) => {
+      const i = css.indexOf('@media (prefers-color-scheme: dark)');
+      return (
+        css.slice(0, i) +
+        css
+          .slice(i)
+          .replace('--data-1-surface: oklch(32% 0.052 25)', '--data-1-surface: oklch(32% 0.45 25)')
+      );
+    })
   );
   assert.equal(status, 1, out);
-  assert.match(out, /--data-1-surface is declared twice and the copies disagree/);
+  assert.match(out, /--data-1-surface/);
 });
 
-test('accepts duplicate dark blocks whose copies agree — the gate is drift, not duplication', () => {
-  const { status, out } = runWith(({ edit }) => edit('categorical.css', duplicateDarkBlock));
-  assert.equal(status, 0, out);
-  assert.match(out, /All gates pass/);
+test('rejects a value broken in only the explicit-choice copy', () => {
+  const { status, out } = runWith(({ edit }) =>
+    edit('categorical.css', (css) => {
+      const i = css.indexOf(':root[data-theme="dark"]');
+      return (
+        css.slice(0, i) +
+        css
+          .slice(i)
+          .replace('--data-1-surface: oklch(32% 0.052 25)', '--data-1-surface: oklch(32% 0.45 25)')
+      );
+    })
+  );
+  assert.equal(status, 1, out);
+  assert.match(out, /--data-1-surface/);
 });
 
 test('rejects a token file with no dark register at all', () => {
@@ -196,4 +192,55 @@ test('rejects a token file with no dark register at all', () => {
   );
   assert.equal(status, 1, out);
   assert.match(out, /status\.css has no/);
+});
+
+/*
+ * ---- the two dark blocks must match (v0.6.0) ----
+ *
+ * The register is authored twice because a media query cannot be driven by a
+ * button. These cases pin the gate that keeps the copies honest — including
+ * the one checkDuplicates structurally cannot catch, where a token exists in
+ * only one block and so has nothing to disagree with.
+ */
+
+test('rejects a token present in the explicit block but missing from the media query', () => {
+  const { status, out } = runWith(({ edit }) =>
+    edit('status.css', (css) => {
+      const i = css.indexOf('@media (prefers-color-scheme: dark)');
+      // Drop it from the media-query copy only.
+      return css.slice(0, i) + css.slice(i).replace('    --danger-border: oklch(50% 0.082 27);\n', '');
+    })
+  );
+  assert.equal(status, 1, out);
+  assert.match(out, /--danger-border is in :root\[data-theme="dark"\] but missing from the media-query dark block/);
+});
+
+test('rejects a token present in the media query but missing from the explicit block', () => {
+  const { status, out } = runWith(({ edit }) =>
+    edit('status.css', (css) =>
+      css.replace('\n  --danger-border: oklch(50% 0.082 27);', '')
+    )
+  );
+  assert.equal(status, 1, out);
+  assert.match(out, /--danger-border is in the media-query dark block but missing from :root\[data-theme="dark"\]/);
+});
+
+test('rejects removal of the explicit-choice selector — the toggle capability itself', () => {
+  const { status, out } = runWith(({ edit }) =>
+    edit('categorical.css', (css) =>
+      css.replace(/\n\/\* The same register[\s\S]*?\n:root\[data-theme="dark"\] \{[\s\S]*?\n\}\n/, '\n')
+    )
+  );
+  assert.equal(status, 1, out);
+  assert.match(out, /has nothing to drive/);
+});
+
+test('rejects removal of the :not() guard inside the media query', () => {
+  const { status, out } = runWith(({ edit }) =>
+    edit('categorical.css', (css) =>
+      css.replace(':root:not([data-theme="light"])', ':root')
+    )
+  );
+  assert.equal(status, 1, out);
+  assert.match(out, /has lost its dark register/);
 });

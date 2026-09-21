@@ -216,9 +216,30 @@ its own toggle:
 }
 ```
 
-A surface with an explicit theme toggle swaps the media query for whatever selector drives the rest
-of its theme (`:root[data-theme="dark"]`, a `.dark` class). Nothing else changes — which is the
-whole argument for this shape over the alternative.
+A surface with an explicit theme toggle swaps the media query for the selector that drives the rest
+of its theme. Nothing else changes — which is the whole argument for this shape over the
+alternative.
+
+**Since `v0.6.0` the system ships that selector**, so this is now concrete rather than an assumption
+about the consumer (SPEC §9.1). The swap is one line:
+
+```css
+.lockup__mark--dark { display: none; }
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .lockup__mark--light { display: none; }
+  :root:not([data-theme="light"]) .lockup__mark--dark  { display: block; }
+}
+
+:root[data-theme="dark"] .lockup__mark--light { display: none; }
+:root[data-theme="dark"] .lockup__mark--dark  { display: block; }
+```
+
+**A surface that only follows system preference needs none of this** and should keep the plain media
+query above. Until `v0.6.0` no consumer could do otherwise: every dark block lived in a media query,
+which a button cannot override, so this paragraph named a capability the tokens did not provide.
+That is fixed, and **it does not gate building a header** — adopting the selector later is this
+one-line change.
 
 **`<picture>` with a `prefers-color-scheme` source is not wrong**, and it fetches only the file it
 uses. It is simply narrower: its `media` cannot see a `[data-theme]` attribute or a `.dark` class,

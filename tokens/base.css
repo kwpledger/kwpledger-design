@@ -116,8 +116,29 @@
  * the portal silently wear KPLS's uniform, and light mode should never put
  * MPSAS cream on a page that isn't MPSAS.
  */
+/*
+ * ---- The toggle contract (v0.6.0) ----
+ *
+ * The dark register is authored TWICE, on purpose, and the two copies must
+ * stay byte-identical in value. A media query answers to the operating system
+ * and a button cannot override it, so a consumer with its own theme toggle
+ * needs a selector to drive. A rule inside a media query and a rule outside
+ * one cannot be the same rule, so there is no way to express this once.
+ *
+ *   :root:not([data-theme="light"])  inside the query — system preference,
+ *                                    unless the page has explicitly opted out
+ *   :root[data-theme="dark"]         outside it — the explicit choice
+ *
+ * A consumer that never sets data-theme is COMPLETELY UNAFFECTED: the media
+ * query still governs and the :not() guard only matters once an explicit
+ * light override exists.
+ *
+ * `npm run verify` gates the two copies against each other — same tokens, same
+ * values — so drift is a build failure rather than a silent defect. That gate
+ * is the reason this shape is safe to author. See SPEC.md §7.4 and §9.1.
+ */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --surface: var(--navy-900);
     --surface-card: var(--navy-800);
     --fg: var(--navy-50);
@@ -126,4 +147,33 @@
     --accent-hover: var(--teal-200);
     --border: var(--navy-600);
   }
+}
+
+/* The same register, reachable by an explicit choice. Identical by rule. */
+:root[data-theme="dark"] {
+  --surface: var(--navy-900);
+  --surface-card: var(--navy-800);
+  --fg: var(--navy-50);
+  --fg-muted: var(--navy-200);
+  --accent: var(--teal-300);
+  --accent-hover: var(--teal-200);
+  --border: var(--navy-600);
+}
+
+/*
+ * `color-scheme: light dark` above tells the UA this page renders both, so it
+ * picks form controls, scrollbars and the canvas from the SYSTEM preference.
+ * An explicit choice has to pin it too, or a page toggled to dark on a light
+ * OS gets dark tokens with light scrollbars and light date pickers.
+ *
+ * Separate from the token blocks above deliberately: this is a UA rendering
+ * hint rather than a token, it is not part of the duplicated register, and
+ * keeping it out of those blocks is what lets them stay identical.
+ */
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
 }

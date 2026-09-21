@@ -126,6 +126,57 @@ function checkDuplicates(file, regions, fail) {
   }
 }
 
+/*
+ * THE TWO DARK BLOCKS MUST MATCH — the gate that makes v0.6.0's shape safe.
+ *
+ * checkDuplicates above catches a token declared twice with different values.
+ * It CANNOT catch a token declared in only one of the two blocks, because one
+ * declaration has nothing to disagree with. That is the likelier drift: a slot
+ * added to the explicit-choice block and forgotten in the media query gives
+ * every toggle user a value that system-preference users never get.
+ *
+ * So compare the blocks as sets, not just as declarations, and require both
+ * selectors to be present at all — otherwise deleting one block would simply
+ * remove a capability with nothing to report it.
+ */
+const DARK_MEDIA_SELECTOR = ':root:not([data-theme="light"])';
+const DARK_EXPLICIT_SELECTOR = ':root[data-theme="dark"]';
+
+function darkBlockBodies(src) {
+  const media = new RegExp(
+    '@media \\(prefers-color-scheme: dark\\) \\{\\s*' +
+      ':root:not\\(\\[data-theme="light"\\]\\) \\{([\\s\\S]*?)\\n  \\}\\n\\}'
+  ).exec(src);
+  // Several explicit-choice rules may exist (base.css adds one for
+  // `color-scheme`, which declares no custom properties). Merge them.
+  const explicit = [...src.matchAll(/:root\[data-theme="dark"\] \{([\s\S]*?)\n\}/g)]
+    .map((m) => m[1])
+    .join('\n');
+  return [media?.[1] ?? null, explicit || null];
+}
+
+function checkDarkBlockParity(file, darkSrc, fail) {
+  const [mediaBody, explicitBody] = darkBlockBodies(darkSrc);
+  if (mediaBody === null)
+    return fail(`${file}: no \`${DARK_MEDIA_SELECTOR}\` rule inside the dark media query — a consumer that follows system preference has lost its dark register`);
+  if (explicitBody === null)
+    return fail(`${file}: no \`${DARK_EXPLICIT_SELECTOR}\` rule — a consumer with its own theme toggle has nothing to drive (SPEC.md §9.1)`);
+
+  const props = (body) =>
+    new Map(
+      [...body.matchAll(/--([\w-]+):\s*([^;]+);/g)].map((m) => [m[1], m[2].trim().replace(/\s+/g, ' ')])
+    );
+  const [a, b] = [props(mediaBody), props(explicitBody)];
+
+  for (const k of a.keys())
+    if (!b.has(k)) fail(`${file}: --${k} is in the media-query dark block but missing from ${DARK_EXPLICIT_SELECTOR} — toggle users would not get it`);
+  for (const k of b.keys())
+    if (!a.has(k)) fail(`${file}: --${k} is in ${DARK_EXPLICIT_SELECTOR} but missing from the media-query dark block — system-preference users would not get it`);
+  for (const [k, v] of a)
+    if (b.has(k) && b.get(k) !== v)
+      fail(`${file}: --${k} differs between the two dark blocks — \`${v}\` vs \`${b.get(k)}\``);
+}
+
 /* ---- parse base.css: palette hex + semantic aliases, per theme ---- */
 function parseBase() {
   const css = read('tokens/base.css');
@@ -198,7 +249,10 @@ console.log('kwp design — token verification\n');
  * Runs before completeness because a token the gates never see is worse than
  * one that is missing — missing gets reported, unseen gets a pass.
  */
-for (const [file, regions] of Object.entries(REGIONS)) checkDuplicates(file, regions, fail);
+for (const [file, regions] of Object.entries(REGIONS)) {
+  checkDuplicates(file, regions, fail);
+  checkDarkBlockParity(file, regions[1], fail);
+}
 
 /* ---- completeness: what must exist, before checking what it is ---- */
 {
@@ -242,7 +296,7 @@ for (const [file, regions] of Object.entries(REGIONS)) checkDuplicates(file, reg
   console.log(
     `completeness: ${CATEGORICAL_SLOTS} categorical slots x ${ROLES.length} roles x ${THEMES.length} themes, ` +
       `${STATUS_NAMES.length} status names, ${SEMANTIC_TOKENS.length} semantic tokens; ` +
-      `no disagreeing duplicate declarations across ${Object.keys(REGIONS).length} files\n`
+      `no disagreeing duplicates and both dark blocks matched across ${Object.keys(REGIONS).length} files\n`
   );
 }
 

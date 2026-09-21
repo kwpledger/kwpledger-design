@@ -1,9 +1,16 @@
 # The theme-toggle capability
 
-**Status: open decision, Kevin's call.** Raised 2026-09-21 from a consumer
-(meal-planner) that wanted a light/dark toggle and found it could not build one
-cleanly against `v0.5.1`. The verifier half shipped in `v0.5.2`; the selector
-half has not shipped and is not the site line's to ship.
+**Status: DECIDED 2026-09-21 — Option A, shipped in `v0.6.0`.** Kevin chose the
+companion selector. Both halves are now in: the verifier gate and the selectors
+themselves. SPEC §9.1 is the contract; this file is the reasoning and the
+rejected alternatives.
+
+The `v0.5.2` patch described below was never tagged — it and the selector work
+merged together as `v0.6.0`, which is the better shape anyway, since the gate is
+what makes the duplication safe.
+
+Raised from a consumer (meal-planner) that wanted a light/dark toggle and found
+it could not build one cleanly against `v0.5.1`.
 
 ---
 
@@ -71,7 +78,7 @@ defect. It does not make Option A free. It makes it *checkable*.
 
 ## 4. The options
 
-### Option A — companion selector on each dark block
+### Option A — companion selector on each dark block ✅ **chosen**
 
 ```css
 @media (prefers-color-scheme: dark) {
@@ -89,7 +96,7 @@ guard only matters once an explicit light override exists.
 - **Compatibility:** universal. No new CSS features.
 - **Bump:** minor. New consumer-visible capability, nothing removed or renamed.
 
-### Option B — `light-dark()`
+### Option B — `light-dark()` — *revisit ~Nov 2026*
 
 ```css
 :root { color-scheme: light dark; }
@@ -115,7 +122,7 @@ for free.
 Worth noting it satisfies §4.5's "author light and dark together" more literally
 than the current shape does — both registers on one line.
 
-### Option C — do nothing; consumers follow system preference only
+### Option C — do nothing; consumers follow system preference only — *rejected*
 
 Legitimate, and it is the status quo. But then **§4.1's conditional clause
 should be struck or qualified**, because as written it directs consumers toward
@@ -124,11 +131,14 @@ that is actually inconsistent.
 
 ## 5. What is and is not the site line's to decide
 
-- **Not ours:** the selector work itself. It is a minor bump under
-  [OWNERSHIP](OWNERSHIP.md) — "those claim the system changed, and that is his
-  call" — and Option B additionally moves a spec rule.
-- **Ours, and done:** the verifier defect. A patch that left every token value
-  alone, which is exactly the carve-out the ownership rule names.
+- **Was not ours, and Kevin has now called it:** the selector work is a minor
+  bump under [OWNERSHIP](OWNERSHIP.md) — "those claim the system changed, and
+  that is his call." He chose A on 2026-09-21, which is what authorized
+  `v0.6.0`.
+- **Was ours:** the verifier defect. A fix that left every token value alone,
+  which is exactly the carve-out the ownership rule names.
+- **Still not ours:** Option B. It moves SPEC §6, so it needs its own
+  conversation rather than arriving as a tidy-up.
 
 ## 6. The layout note is a separate question
 
