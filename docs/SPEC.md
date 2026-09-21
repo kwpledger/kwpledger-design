@@ -267,6 +267,36 @@ This is a general point, not a one-off repair: **a release check that has never
 failed is not known to work.** Anything added to the gate table should arrive
 with a case that breaks it.
 
+### 7.4 Drift between duplicate declarations
+
+The same failure shape as §7.3, one level down, and gated since **v0.5.2**.
+
+The parsers build `token -> value` by sweeping each register with a regex, so a
+token declared **twice in the same register** silently resolves to whichever
+copy is authored last. The other copy is never read by any gate. Verified: a
+`--data-1-surface` at chroma `0.45` — five times the §4.6 ceiling and well
+outside sRGB — sitting in the media-query block reported **"All gates pass"**
+and exited `0`.
+
+That is not idle. `@media (prefers-color-scheme: dark)` cannot be overridden by
+a button, so a consumer with its own theme toggle needs a **selector** to drive,
+and this repo ships none. The shape
+[header-footer-design-system.md](header-footer-design-system.md) §4.1 already
+assumes — swapping the media query for `:root[data-theme="dark"]` or a `.dark`
+class — implies a second dark block beside the media query, because a rule
+inside a media query and a rule outside one cannot be the same rule. **Two
+copies of one register is a drift surface by construction.**
+
+So the gate is on *disagreement*, not on duplication: identical copies pass,
+diverging copies fail and name the token and both values. That is what makes
+the duplicated-block shape safe to author if the system adopts it, and it holds
+whether or not it ever does.
+
+The split between registers is also no longer recomputed per parser. A file
+with no dark block used to slice as "everything but the last character" —
+§4.5 authors both registers together, so one register is now a hard failure
+naming the file.
+
 ---
 
 ## 8. Color is reinforcement, never the sole carrier of meaning

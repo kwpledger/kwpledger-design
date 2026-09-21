@@ -50,6 +50,7 @@ docs/PALETTE.md    # every value as hex, for consumers that can't take a depende
 docs/header-footer-design-system.md # the shared chrome rule (KWP-16) — binds every surface
 docs/infographic-design-system.md   # the 1080x1350 infographic format — a layer-3 consumer
 docs/quote-post-design-system.md    # the 1400x1000 (7:5) quote-card format — a layer-3 consumer
+docs/theme-toggle-capability.md     # why no consumer can build a light/dark TOGGLE yet — open decision
 ```
 
 ## Rules

@@ -71,11 +71,66 @@ const EXCLUDED_HUE_BANDS = [
   [238, 262, 'navy surface family'],
 ];
 
+/* Each parser records its two regions here for the drift gate to re-read. */
+const REGIONS = {};
+
+/*
+ * The light/dark split, in one place. Every parser below sliced on this string
+ * independently, and a miss returned `slice(0, -1)` — the whole file minus its
+ * last character as "light", one character as "dark". Nothing said so.
+ */
+const DARK_AT = '@media (prefers-color-scheme: dark)';
+function splitThemes(file, css) {
+  const i = css.indexOf(DARK_AT);
+  if (i === -1) {
+    console.error(`FAILED — ${file} has no \`${DARK_AT}\` block. Light and dark are`);
+    console.error('  authored together (SPEC.md §4.5); a file with one register is incomplete.');
+    process.exit(1);
+  }
+  return [css.slice(0, i), css.slice(i)];
+}
+
+/*
+ * DRIFT BETWEEN DUPLICATE DECLARATIONS, which is the failure that looks most
+ * like success — the same shape as the --data-8 case in §7.3, one level down.
+ *
+ * The parsers below build `token -> value` with a regex sweep, so a second
+ * declaration of the same token in the same register silently overwrites the
+ * first. Whichever copy is authored LAST is the only one any gate ever sees.
+ * The other can hold a chroma five times the ceiling, out of sRGB entirely,
+ * and this script reports "All gates pass".
+ *
+ * That is not hypothetical and it is not idle: a consumer with its own theme
+ * toggle needs a selector to drive, so the shape in
+ * docs/header-footer-design-system.md §4.1 implies a second dark block beside
+ * the media query. Two copies of one register is a drift surface by
+ * construction. This gate is what makes that shape safe to author — identical
+ * copies pass, disagreeing copies fail by name.
+ */
+function checkDuplicates(file, regions, fail) {
+  const DECL = /--([\w-]+):\s*([^;]+);/g;
+  // Both files carry example declarations inside doc comments (the
+  // --meal-breakfast layer-3 illustration). Those are prose, not authored
+  // tokens, and two illustrations of one name would trip this gate for no
+  // reason. Strip comments before scanning.
+  const strip = (src) => src.replace(/\/\*[\s\S]*?\*\//g, '');
+  for (const [region, src] of Object.entries({ light: regions[0], dark: regions[1] })) {
+    const seen = new Map();
+    for (const m of strip(src).matchAll(DECL)) {
+      const value = m[2].trim().replace(/\s+/g, ' ');
+      const prior = seen.get(m[1]);
+      if (prior === undefined) seen.set(m[1], value);
+      else if (prior !== value)
+        fail(`${file} ${region}: --${m[1]} is declared twice and the copies disagree — \`${prior}\` vs \`${value}\`. Duplicate blocks must stay identical.`);
+    }
+  }
+}
+
 /* ---- parse base.css: palette hex + semantic aliases, per theme ---- */
 function parseBase() {
   const css = read('tokens/base.css');
-  const i = css.indexOf('@media (prefers-color-scheme: dark)');
-  const [lightSrc, darkSrc] = [css.slice(0, i), css.slice(i)];
+  const [lightSrc, darkSrc] = splitThemes('base.css', css);
+  REGIONS['base.css'] = [lightSrc, darkSrc];
   const hexes = Object.fromEntries(
     [...css.matchAll(/--([\w-]+):\s*(#[0-9a-fA-F]{6})\s*;/g)].map((m) => [m[1], m[2]])
   );
@@ -97,7 +152,8 @@ function parseBase() {
 /* ---- parse categorical.css: slot -> {surface, fg, border} as [L,C,H] ---- */
 function parseCategorical() {
   const css = read('tokens/categorical.css');
-  const i = css.indexOf('@media (prefers-color-scheme: dark)');
+  const [lightSrc, darkSrc] = splitThemes('categorical.css', css);
+  REGIONS['categorical.css'] = [lightSrc, darkSrc];
   const grab = (src) => {
     const out = {};
     for (const m of src.matchAll(
@@ -107,13 +163,14 @@ function parseCategorical() {
     }
     return out;
   };
-  return { light: grab(css.slice(0, i)), dark: grab(css.slice(i)) };
+  return { light: grab(lightSrc), dark: grab(darkSrc) };
 }
 
 /* ---- parse status.css: name -> {surface, fg, border} as [L,C,H] ---- */
 function parseStatus() {
   const css = read('tokens/status.css');
-  const i = css.indexOf('@media (prefers-color-scheme: dark)');
+  const [lightSrc, darkSrc] = splitThemes('status.css', css);
+  REGIONS['status.css'] = [lightSrc, darkSrc];
   const grab = (src) => {
     const out = {};
     for (const m of src.matchAll(
@@ -123,7 +180,7 @@ function parseStatus() {
     }
     return out;
   };
-  return { light: grab(css.slice(0, i)), dark: grab(css.slice(i)) };
+  return { light: grab(lightSrc), dark: grab(darkSrc) };
 }
 
 /* ---- run ---- */
@@ -135,6 +192,13 @@ const fail = (msg) => failures.push(msg);
 const ok = (v, gate) => (v >= gate ? '' : ' ✗');
 
 console.log('kwp design — token verification\n');
+
+/*
+ * ---- drift: duplicate declarations that disagree ----
+ * Runs before completeness because a token the gates never see is worse than
+ * one that is missing — missing gets reported, unseen gets a pass.
+ */
+for (const [file, regions] of Object.entries(REGIONS)) checkDuplicates(file, regions, fail);
 
 /* ---- completeness: what must exist, before checking what it is ---- */
 {
@@ -177,7 +241,8 @@ console.log('kwp design — token verification\n');
 
   console.log(
     `completeness: ${CATEGORICAL_SLOTS} categorical slots x ${ROLES.length} roles x ${THEMES.length} themes, ` +
-      `${STATUS_NAMES.length} status names, ${SEMANTIC_TOKENS.length} semantic tokens\n`
+      `${STATUS_NAMES.length} status names, ${SEMANTIC_TOKENS.length} semantic tokens; ` +
+      `no disagreeing duplicate declarations across ${Object.keys(REGIONS).length} files\n`
   );
 }
 

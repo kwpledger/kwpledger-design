@@ -140,3 +140,60 @@ test('still rejects a chroma over the ceiling', () => {
   assert.equal(status, 1, out);
   assert.match(out, /chroma|gamut/);
 });
+
+/*
+ * ---- duplicate dark blocks ----
+ *
+ * A consumer with its own theme toggle needs a selector to drive, and the
+ * media query cannot be one. The shape implied by
+ * docs/header-footer-design-system.md §4.1 therefore puts a second dark block
+ * beside the media query, so the register is authored twice.
+ *
+ * The verifier builds `token -> value` by sweeping with a regex, so the copy
+ * authored LAST silently wins and the other is never checked by any gate.
+ * These three cases pin the behaviour that makes the shape safe: drift fails,
+ * agreement passes.
+ */
+
+/** The dark `:root` body of a token file, duplicated into a second selector. */
+const duplicateDarkBlock = (css) => {
+  const i = css.indexOf('@media (prefers-color-scheme: dark)');
+  const body = /@media \(prefers-color-scheme: dark\) \{\s*:root \{([\s\S]*?)\n  \}\n\}/.exec(
+    css.slice(i)
+  )[1];
+  return (
+    css.slice(0, i) +
+    `@media (prefers-color-scheme: dark) {\n  :root:not([data-theme="light"]) {${body}\n  }\n}\n\n` +
+    `:root[data-theme="dark"] {${body}\n}\n`
+  );
+};
+
+test('rejects duplicate dark blocks whose copies disagree', () => {
+  const { status, out } = runWith(({ edit }) =>
+    edit('categorical.css', (css) =>
+      // Break ONLY the media-query copy. Before this gate existed the
+      // attribute copy won the parse and this reported "All gates pass",
+      // with a chroma five times the ceiling and outside sRGB.
+      duplicateDarkBlock(css).replace(
+        '--data-1-surface: oklch(32% 0.052 25)',
+        '--data-1-surface: oklch(32% 0.45 25)'
+      )
+    )
+  );
+  assert.equal(status, 1, out);
+  assert.match(out, /--data-1-surface is declared twice and the copies disagree/);
+});
+
+test('accepts duplicate dark blocks whose copies agree — the gate is drift, not duplication', () => {
+  const { status, out } = runWith(({ edit }) => edit('categorical.css', duplicateDarkBlock));
+  assert.equal(status, 0, out);
+  assert.match(out, /All gates pass/);
+});
+
+test('rejects a token file with no dark register at all', () => {
+  const { status, out } = runWith(({ edit }) =>
+    edit('status.css', (css) => css.slice(0, css.indexOf('@media (prefers-color-scheme: dark)')))
+  );
+  assert.equal(status, 1, out);
+  assert.match(out, /status\.css has no/);
+});
