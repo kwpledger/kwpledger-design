@@ -50,7 +50,7 @@ docs/PALETTE.md    # every value as hex, for consumers that can't take a depende
 docs/header-footer-design-system.md # the shared chrome rule (KWP-16) — binds every surface
 docs/infographic-design-system.md   # the 1080x1350 infographic format — a layer-3 consumer
 docs/quote-post-design-system.md    # the 1400x1000 (7:5) quote-card format — a layer-3 consumer
-docs/theme-toggle-capability.md     # why no consumer can build a light/dark TOGGLE yet — open decision
+docs/theme-toggle-capability.md     # the light/dark TOGGLE contract — why the dark register is authored twice
 ```
 
 ## Rules
@@ -66,6 +66,7 @@ docs/theme-toggle-capability.md     # why no consumer can build a light/dark TOG
 - **Never let a value clip out of sRGB.** A clipped color is silently no longer at its authored lightness, which breaks parity with no warning.
 - **Light/dark is user preference; channel or section identity is not.** Never wire them to the same switch.
 - Notation is deliberately mixed — `base.css` hex, `categorical.css` `oklch()`. See SPEC §6. Do not "tidy" this.
+- **Each dark register is authored TWICE and the copies must stay identical** — a guarded media query plus `:root[data-theme="dark"]`, so a consumer's toggle has a selector to drive (SPEC §9.1). A rule inside a media query and one outside it cannot be the same rule, so this is structural, not duplication to tidy. `verify` gates drift and set-parity between the blocks.
 - **Do not build an authoring UI or tooling.** `tools/` holds a verifier and the math it needs, and stays that size.
 
 ## Who owns this repo
