@@ -90,7 +90,21 @@ it is identical in all of them and needs no configuration — then add it above.
 If it does not, add it to the hands-on list and accept that a human is the
 transport.
 
-**Do not name a private repo here on your own initiative.** This repo is
-public. If the name already appears elsewhere in this repo it is not a new
-disclosure and is fine; otherwise ask Kevin first, and note that you did —
-`smartalarm-pro` above is the worked example.
+**Do not name a private repo here that isn't already named elsewhere in this
+repo unless Kevin says to do so** (his wording, 2026-09-22). This repo is
+public. If the name already appears elsewhere here, listing it is not a new
+disclosure. Otherwise ask, and note that you did — `smartalarm-pro` above is
+the worked example.
+
+**Do not infer *why* a repo is private.** The reason differs per repo and
+changes over time. Some are private only because they are unfinished and so
+not published yet — `meal-planner` was one of those until it went public.
+Others are private because they are intended as products, where it genuinely
+is confidentiality. Both kinds are on the roster above, so a rule that assumed
+either reason would be wrong about half of them. Ask; do not guess, and do not
+write your guess down here.
+
+A consumer being private is not a reason to leave it off the roster — only a
+reason to ask before naming it. Leaving one off defeats the point, since the
+roster is the only channel that reaches the consumers that cannot check for
+themselves.
