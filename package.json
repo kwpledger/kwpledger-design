@@ -1,6 +1,6 @@
 {
   "name": "@kwpledger/design",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Shared design tokens for kwpledger.com, the *.kwpledger.com subdomains, and associated apps.",
   "license": "UNLICENSED",
   "private": false,
@@ -16,6 +16,7 @@
     "./status.css": "./tokens/status.css",
     "./fonts.css": "./tokens/fonts.css",
     "./fonts/*": "./fonts/*",
+    "./logos/*": "./logos/*",
     "./package.json": "./package.json"
   },
   "files": [
