@@ -23,10 +23,10 @@ npm test         # proves `verify` REJECTS broken tokens — see SPEC §7.3
 
 Zero dependencies. Node `>=22.12.0`. Run both before tagging anything.
 
-**`verify` checks the tokens; `test` checks `verify`.** It once reported "All
-gates pass" with `--data-8` deleted, because it only checked the slots it found.
-Anything you add to the gates needs a failure case in `test/verify.test.mjs`, or
-you do not know it can fail.
+**`verify` checks the tokens; `test` checks `verify`.** It once passed with
+`--data-8` deleted, having only checked the slots it found. **Anything you add
+to the gates needs a failure case in `test/verify.test.mjs`**, or you do not
+know it can fail.
 
 ## Layout
 
@@ -45,65 +45,57 @@ tools/
                         # Takes an optional root path — how the tests aim it at mutated copies.
 test/
   verify.test.mjs       # failure cases for the verifier. `npm test`.
-docs/SPEC.md       # the contract
-docs/PALETTE.md    # every value as hex, for consumers that can't take a dependency
-docs/header-footer-design-system.md # the shared chrome rule (KWP-16) — binds every surface
-docs/infographic-design-system.md   # the 1080x1350 infographic format — a layer-3 consumer
-docs/quote-post-design-system.md    # the 1400x1000 (7:5) quote-card format — a layer-3 consumer
-docs/theme-toggle-capability.md     # the light/dark TOGGLE contract — why the dark register is authored twice
+docs/              # SPEC.md is the contract; index in docs/README.md
 ```
 
 ## Rules
 
-- **Three layers; each may reach exactly one layer down.** Palette → semantic → domain. Domain tokens (`--meal-breakfast`) live in the consuming repo, **never here**. This repo must never learn what a "meal type" is.
+- **Three layers; each may reach exactly one layer down.** Palette → semantic → domain. Domain tokens (`--meal-breakfast`) live in the consuming repo, **never here** — this repo must never learn what a "meal type" is.
 - **Consumers reference semantic tokens only**, never raw palette values.
-- **Categorical slots are numbered, never named for their hue.** `--data-1` is the first slot, not "the red one".
-- **Status tokens are named for their meaning, never numbered** — the inverse rule, same reason. Never map a status onto `--data-n` or vice versa: slots are reassignable, meanings are not.
-- **Status is authored louder than categorical** (higher chroma per role, still under the ceiling). That is what stops an error reading as an ordinary category at the same hue. Gated.
-- **Color is always reinforcement, never the sole carrier of meaning.** Every color-coded axis carries a text label. Accessibility requirement, and it is what makes these values safe to change later.
-- **Author light and dark together.** Neither register is derivable from the other — the lightness that keeps eight hues in sRGB differs between themes.
-- **Never exceed the chroma ceiling of 0.091** (`--teal-300`, the most saturated brand color). Stately, not neon, expressed as a number a script can check.
-- **Never let a value clip out of sRGB.** A clipped color is silently no longer at its authored lightness, which breaks parity with no warning.
+- **Categorical slots are numbered, never named for their hue** (`--data-1`, not "the red one"); **status tokens are named for their meaning, never numbered.** Never map a status onto `--data-n` or the reverse: slots are reassignable, meanings are not.
+- **Status is authored louder than categorical** (higher chroma per role, still under the ceiling), so an error cannot read as an ordinary category at the same hue. Gated.
+- **Color is always reinforcement, never the sole carrier.** Every color-coded axis carries a text label — an accessibility requirement, and what makes these values safe to change later.
+- **Author light and dark together.** Neither is derivable from the other: the lightness that keeps eight hues in sRGB differs between themes.
+- **Never exceed the chroma ceiling of 0.091** (`--teal-300`). Stately, not neon, as a number a script can check.
+- **Never let a value clip out of sRGB.** A clipped color is silently off its authored lightness, breaking parity with no warning.
 - **Light/dark is user preference; channel or section identity is not.** Never wire them to the same switch.
 - Notation is deliberately mixed — `base.css` hex, `categorical.css` `oklch()`. See SPEC §6. Do not "tidy" this.
-- **Each dark register is authored TWICE and the copies must stay identical** — a guarded media query plus `:root[data-theme="dark"]`, so a consumer's toggle has a selector to drive (SPEC §9.1). A rule inside a media query and one outside it cannot be the same rule, so this is structural, not duplication to tidy. `verify` gates drift and set-parity between the blocks.
+- **Each dark register is authored TWICE and the copies must stay identical** — a guarded media query plus `:root[data-theme="dark"]`, so a consumer's toggle has a selector to drive (SPEC §9.1). Structural, not duplication to tidy: a rule inside a media query and one outside it cannot be the same rule. `verify` gates drift and set-parity.
 - **Do not build an authoring UI or tooling.** `tools/` holds a verifier and the math it needs, and stays that size.
 
 ## Who owns this repo
 
 **The `kwpledger-site` line of sessions is the source of truth here** (Kevin, 2026-08-19). If you are working in this repo from some other task, that is you being a guest, and the rule is simple:
 
-- **Add freely.** New docs, new assets, new consumer specs. `docs/infographic-design-system.md` and `logos/` both arrived this way and are welcome.
-- **Do not change or subtract.** Tokens, the rules above, `docs/SPEC.md`, and the contrast gates are not yours to edit. If your task seems to need a token changed, that is a conversation with Kevin, not a commit.
-- **Do not bump the version or cut a tag.** Version bumps originate from the site line. Pinning only means something if one line of succession decides when a version exists — two sessions bumping independently produce two different claims about what `v0.3.0` contains.
+- **Add freely.** New docs, new assets, new consumer specs.
+- **Do not change or subtract.** Tokens, the rules above, `docs/SPEC.md` and the contrast gates are not yours to edit. A task that seems to need a token changed is a conversation with Kevin, not a commit.
+- **Do not bump the version or cut a tag.** Pinning only means something if one line of succession decides when a version exists.
 
 **How to tell whether you are the site line** (Kevin, 2026-09-09). It is a checkable test, not a judgement call:
 
 > **You are the site line if and only if `kwpledger-site` is attached to this session** — its `AGENTS.md` loaded, carrying the line *"This session line owns that repo's versions and tags."* If it is not attached, you are a guest here: add freely, change nothing, bump nothing.
 
-The authority travels with the task rather than being assumed — a repo cannot own anything. Why the test is checkable rather than a judgement call, and what each misreading costs: [docs/OWNERSHIP.md](docs/OWNERSHIP.md).
+The authority travels with the task; a repo cannot own anything.
 
-**Authorized is not acting** (Kevin, 2026-09-11). The test above says who *may* act here, not who *is*, and two sessions can pass it at once. That has happened.
+**Authorized is not acting** (Kevin, 2026-09-11). The test says who *may* act, not who *is*, and two sessions can pass it at once — which has happened. **You are the acting session only if your task names a change in this repo.** If `site` is attached but your task is about another repo, you are authorized and not acting: add freely, but no commit, no bump, no tag here.
 
-**You are the acting session only if your task names a change in this repo.** If `site` is attached but your task is about some other repo, you are authorized and not acting: add freely, but no commit, no bump, no tag here.
+Why the test is checkable rather than a judgement call, what each misreading costs, and the incident behind the acting rule: [docs/OWNERSHIP.md](docs/OWNERSHIP.md).
 
-**Who may move which digit** (Kevin, 2026-09-09). Kevin owns **major `x.`** and **minor `x.y`** — those claim the system changed, and that is his call. The site line of sessions may increment the **patch `x.y.z`** on its own for a fix that leaves every token value alone: a verifier or tooling defect, a docs correction. If a token value, a gate threshold, or a rule in this file moved, it is not a patch, and it is not yours.
+**Who may move which digit** (Kevin, 2026-09-09). Kevin owns **major `x.`** and **minor `x.y`** — those claim the system changed. The site line may move the **patch `x.y.z`** alone, for a fix that leaves every token value untouched: a verifier or tooling defect, a docs correction. If a token value, a gate threshold, or a rule in this file moved, it is not a patch and not yours.
 
-This file is a handoff to the **next** session and to whatever **parallel** session is in here right now. Write it for both — and keep it short enough to be read by both.
-
-**Four rules govern this file's length** (Kevin, 2026-09-20), the same in every repo of his that has one. **(1) Soft limit 1,350 words** — past it, weigh each addition, and look for what can be cut safely or preserved by moving it to a `docs/` reference. **(2) Hard limit 1,850** — past it, cut or move *now*, not later. **(3) The four-minute rule is _a_ primary decider**, not the only one: if a session will not need it in the first four minutes after handoff, it is a high-tier candidate for preservation by move. **(4) No `docs/` file carries a word limit** — reference, not handoff, so moving costs nothing. A PostToolUse hook measures this file on every write (`.claude/hooks/agents-md-length.mjs`); it reports but cannot block.
+This file is a handoff to the **next** session and to whatever **parallel** session is in here right now — written for both, and short enough to be read by both. **Its word budget is 1,350 soft, 1,850 hard**; past soft, move something to `docs/`, which carries no limit. Full rules: [docs/HANDOFF-FILE.md](docs/HANDOFF-FILE.md).
 
 ## Changing something
 
 Edit → `npm run verify` and `npm test` pass → update SPEC.md and regenerate the PALETTE.md tables in the same commit if values or rules moved → bump the version.
 
-**You do not cut the tag by hand, and you cannot.** A session has no way to create a git ref — pushing a tag and POSTing to the refs API are both blocked. `.github/workflows/release.yml` cuts it on merge to `main`, whenever `package.json`'s version has no tag yet. **So a bumped version IS the release**; merging is what publishes it.
+**You do not cut the tag by hand, and you cannot** — a session cannot create a git ref; pushing a tag and the refs API are both blocked. `.github/workflows/release.yml` cuts it on merge to `main` when `package.json`'s version has no tag yet. **So a bumped version IS the release**; merging publishes it.
 
-**A local `git tag` proves nothing about this repo.** Clones here arrive without tags, so the command prints an empty list whether or not releases exist. They do exist. Reading that emptiness as "this repo has never been tagged" is a mistake already made once, and it got written into another repo's docs as a migration blocker. **`git ls-remote --tags origin` is the check** — it asks the remote, which is what the question was about.
+**A local `git tag` proves nothing about this repo.** Clones here arrive without tags, so it prints an empty list whether or not releases exist. They do exist. **`git ls-remote --tags origin` is the check** — it asks the remote, which is what the question was about.
 
-This paragraph deliberately does **not** list the tags, and that is load-bearing: every version of it that named a number went stale, twice within days. There is no number here to correct. Run the command. The three attempts, and the same defect reaching another repo: [docs/OWNERSHIP.md](docs/OWNERSHIP.md).
+**Never write a tag number into this file.** Every version that named one went stale, twice within days. There is no number here to correct: run the command. The attempts, and the same defect reaching another repo: [docs/OWNERSHIP.md](docs/OWNERSHIP.md).
 
-**Removing or renaming a token is a major bump**, even if nothing appears to use it. The delivery model assumes pinning; a silent rename is exactly what pinning exists to prevent.
+**Removing or renaming a token is a major bump**, even if nothing appears to use it. A silent rename is exactly what pinning exists to prevent.
 
 **Not unilateral** — the categorical count, hue placement, the layering contract, the chroma ceiling, and the text-label rule need a spec change and a conversation with Kevin.
 
@@ -118,9 +110,9 @@ This paragraph deliberately does **not** list the tags, and that is load-bearing
 
 ## Working with Kevin
 
-- **He brings the goal; you bring the numbered list.** He executes an ordered list well and stalls at generating one. Producing the sequence is your job.
+- **He brings the goal; you bring the numbered list** — producing the sequence is your job, and he stalls at generating one.
 - **Surface one item at a time.** A long list of open work causes paralysis.
-- **Narrate your reasoning back, including routine results.** Going quiet to spare him noise removes the *why*, which is the part he wants.
+- **Narrate your reasoning back, including routine results.** The *why* is the part he wants.
 - **Spar, don't flatter.** Concrete over abstract.
 
 Full context: `kwpledger-site/docs/WORKING-STYLE.md`.
