@@ -96,12 +96,15 @@ public. If the name already appears elsewhere here, listing it is not a new
 disclosure. Otherwise ask, and note that you did — `smartalarm-pro` above is
 the worked example.
 
-**Read that as a publishing-timing rule, not a confidentiality one.** Kevin's
-repos are private because they are incomplete and therefore unpublished, not
-because their contents are sensitive. `meal-planner` is already public and
-`runbox-mcp` will likely follow; the Base44 apps will probably stay private
-simply because they stay unfinished. So the question is *has he published this
-yet*, never *is this a secret*. A consumer being private is not a reason to
-leave it off the roster — only a reason to ask before naming it. Leaving one
-off defeats the point, since the roster is the only channel that reaches the
-consumers that cannot check for themselves.
+**Do not infer *why* a repo is private.** The reason differs per repo and
+changes over time. Some are private only because they are unfinished and so
+not published yet — `meal-planner` was one of those until it went public.
+Others are private because they are intended as products, where it genuinely
+is confidentiality. Both kinds are on the roster above, so a rule that assumed
+either reason would be wrong about half of them. Ask; do not guess, and do not
+write your guess down here.
+
+A consumer being private is not a reason to leave it off the roster — only a
+reason to ask before naming it. Leaving one off defeats the point, since the
+roster is the only channel that reaches the consumers that cannot check for
+themselves.
