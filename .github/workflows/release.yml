@@ -56,6 +56,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      issues: write
     steps:
       - uses: actions/checkout@v4
         with:
@@ -108,3 +109,54 @@ jobs:
           } > "$RUNNER_TEMP/notes.md"
 
           gh release create "$V" --title "$V" --notes-file "$RUNNER_TEMP/notes.md"
+
+      # Consumers pin, so a release reaches nobody until somebody merges it.
+      # The pinned consumers each run their own drift check and will notice on
+      # their next push or weekly run. The HANDS-ON ones — Base44, Substack, the
+      # fixed-canvas formats — have no build and cannot poll anything, so this
+      # roster is the entire mechanism for them. See docs/CONSUMERS.md.
+      #
+      # This announces; it never updates. Automatic propagation is precisely
+      # what pinning exists to prevent.
+      #
+      # Why the announcement lives here and the pin check does not: this repo is
+      # public and several consumers are private, so reading their pins from
+      # here would need a cross-repo credential in a public repo's secrets. A
+      # consumer reading a public remote needs none.
+      - name: Open the consumer checklist
+        if: steps.check.outputs.exists == 'false'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          V="v${{ steps.v.outputs.version }}"
+
+          ROSTER=$(sed -n '/<!-- consumers:start -->/,/<!-- consumers:end -->/p' \
+                     docs/CONSUMERS.md | sed '/<!-- consumers:/d')
+          if [ -z "$(echo "$ROSTER" | tr -d '[:space:]')" ]; then
+            echo "::error::No roster found between the markers in docs/CONSUMERS.md."
+            echo "::error::Refusing to open an empty checklist."
+            exit 1
+          fi
+
+          # echo rather than a heredoc, for the reason given above.
+          {
+            echo "\`$V\` is tagged and released."
+            echo
+            echo 'Nothing has taken it yet — consumers pin, deliberately. This is'
+            echo 'the offer, not the update.'
+            echo
+            echo "$ROSTER"
+            echo
+            echo 'The pinned consumers will also raise this themselves on their'
+            echo 'next push or weekly check, so their boxes may already be handled'
+            echo 'by the time you read this. The hands-on ones will not — this list'
+            echo 'is the only thing that reaches them.'
+            echo
+            echo '<sub>Opened automatically by `.github/workflows/release.yml`'
+            echo 'from the roster in `docs/CONSUMERS.md`.</sub>'
+          } > "$RUNNER_TEMP/checklist.md"
+
+          gh issue create \
+            --title "$V — consumers to update" \
+            --body-file "$RUNNER_TEMP/checklist.md"
