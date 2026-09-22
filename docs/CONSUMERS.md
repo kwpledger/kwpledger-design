@@ -70,6 +70,9 @@ a version is tagged. Edit the list here; the issue follows.
 
 - [ ] **Base44 apps** — `tapdodge`, `plankvoice`. Values are pasted, not
       imported. A token change means editing each app by hand.
+- [ ] **`smartalarm-pro`** — a Base44 app, not consuming these tokens yet.
+      Listed on Kevin's say-so (2026-09-22) so it is not forgotten when it
+      does. Nothing to do for it until then.
 - [ ] **Substack** — theme colors set in the publication settings UI.
 - [ ] **Fixed-canvas formats** — the infographic (1080×1350), quote post
       (1400×1000) and LinkedIn banner specs in `docs/`. Re-export affected
@@ -87,5 +90,7 @@ it is identical in all of them and needs no configuration — then add it above.
 If it does not, add it to the hands-on list and accept that a human is the
 transport.
 
-**Do not name a private repo here that is not already named elsewhere in this
-repo.** This one is public.
+**Do not name a private repo here on your own initiative.** This repo is
+public. If the name already appears elsewhere in this repo it is not a new
+disclosure and is fine; otherwise ask Kevin first, and note that you did —
+`smartalarm-pro` above is the worked example.
