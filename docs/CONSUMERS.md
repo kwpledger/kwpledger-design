@@ -90,7 +90,18 @@ it is identical in all of them and needs no configuration — then add it above.
 If it does not, add it to the hands-on list and accept that a human is the
 transport.
 
-**Do not name a private repo here on your own initiative.** This repo is
-public. If the name already appears elsewhere in this repo it is not a new
-disclosure and is fine; otherwise ask Kevin first, and note that you did —
-`smartalarm-pro` above is the worked example.
+**Do not name a private repo here that isn't already named elsewhere in this
+repo unless Kevin says to do so** (his wording, 2026-09-22). This repo is
+public. If the name already appears elsewhere here, listing it is not a new
+disclosure. Otherwise ask, and note that you did — `smartalarm-pro` above is
+the worked example.
+
+**Read that as a publishing-timing rule, not a confidentiality one.** Kevin's
+repos are private because they are incomplete and therefore unpublished, not
+because their contents are sensitive. `meal-planner` is already public and
+`runbox-mcp` will likely follow; the Base44 apps will probably stay private
+simply because they stay unfinished. So the question is *has he published this
+yet*, never *is this a secret*. A consumer being private is not a reason to
+leave it off the roster — only a reason to ask before naming it. Leaving one
+off defeats the point, since the roster is the only channel that reaches the
+consumers that cannot check for themselves.
