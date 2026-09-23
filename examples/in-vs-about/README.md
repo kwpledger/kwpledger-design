@@ -17,6 +17,8 @@ actually ran in. Kevin approved the copy on 2026-09-23.
 
 ## Declared deviation: three modules
 
+Permitted under Part 10, *Departing from this document in one graphic* — this is its worked example.
+
 §2.4 calls four the practical minimum. This has three because the work ran in
 three lanes and no more; a fourth would be invented to fill the count. The
 closing note carries the weight a fourth module would, the same way

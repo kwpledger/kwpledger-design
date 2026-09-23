@@ -695,6 +695,24 @@ SPEC §10 permits a consumer to add what it needs, provided the deviation is jus
 
 Also declared, though not deviations: card radius and the 2px module edge are layout decisions with no token behind them, which is correct — they are this consumer's business, not the system's.
 
+### Departing from this document in one graphic
+
+This document is guidance, not a gate. Under SPEC §10 as extended on 2026-09-23 (Kevin, as product owner), one graphic may depart from a rule here when **both** hold:
+
+1. **It makes sense for what that graphic is** — the departure follows from the content, not from preference.
+2. **The graphic's README records it** — what was done, why, and why it beat the obvious alternative.
+
+Worked example: `examples/in-vs-about/` runs three modules against §2.4's practical minimum of four. The work it depicts ran in three lanes, and a fourth module would have been invented to fill the count; a closing note carries the weight a fourth would. Its README says so.
+
+**Four constraints are not open to this,** because a stated reason cannot restore what each one protects:
+
+- **Eight modules maximum.** A ninth has no categorical color to be (§2.4).
+- **23px for anything read as a sentence.** Below it, text is unreadable at feed scale (§3.2).
+- **The 200-word hard cap.** The 120–180 range may flex with a reason; the cap does not (§7.4).
+- **No topic icons, no emoji** (§5.7).
+
+Changing any of those four is still a conversation about this document, as *Changing this document* below says — not a note in one graphic's README.
+
 **Nothing here belongs in `tokens/`.** The design system must never learn what an "infographic" is, for the same reason it must never learn what a "meal type" is.
 
 ---
