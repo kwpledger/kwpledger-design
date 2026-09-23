@@ -35,3 +35,4 @@ contract**, and it wins over anything written here or there.
 | [OWNERSHIP.md](OWNERSHIP.md) | Why the site-line test is checkable, the incident behind *authorized is not acting*, and why no tag number is written down. |
 | [HANDOFF-FILE.md](HANDOFF-FILE.md) | What `AGENTS.md` is for and its word budget. |
 | [BACKLOG.md](BACKLOG.md) | Open decisions. Kept short on purpose. |
+| [CHANGELOG.md](CHANGELOG.md) | What each tagged version added, newest first. |
