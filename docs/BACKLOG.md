@@ -1,6 +1,6 @@
 # These things need to be done in kwpledger-design v1.0 #
 
-Current release: **v0.7.0** (2026-09-23). Format: [BACKLOG-FORMAT](https://github.com/kwpledger/kwpledger-site/blob/main/docs/BACKLOG-FORMAT.md).
+Current release: **v0.7.0** (2026-09-23). Format: [BACKLOG-FORMAT](BACKLOG-FORMAT.md).
 
 **This repo's addition to the format: open decisions only.** [SPEC.md](SPEC.md)
 is the contract and [AGENTS.md](../AGENTS.md) the working agreement; this file
@@ -48,3 +48,4 @@ Released work is in [CHANGELOG.md](CHANGELOG.md).
 **Completed Items**
 
 - [x] Footer rule: an optional privacy link beneath the copyright (`header-footer-design-system.md` §6.3). 2026-09-23, PR #47.
+- [x] `BACKLOG-FORMAT.md` moved here from `kwpledger-site`, as the hub for cross-repo standards; it ships in the package's `docs/`, so consumers carry their pinned copy. Kevin's call. 2026-09-23.
