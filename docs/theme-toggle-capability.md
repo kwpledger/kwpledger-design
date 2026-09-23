@@ -159,6 +159,23 @@ run its own CSS and JS**, and the tier language §10.1 already uses for
 conformance ("a strict subset chain rather than alternatives") carries it for
 the platforms that cannot.
 
+**Settled 2026-09-23 — and settled narrower than the paragraph above proposed.**
+[header-footer-design-system.md](header-footer-design-system.md) §4.4 now
+specifies the control: three states, last in the header, radiogroup semantics,
+`system` as the absence of the attribute, a render-blocking pre-paint script.
+**But its presence is optional at every tier, including full control** — only
+its shape is binding.
+
+That is deliberately less than *required where the platform can run CSS and JS*.
+The narrow version was what got authorised, and it buys the thing that actually
+mattered: two surfaces can no longer invent different toggles. Requiring one is
+a strictly larger claim, it binds surfaces nobody has thought about yet, and it
+can be made later by changing one cell in §5's tier table — whereas un-requiring
+it later would be a breaking change to a spec consumers pin.
+
+So the open question is no longer *what shape* but only *whether to mandate*,
+and that remains Kevin's.
+
 ## 7. This does not block a consumer's header
 
 **A consumer building chrome for the first time should not wait for §4 to be
