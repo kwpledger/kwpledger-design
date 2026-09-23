@@ -1,7 +1,7 @@
 # Read this before every social card.
 
 The kwp social card — the **1200×630** image a link preview shows when someone shares a kwpledger
-page on LinkedIn, in Slack, in iMessage. It is served as `og:image`, so it is read in a feed, at
+page on LinkedIn or in a message. It is served as `og:image`, so it is read in a feed, at
 feed scale, next to someone else's post.
 
 This is a **layer-3 consumer** of [the kwp design system](SPEC.md), and a sibling of
@@ -21,7 +21,7 @@ infographic, not this.
 
 ### 0.1 Why 1200×630
 
-1.91:1 is what LinkedIn, Slack, Facebook and iMessage all render as the large preview, and
+1.91:1 is the large-preview shape LinkedIn and iMessage render, as do most other link previews, and
 1200×630 is its common size. Anything else gets letterboxed or cropped differently per platform.
 
 **The card assumes the large preview.** The site emits `twitter:card = summary_large_image` so
