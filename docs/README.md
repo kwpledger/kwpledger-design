@@ -23,6 +23,7 @@ contract**, and it wins over anything written here or there.
 | [infographic-design-system.md](infographic-design-system.md) | The 1080×1350 infographic format — a layer-3 consumer. |
 | [quote-post-design-system.md](quote-post-design-system.md) | The 1400×1000 (7:5) quote-card format — a layer-3 consumer. |
 | [linkedin-banner-design-system.md](linkedin-banner-design-system.md) | The banner format. |
+| [social-card-design-system.md](social-card-design-system.md) | The 1200×630 link-preview card (`og:image`) — a layer-3 consumer. |
 | [office-theme.md](office-theme.md) | Kevin's Microsoft 365 theme. Consumed by hand; nothing depends on it. |
 | [illustration-brief-desire-path.md](illustration-brief-desire-path.md) | A single illustration brief. |
 
