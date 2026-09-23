@@ -12,7 +12,7 @@ actually ran in. Kevin approved the copy on 2026-09-23.
 | Slots | `--data-1`, `--data-2`, `--data-3`, in order (§4.3) |
 | Card mode | Neutral (§4.4) — chip carries the tint |
 | Word count | **132** (§7.4 budget 120–180) |
-| Mark | `logo_long_ring_teal.svg` — the §5.8 default. The older examples still carry the bare `logo_long.svg`, which §5.8 calls stale |
+| Mark | `logo_long_ring_teal.svg` — the §5.8 default, now carried by every infographic in `examples/` |
 | Exports | `in-vs-about.jpg` 1080×1350 q92 |
 
 ## Declared deviation: three modules

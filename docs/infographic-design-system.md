@@ -388,7 +388,7 @@ The mark is chosen by **register**, and the choice is not optional. The inverted
 | Light canvas | `logo_long_ring_teal.svg` | `logo_short_ring_teal.svg` |
 | Dark canvas | `logo_long_ring_inv_teal.svg` | `logo_short_ring_inv_teal.svg` |
 
-**The ringed mark is the default**, at the default teal ring, per [`docs/logo-usage.md`](logo-usage.md). The ringless files (`logo_long.svg`, `logo_short_inv.svg`, and their pairs) are the exception and need a stated reason — §1.1 of that document lists the two known-good ones. The five graphics in `examples/` predate this and still carry a bare `logo_long.svg`; they are stale rather than wrong, and get re-marked when each is next touched.
+**The ringed mark is the default**, at the default teal ring, per [`docs/logo-usage.md`](logo-usage.md). The ringless files (`logo_long.svg`, `logo_short_inv.svg`, and their pairs) are the exception and need a stated reason — §1.1 of that document lists the two known-good ones. Every infographic in `examples/` carries the ringed teal mark — the four that predated this rule were re-marked on 2026-09-23.
 
 All eight marks are **true vectors and transparent**, as of the 2026-08-30 rework. The two traps this section used to list — a file with no alpha that dropped a white box on a dark canvas, and an `.svg` that was really a base64 raster — are both gone with the raster set. `logos/PROVENANCE.md` keeps them on the record as superseded; do not reach for them.
 

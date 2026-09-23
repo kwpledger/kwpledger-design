@@ -25,7 +25,7 @@ for the JPG, and a print-to-PDF at `scale 0.66` on 8.5×11in paper with 0.53in
 side and 0.84in top/bottom margins, matching `../four-principles/`.
 
 The two `@font-face` rules point at `../../fonts/`, and the footer mark at
-`../../logos/logo_long.svg`. Both are relative, so the file only renders
+`../../logos/logo_long_ring_teal.svg`. Both are relative, so the file only renders
 correctly from inside this directory.
 
 ## Preflight (§9)
@@ -44,7 +44,7 @@ Measured in the render, not estimated:
 - Both cards render at exactly 630.8px, and all eight bullets wrap to exactly two
   lines — the columns align row-for-row, which is the whole point of the format.
 - Letter PDF is one page, `/MediaBox [0 0 612 792]`, **zero image XObjects** —
-  the signature mark is `logo_long.svg` and stays vector.
+  the signature mark is vector (`logo_long_ring_teal.svg` since 2026-09-23).
 - `npm run verify` passes. No token was touched.
 
 ## Declared deviations
@@ -175,3 +175,7 @@ It works as a feed post and as the Letter handout. Dropped into a 16:9 deck it
 will letterbox with wide bars either side. A 16:9 slide variant would be a new
 format outside §0, not a resize of this one — the vertical budget in §2.3 is the
 whole design — so it is not assumed here.
+
+## Re-marked 2026-09-23
+
+The footer mark is now `logo_long_ring_teal.svg`, the §5.8 default, replacing the bare `logo_long.svg`. Same 1038×598 box and a vector circle, so nothing else moved: re-exported JPG and letter PDF, overflow 0, the PDF still one page with zero image XObjects. The pixel diff here was not confined to the mark: text sits a pixel or two differently across the canvas, so the previous JPG had drifted slightly from its source. The new render matches this README's recorded measurements exactly — both cards 630.8px, all eight bullets two lines.

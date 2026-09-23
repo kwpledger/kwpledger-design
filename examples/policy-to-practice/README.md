@@ -19,7 +19,7 @@ No renderer ships in this repo on purpose — `tools/` holds the verifier and th
 math it needs, and stays that size.
 
 The two `@font-face` rules point at `../../fonts/`, and the footer mark at
-`../../logos/logo_long.svg`. Both are relative, so the file only renders
+`../../logos/logo_long_ring_teal.svg`. Both are relative, so the file only renders
 correctly from inside this directory.
 
 ## The letter PDF
@@ -63,3 +63,7 @@ claims it as such rather than dressing it as an industry framework.
 
 The subhead is deliberately first person. "Most organizations stop at layer
 three" would be a stronger line and is not a claim the evidence supports.
+
+## Re-marked 2026-09-23
+
+The footer mark is now `logo_long_ring_teal.svg`, the §5.8 default, replacing the bare `logo_long.svg`. Same 1038×598 box and a vector circle, so nothing else moved: re-exported JPG and letter PDF, overflow 0, the PDF still one page with zero image XObjects. A pixel diff against the previous JPG changes only a 76px square around the initials.
