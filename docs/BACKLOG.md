@@ -41,7 +41,7 @@ Released work is in [CHANGELOG.md](CHANGELOG.md).
 - [x] `actions/checkout` v4 → v7 in `release.yml`, part of the sweep across all four repos (kwpledger-site KWP-21). 2026-09-23, PR #46.
 
 
-## To Do (surface specs) ##
+## To Do (specs) ##
 
 (none)
 
