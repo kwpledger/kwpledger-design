@@ -1,0 +1,181 @@
+<meta charset="utf-8">
+<title>Information In vs. About the Material — 1080×1350</title>
+<style>
+  @font-face { font-family:'Lora'; src:url('../../fonts/lora-latin.woff2') format('woff2');
+               font-weight:600; font-style:normal; }
+  @font-face { font-family:'Hanken Grotesk'; src:url('../../fonts/hanken-grotesk-latin.woff2') format('woff2');
+               font-weight:100 900; font-style:normal; }
+
+  :root{
+    /* ---- LIGHT REGISTER. One register per canvas — never mix. §4.1 ---- */
+    --surface:#fbfaf8; --surface-card:#ffffff;
+    --fg:#1a1917; --fg-muted:#5c5a57;
+    --accent:#0d5c58; --border:#e3e0da;
+
+    --data-1-surface:#fbd3cf; --data-1-fg:#5f3531; --data-1-border:#eaaba5;
+    --data-2-surface:#f6d8c0; --data-2-fg:#5a3a1e; --data-2-border:#e2b38d;
+    --data-3-surface:#e2e0be; --data-3-fg:#474419; --data-3-border:#c4c188;
+
+    --font-display:'Lora',Georgia,'Iowan Old Style',Palatino,serif;
+    --font-body:'Hanken Grotesk',system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+
+    --step--1:19px; --step-0:23px; --step-1:28px;
+    --step-2:36px;  --step-4:57px;
+
+    --space-2xs:10px; --space-xs:15px; --space-s:20px;
+    --space-m:30px;   --space-l:50px;
+
+    --radius-card:14px; --radius-chip:8px;
+  }
+
+  *{box-sizing:border-box; margin:0;}
+  body{margin:0; background:#555;}
+  /* The #555 body is a viewing backdrop, not part of the graphic. Handout prints on white. */
+  @media print{ body{background:#fff;} }
+
+  .canvas{
+    width:1080px; height:1350px;
+    padding:var(--space-l);
+    background:var(--surface); color:var(--fg);
+    font-family:var(--font-body); font-size:var(--step-0);
+    display:flex; flex-direction:column;
+    overflow:hidden;
+  }
+
+  /* ---- Header §5.1 ---- */
+  .eyebrow{font-size:var(--step--1); font-weight:600; letter-spacing:.10em;
+           line-height:1.2; text-transform:uppercase; color:var(--accent);}
+  h1{font-family:var(--font-display); font-weight:600;
+     font-size:var(--step-4); line-height:1.05; margin-top:var(--space-2xs);}
+  h1 em{font-style:normal; color:var(--accent);}   /* no italics — §3.4 */
+  .subhead{font-size:var(--step-1); line-height:1.35;
+           color:var(--fg-muted); margin-top:var(--space-xs);}
+  hr{border:0; border-top:1px solid var(--border); margin:var(--space-m) 0;}
+
+  /* ---- Body: layout A stack, 3 rows + closing note — see README ---- */
+  .body{flex:1; display:grid; grid-template-rows:repeat(3,1fr) auto; gap:var(--space-s);}
+
+  .module{
+    background:var(--surface-card);
+    border:2px solid var(--edge);
+    border-radius:var(--radius-card);
+    padding:0 var(--space-s);
+    display:grid;
+    grid-template-columns:320px 1fr;   /* horizontal internals — §5.2, see README */
+    column-gap:var(--space-s);
+    align-content:center;
+  }
+  .chip{
+    justify-self:start;
+    background:var(--tint); color:var(--ink);
+    border:1px solid var(--edge); border-radius:var(--radius-chip);
+    padding:6px 14px; font-size:var(--step--1); font-weight:600;
+    letter-spacing:.10em; text-transform:uppercase; line-height:1;
+  }
+  .module h2{
+    font-family:var(--font-display); font-weight:600;
+    font-size:var(--step-2); line-height:1.15; color:var(--ink);
+    margin-top:var(--space-2xs);
+  }
+  .module .lede{grid-column:1;}
+  .module .detail{grid-column:2;}
+  .module p{line-height:1.40;}
+  .module p.limit{color:var(--fg-muted);}
+
+  /* The key question — the takeaway line, one per module. */
+  .ask{
+    display:flex; align-items:baseline; gap:var(--space-xs);
+    margin-top:var(--space-xs); padding-top:var(--space-xs);
+    border-top:1px solid var(--border);
+  }
+  .ask .tag{
+    flex:none; color:var(--ink);
+    font-size:var(--step--1); font-weight:600;
+    letter-spacing:.10em; text-transform:uppercase;
+  }
+  .ask .q{font-weight:600; color:var(--fg); line-height:1.40;}
+
+  /* One slot per module, taken in order — §4.3 */
+  .s1{--tint:var(--data-1-surface); --ink:var(--data-1-fg); --edge:var(--data-1-border);}
+  .s2{--tint:var(--data-2-surface); --ink:var(--data-2-fg); --edge:var(--data-2-border);}
+  .s3{--tint:var(--data-3-surface); --ink:var(--data-3-fg); --edge:var(--data-3-border);}
+
+  /* Closing panel — same shape as little-ai-big-ai's "Why it matters". */
+  .note{
+    background:var(--surface-card); border:1px solid var(--border);
+    border-radius:var(--radius-card); padding:var(--space-xs) var(--space-m);
+  }
+  .note .tag{display:block; color:var(--accent);
+             font-size:var(--step--1); font-weight:600;
+             letter-spacing:.10em; text-transform:uppercase; line-height:1.2;}
+  .note p{font-size:var(--step-1); line-height:1.35; margin-top:var(--space-2xs);}
+
+  /* ---- Footer §5.8 ---- */
+  footer{
+    border-top:1px solid var(--border);
+    margin-top:var(--space-m); padding-top:var(--space-s);
+    display:flex; justify-content:space-between; align-items:center;
+    font-size:var(--step--1);
+  }
+  /* Long mark, ringed at the default teal — §5.8. Light canvas -> the dark mark.
+     Placed as-is, never redrawn. */
+  footer .mark{height:110px; width:auto; display:block;}
+  footer .who{color:var(--fg-muted); letter-spacing:.10em; text-transform:uppercase;
+              font-weight:600;}
+</style>
+
+<div class="canvas">
+  <div class="eyebrow">The line that decided the workflow</div>
+  <h1>Information in the material is not information <em>about</em> it</h1>
+  <div class="subhead">How 44 course reviews were split between two models and one person.</div>
+  <hr>
+
+  <div class="body">
+    <article class="module s1">
+      <div class="lede">
+        <span class="chip">Lane 1</span>
+        <h2>In the material</h2>
+      </div>
+      <div class="detail">
+        <p>The course content itself.</p>
+        <p class="limit">The organization&rsquo;s property, so the rules applied.</p>
+        <div class="ask"><span class="tag">Goes to</span><span class="q">The in-house model only</span></div>
+      </div>
+    </article>
+
+    <article class="module s2">
+      <div class="lede">
+        <span class="chip">Lane 2</span>
+        <h2>About the material</h2>
+      </div>
+      <div class="detail">
+        <p>My review notes and narrated transcripts.</p>
+        <p class="limit">Mine, until written into an official document.</p>
+        <div class="ask"><span class="tag">Goes to</span><span class="q">A frontier model, grounded in them</span></div>
+      </div>
+    </article>
+
+    <article class="module s3">
+      <div class="lede">
+        <span class="chip">Lane 3</span>
+        <h2>Judgment calls</h2>
+      </div>
+      <div class="detail">
+        <p>Finding sources. Tracing quotes nobody attributed.</p>
+        <p class="limit">Checking a model&rsquo;s guess costs more than deciding.</p>
+        <div class="ask"><span class="tag">Goes to</span><span class="q">No model. A person.</span></div>
+      </div>
+    </article>
+
+    <div class="note">
+      <span class="tag">What the rules missed</span>
+      <p>The rules said which data could go where. Nobody said which work.
+         That line came from the workflow &mdash; and a person checked every claim.</p>
+    </div>
+  </div>
+
+  <footer>
+    <img class="mark" src="../../logos/logo_long_ring_teal.svg" alt="kwpledger">
+    <span class="who">AI implementation in regulated environments</span>
+  </footer>
+</div>
