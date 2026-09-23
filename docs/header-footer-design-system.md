@@ -31,6 +31,7 @@ color, type, or spacing. Where this document and SPEC.md disagree, SPEC.md wins;
 | How does light/dark work? | Both files ship; CSS hides one. | §4.1 |
 | What if a reader force-darkens the page? | It breaks, and that is accepted. Declare `color-scheme` and stop. | §4.2 |
 | Does the rule span the page or the column? | **The page.** Full-bleed, every time. | §2.2 |
+| Does the footer link a privacy page? | Only to the surface's **own** note, beneath `©`. Optional. | §6.3 |
 | What if the consumer can't do any of this? | Tiered. Do what the surface allows, in order. | §5 |
 
 **What this does not do:** ship component CSS. The surfaces cannot share markup — different repos,
@@ -421,6 +422,8 @@ Same shape, inverted — a full-bleed opening rule, then **two blocks on one row
 3. **A context block, left-aligned** *(optional)* — a short note about what the surface is,
    and a return link to the parent. Subdomains carry it; kwpledger.com leaves that side empty.
 4. **The mark** *(optional)* — §3's rules apply unchanged if present.
+5. **A privacy link** *(optional)* — the last line of the identity block, beneath `©`, labelled
+   `Privacy`. Only on a surface that publishes its own privacy note. See §6.3.
 
 Type at `var(--step--1)`, color `var(--fg-muted)`.
 
@@ -468,6 +471,20 @@ harvesting risk. Kevin's correction, and it is the right one: with a catch-all t
 never worth defending, so a rule that constrains every surface to defend it is priced wrong.
 Kept as a convention because it is free where markup is available, not because it is load-
 bearing.)*
+
+### 6.3 The privacy link goes where a reader already looks, and only if the page is true
+
+**Added 2026-09-23 on Kevin's instruction**, when kwpledger.com gained a `/privacy` page.
+
+The footer is where readers look for it, so that is where it goes. It sits in the identity
+block rather than the empty left side. That side is for a subdomain's context block, and a
+link alone on the parent's left would bring back the two-ends layout §6.1 removed.
+
+**Optional, and optional for a reason.** A privacy note is a promise about what a surface does,
+so each surface writes its own and links only that. A surface with no note of its own does not
+link the parent's. Borrowing one describes a different system, and an inaccurate privacy
+statement is worse than none. For the same reason there is no shared "terms" link. Nothing on
+these surfaces has accounts, uploads, or sales for terms to govern.
 
 **At most one mark per page of chrome.** If the header carries it, the footer does not. Two
 signatures on one screen is the mark asking for attention it has already been given, and on a short
