@@ -1,7 +1,7 @@
 # Changelog — kwpledger-design
 
 Newest first. Each version lists what it added, one line per item; the PR has
-the detail. Format: [BACKLOG-FORMAT](https://github.com/kwpledger/kwpledger-site/blob/main/docs/BACKLOG-FORMAT.md).
+the detail. Format: [BACKLOG-FORMAT](BACKLOG-FORMAT.md).
 
 Unlike the other repos, this one was tagged from its first release, so every
 version below is real, not reconstructed. Dates are GitHub's release dates

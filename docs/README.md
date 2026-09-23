@@ -36,3 +36,4 @@ contract**, and it wins over anything written here or there.
 | [HANDOFF-FILE.md](HANDOFF-FILE.md) | What `AGENTS.md` is for and its word budget. |
 | [BACKLOG.md](BACKLOG.md) | Open decisions. Kept short on purpose. |
 | [CHANGELOG.md](CHANGELOG.md) | What each tagged version added, newest first. |
+| [BACKLOG-FORMAT.md](BACKLOG-FORMAT.md) | The backlog and changelog format every kwpledger repo follows. Ships in the package, so consumers carry their pinned copy. |

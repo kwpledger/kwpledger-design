@@ -10,6 +10,7 @@ One source of truth. Change a color here, bump the pin in a consumer, and it pro
 - **[docs/infographic-design-system.md](docs/infographic-design-system.md)** — the 1080×1350 LinkedIn/YouTube infographic format. A layer-3 consumer, written to be pasted into ChatGPT.
 - **[docs/BACKLOG.md](docs/BACKLOG.md)** — open decisions waiting on Kevin. Not a work tracker; only things that need deciding before they can be written.
 - **[docs/CHANGELOG.md](docs/CHANGELOG.md)** — what each tagged version added, newest first.
+- **[docs/BACKLOG-FORMAT.md](docs/BACKLOG-FORMAT.md)** — the backlog and changelog format every kwpledger repo follows.
 - **[docs/social-card-design-system.md](docs/social-card-design-system.md)** — the 1200×630 link-preview card served as `og:image`. A layer-3 consumer; reference implementation in [examples/social-card/](examples/social-card/).
 - **[docs/quote-post-design-system.md](docs/quote-post-design-system.md)** — the 1400×1000 (7:5) quote-card format. A layer-3 consumer; reference implementation and template in [examples/self-quote/](examples/self-quote/).
 
