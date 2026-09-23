@@ -16,10 +16,11 @@ Released work is in [CHANGELOG.md](CHANGELOG.md).
 
 ## To Do (consumers) ##
 
-- [ ] **1.** Every consumer takes or declines **v0.7.0**. The release opened [#45](https://github.com/kwpledger/kwpledger-design/issues/45) with the nine-entry roster, and nothing on it is ticked yet. The three pinned consumers (`kwpledger-site`, `meal-planner`, `runbox-mcp`) are each one bump PR; the hands-on ones have no build and hear about it from #45 alone. Close #45 when every box is ticked or declined.
+- [ ] **1.** The hands-on consumers take or decline **v0.7.0**, then close [#45](https://github.com/kwpledger/kwpledger-design/issues/45). *Kevin's.* v0.7.0 changed no token, font or logo, so for Base44, Substack, the fixed-canvas formats and the Office theme there's nothing to re-apply; ticking or declining their boxes is the whole job.
 
 **Completed Items**
 
+- [x] The three pinned consumers took v0.7.0: kwpledger-site#57, meal-planner#42, runbox-mcp#67. Each drift issue closed itself on merge. 2026-09-23.
 - [x] The consumer checklist ran on a real release. `release.yml` opened #45 for v0.7.0 with all nine roster entries, the path that had never run before. 2026-09-23.
 
 
