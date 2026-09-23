@@ -43,3 +43,7 @@ Measured in the render, not estimated:
 - Grayscale: every lane still identified by its `LANE n` chip and title.
 - Titles are parallel noun phrases. One accent phrase in the headline.
 - Lora and Hanken Grotesk both loaded from `../../fonts/`.
+
+## Revised 2026-09-23
+
+Lane 2's qualifier changed from "Mine, until written into an official document" to "My observations, not the course content itself." Kevin's revision of the case study presents the information boundary as his interpretation rather than an ownership claim, and the graphic now says only what the text says. Word count 133; overflow 0; 23px floor holds.
