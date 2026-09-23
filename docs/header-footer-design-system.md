@@ -329,6 +329,69 @@ Two things survive from it, both real:
 
 ---
 
+### 4.4 A toggle is optional. Its shape is not.
+
+**Nothing here requires a surface to have a theme toggle.** Most of them cannot: Substack has five
+settings, Base44 generates its own chrome, a fixed canvas has no runtime at all. Requiring one would
+bind surfaces that can never comply, which is the failure §5 exists to avoid.
+
+What this section settles is the other half — **if a surface has a toggle, it is this toggle.** Two
+properties inventing their own placement and semantics is how two surfaces that both claim to follow
+one rule end up looking different.
+
+`kwpledger.com` is the reference implementation (`src/layouts/BaseLayout.astro`).
+
+**Three states, never two.** System, light, dark. A light/dark pair cannot express *follow my OS* —
+which is the state every visitor arrives in, and the one a returning visitor most often wants back.
+A two-state control silently converts "I have no preference" into a preference.
+
+**Last in the header**, after the nav. §2 puts nav after the lockup; the toggle goes after that.
+
+**A radiogroup, because the options are mutually exclusive and not independent** — not a checkbox,
+not a two-state switch, not a `<select>`:
+
+```html
+<div class="theme-toggle" role="radiogroup" aria-label="Colour theme" data-theme-toggle>
+  <button type="button" role="radio" aria-checked="true"  tabindex="0"  data-theme-value="system">System</button>
+  <button type="button" role="radio" aria-checked="false" tabindex="-1" data-theme-value="light">Light</button>
+  <button type="button" role="radio" aria-checked="false" tabindex="-1" data-theme-value="dark">Dark</button>
+</div>
+```
+
+Roving tabindex: exactly one button is `tabindex="0"`. **Arrow keys move focus _and_ selection** —
+that is the radiogroup contract, and moving selection alone strands focus on a button that roving
+tabindex has just dropped to `-1` while assistive tech still announces it as current.
+
+**`system` removes the attribute; it is never a value.** `data-theme` carries `light` or `dark` or
+nothing. The `:root:not([data-theme="light"])` guard in SPEC §9.1 is what makes absence mean
+*follow the media query*, so writing `data-theme="system"` would work by accident and break the
+moment that guard is reasoned about.
+
+**A render-blocking inline script must set the attribute before first paint**, reading storage
+directly. Not a module, not deferred, not imported from a shared constant — any of those run after
+first paint and the page visibly flashes the wrong register. The duplicated part is one key name,
+and that duplication is the cost of not flashing.
+
+**The storage key is `kwp-theme`, and the choice does not travel.** `localStorage` is per-origin, so
+`kwpledger.com` and `runbox-mcp.kwpledger.com` remember separately. The shared key buys consistency
+of *implementation*, not of *state* — do not tell a visitor their choice follows them across the
+properties, because it does not.
+
+**Degrade to the system preference, and leave the buttons alone.** With no JavaScript, or with
+`localStorage` throwing in private mode, the media query still themes the page correctly and the
+three buttons simply do nothing. Do not ship them disabled and enable them from script: a control
+that appears dead is worse than one that quietly does the default.
+
+**The lockup swap rides the same selector**, exactly as §4.1 describes. A toggle that themes the
+page but not the mark is the §4 failure with extra steps.
+
+**Colour the selected state from tokens, and check both registers.** `background: var(--accent)`
+with `color: var(--surface)` measures **7.49:1** light and **8.31:1** dark on kwpledger.com. The
+obvious-looking `color: #fff` measures **2.23:1** in dark — a fail, and one that only appears in the
+register a light-mode author never looks at.
+
+---
+
 ## 5. Conformance is tiered
 
 Not every surface can do all of this. Take the rows in order and stop where the surface stops —
@@ -336,7 +399,7 @@ each tier is a strict subset of the one above, so nothing is ever *replaced* by 
 
 | Tier | Surfaces | Required |
 | :-- | :-- | :-- |
-| **Full control** | kwpledger.com, the `*.kwpledger.com` project pages | Everything in §2–§4. No latitude. |
+| **Full control** | kwpledger.com, the `*.kwpledger.com` project pages | Everything in §2–§4. No latitude — except §4.4, whose *presence* is a per-surface choice. Its shape is not. |
 | **Image + text, no markup control** | Base44 | The lockup as one image where possible, the wordmark text, chrome before content. Register pinned to whatever the platform's theme actually is. |
 | **Theme settings only** | Substack | One logo upload + the accent. Pin the publication's theme, then pick the file matching that register (§4). |
 | **Fixed canvas** | Infographic, quote post, LinkedIn banner | Governed by that format's own footer spec. This document defers to them; they defer to `logo-usage.md` for which mark. |
