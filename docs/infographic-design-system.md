@@ -388,7 +388,7 @@ The mark is chosen by **register**, and the choice is not optional. The inverted
 | Light canvas | `logo_long_ring_teal.svg` | `logo_short_ring_teal.svg` |
 | Dark canvas | `logo_long_ring_inv_teal.svg` | `logo_short_ring_inv_teal.svg` |
 
-**The ringed mark is the default**, at the default teal ring, per [`docs/logo-usage.md`](logo-usage.md). The ringless files (`logo_long.svg`, `logo_short_inv.svg`, and their pairs) are the exception and need a stated reason — §1.1 of that document lists the two known-good ones. The five graphics in `examples/` predate this and still carry a bare `logo_long.svg`; they are stale rather than wrong, and get re-marked when each is next touched.
+**The ringed mark is the default**, at the default teal ring, per [`docs/logo-usage.md`](logo-usage.md). The ringless files (`logo_long.svg`, `logo_short_inv.svg`, and their pairs) are the exception and need a stated reason — §1.1 of that document lists the two known-good ones. Every infographic in `examples/` carries the ringed teal mark — the four that predated this rule were re-marked on 2026-09-23.
 
 All eight marks are **true vectors and transparent**, as of the 2026-08-30 rework. The two traps this section used to list — a file with no alpha that dropped a white box on a dark canvas, and an `.svg` that was really a base64 raster — are both gone with the raster set. `logos/PROVENANCE.md` keeps them on the record as superseded; do not reach for them.
 
@@ -694,6 +694,24 @@ SPEC §10 permits a consumer to add what it needs, provided the deviation is jus
 | Fixed px instead of `clamp()` | The canvas is one fixed size. Fluid type has nothing to be fluid against. | The px values are the large end of the shipped scale at a 20px root, not a new scale. |
 
 Also declared, though not deviations: card radius and the 2px module edge are layout decisions with no token behind them, which is correct — they are this consumer's business, not the system's.
+
+### Departing from this document in one graphic
+
+This document is guidance, not a gate. Under SPEC §10 as extended on 2026-09-23 (Kevin, as product owner), one graphic may depart from a rule here when **both** hold:
+
+1. **It makes sense for what that graphic is** — the departure follows from the content, not from preference.
+2. **The graphic's README records it** — what was done, why, and why it beat the obvious alternative.
+
+Worked example: `examples/in-vs-about/` runs three modules against §2.4's practical minimum of four. The work it depicts ran in three lanes, and a fourth module would have been invented to fill the count; a closing note carries the weight a fourth would. Its README says so.
+
+**Four constraints are not open to this,** because a stated reason cannot restore what each one protects:
+
+- **Eight modules maximum.** A ninth has no categorical color to be (§2.4).
+- **23px for anything read as a sentence.** Below it, text is unreadable at feed scale (§3.2).
+- **The 200-word hard cap.** The 120–180 range may flex with a reason; the cap does not (§7.4).
+- **No topic icons, no emoji** (§5.7).
+
+Changing any of those four is still a conversation about this document, as *Changing this document* below says — not a note in one graphic's README.
 
 **Nothing here belongs in `tokens/`.** The design system must never learn what an "infographic" is, for the same reason it must never learn what a "meal type" is.
 

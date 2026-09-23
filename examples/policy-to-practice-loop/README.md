@@ -34,7 +34,7 @@ is what revises the abstraction at the top.
 under the §7.4 floor of 120 — declared there as a deviation. The second line
 retires that deviation rather than restating it: 131 words, inside the budget.
 
-**The footer mark is `logo_long.svg`,** the true vector from the 2026-08-30 rework,
+**The footer mark was `logo_long.svg`** (ringed since 2026-09-23 — see below), the true vector from the 2026-08-30 rework,
 per the current §5.8 table. v1 predates it and still points at the superseded
 `kwp_logo_long.png`. One consequence worth knowing: **this PDF contains zero raster
 images.** v1's letter PDF carries the signature as a 525×300 PNG at 396 dpi — fine
@@ -121,3 +121,7 @@ survive contact with a render:
 The arc's `y` values also come from the render rather than the §5.6 snippet: that
 snippet assumes the §2.3 budget's 833px body, and this graphic's footer lockup is
 taller than the 80px §2.3 budgets, so the real body zone is **823**.
+
+## Re-marked 2026-09-23
+
+The footer mark is now `logo_long_ring_teal.svg`, the §5.8 default, replacing the bare `logo_long.svg`. Same 1038×598 box and a vector circle, so nothing else moved: re-exported JPG and letter PDF, overflow 0, the PDF still one page with zero image XObjects. A pixel diff against the previous JPG changes only a 76px square around the initials.
