@@ -1,6 +1,6 @@
 # These things need to be done in kwpledger-design v1.0 #
 
-Current release: **v0.7.0** (2026-09-23). Format: [BACKLOG-FORMAT](BACKLOG-FORMAT.md).
+Current release: **v0.8.0** (2026-09-24). Format: [BACKLOG-FORMAT](BACKLOG-FORMAT.md).
 
 **This repo's addition to the format: open decisions only.** [SPEC.md](SPEC.md)
 is the contract and [AGENTS.md](../AGENTS.md) the working agreement; this file
@@ -16,12 +16,13 @@ Released work is in [CHANGELOG.md](CHANGELOG.md).
 
 ## To Do (consumers) ##
 
-- [ ] **1.** The hands-on consumers take or decline **v0.7.0**, then close [#45](https://github.com/kwpledger/kwpledger-design/issues/45). *Kevin's.* v0.7.0 changed no token, font or logo, so for Base44, Substack, the fixed-canvas formats and the Office theme there's nothing to re-apply; ticking or declining their boxes is the whole job.
+- [ ] **1.** Consumers take or decline **v0.8.0**. Its merge opens a new checklist issue, as v0.7.0 opened [#45](https://github.com/kwpledger/kwpledger-design/issues/45).
+    - [ ] **a.** The three pinned consumers take it, and move their `BACKLOG-FORMAT` links to the copy the package now ships.
+    - [ ] **b.** *Kevin's:* the hands-on boxes on both issues. Neither release changed a token, font or logo, so there is nothing to re-apply; ticking or declining is the whole job. Then close #45 and the v0.8.0 issue.
 
 **Completed Items**
 
-- [x] The three pinned consumers took v0.7.0: kwpledger-site#57, meal-planner#42, runbox-mcp#67. Each drift issue closed itself on merge. 2026-09-23.
-- [x] The consumer checklist ran on a real release. `release.yml` opened #45 for v0.7.0 with all nine roster entries, the path that had never run before. 2026-09-23.
+(none)
 
 
 ## To Do (tokens) ##
@@ -39,7 +40,7 @@ Released work is in [CHANGELOG.md](CHANGELOG.md).
 
 **Completed Items**
 
-- [x] `actions/checkout` v4 → v7 in `release.yml`, part of the sweep across all four repos (kwpledger-site KWP-21). 2026-09-23, PR #46.
+(none)
 
 
 ## To Do (specs) ##
@@ -48,5 +49,4 @@ Released work is in [CHANGELOG.md](CHANGELOG.md).
 
 **Completed Items**
 
-- [x] Footer rule: an optional privacy link beneath the copyright (`header-footer-design-system.md` §6.3). 2026-09-23, PR #47.
-- [x] `BACKLOG-FORMAT.md` moved here from `kwpledger-site`, as the hub for cross-repo standards; it ships in the package's `docs/`, so consumers carry their pinned copy. Kevin's call. 2026-09-23.
+(none)
