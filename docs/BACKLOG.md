@@ -16,13 +16,11 @@ Released work is in [CHANGELOG.md](CHANGELOG.md).
 
 ## To Do (consumers) ##
 
-- [ ] **1.** Consumers take or decline **v0.8.0**. Its merge opens a new checklist issue, as v0.7.0 opened [#45](https://github.com/kwpledger/kwpledger-design/issues/45).
-    - [ ] **a.** The three pinned consumers take it, and move their `BACKLOG-FORMAT` links to the copy the package now ships.
-    - [ ] **b.** *Kevin's:* the hands-on boxes on both issues. Neither release changed a token, font or logo, so there is nothing to re-apply; ticking or declining is the whole job. Then close #45 and the v0.8.0 issue.
+- [ ] **1.** *Kevin's:* tick or decline the hands-on boxes on [#45](https://github.com/kwpledger/kwpledger-design/issues/45) (v0.7.0) and [#51](https://github.com/kwpledger/kwpledger-design/issues/51) (v0.8.0), then close both. Neither release changed a token, font or logo, so there is nothing to re-apply; ticking or declining is the whole job.
 
 **Completed Items**
 
-(none)
+- [x] The three pinned consumers took v0.8.0 (kwpledger-site#59, meal-planner#43, runbox-mcp#68) and now carry `BACKLOG-FORMAT.md` in `node_modules`; their format links point here. 2026-09-24.
 
 
 ## To Do (tokens) ##
