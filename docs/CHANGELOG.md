@@ -9,6 +9,16 @@ version below is real, not reconstructed. Dates are GitHub's release dates
 bumped `package.json`.
 
 
+## v0.8.0 — 2026-09-24
+
+- [x] `BACKLOG-FORMAT.md`, the backlog and changelog standard every kwpledger repo follows, moved here from `kwpledger-site` as the hub for cross-repo standards. The package ships `docs/`, so every consumer carries its pinned copy. PR #49.
+- [x] Footer rule: an optional privacy link beneath the copyright (`header-footer-design-system.md` §6.3). PR #47.
+- [x] This repo's backlog converted to that standard, and this changelog added, with every tagged version back to v0.1.0. PR #48.
+- [x] `actions/checkout` v4 → v7 in `release.yml`, part of the sweep across all four repos (kwpledger-site KWP-21). PR #46.
+- [x] The consumer checklist ran on a real release for the first time: v0.7.0 opened #45 with all nine roster entries. The three pinned consumers took v0.7.0 the same day (kwpledger-site#57, meal-planner#42, runbox-mcp#67), and each one's drift issue closed itself.
+
+No token, font or logo changed: `tokens/`, `fonts/` and `logos/` are byte-identical to v0.7.0.
+
 ## v0.7.0 — 2026-09-23
 
 - [x] Chrome rule §4.4, the theme toggle, released. It settled narrower than proposed. PR #44.
