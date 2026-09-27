@@ -1,0 +1,195 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>kwp in Motion</title>
+<style>
+@font-face{font-family:'Lora';src:url('../../fonts/lora-latin.woff2') format('woff2');font-weight:600;font-display:swap}
+@font-face{font-family:'Hanken Grotesk';src:url('../../fonts/hanken-grotesk-latin.woff2') format('woff2');font-weight:100 900;font-display:swap}
+:root{
+  --surface:#fbfaf8; --surface-card:#ffffff; --fg:#1a1917; --fg-muted:#5c5a57;
+  --accent:#0d5c58; --accent-hover:#0a4a47; --border:#e3e0da;
+  --font-display:'Lora',Georgia,'Iowan Old Style',Palatino,serif;
+  --font-body:'Hanken Grotesk',system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  --glyph-ms:2600ms; --ring-ms:1100ms; --gap-ms:180ms;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  color-scheme:dark;
+  --surface:#0a1420; --surface-card:#10202f; --fg:#e6ecf2; --fg-muted:#9aabbb;
+  --accent:#5fbdb4; --accent-hover:#8ad8d0; --border:#1e3245;
+}}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --surface:#0a1420; --surface-card:#10202f; --fg:#e6ecf2; --fg-muted:#9aabbb;
+  --accent:#5fbdb4; --accent-hover:#8ad8d0; --border:#1e3245;
+}
+/* Register picks the file, never a filter: black glyph on light, inverted on dark. */
+.reg-dark{display:none}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .reg-light{display:none}:root:not([data-theme="light"]) .reg-dark{display:inline}}
+:root[data-theme="dark"] .reg-light{display:none}
+:root[data-theme="dark"] .reg-dark{display:inline}
+
+body{background:var(--surface);color:var(--fg);font-family:var(--font-body);font-size:1.0625rem;line-height:1.6;padding-inline:16px;padding-block:clamp(24px,6vw,64px)}
+main{max-width:34rem;margin:0 auto;display:grid;gap:28px}
+h1{font-family:var(--font-display);font-weight:600;font-size:clamp(1.6rem,4.5vw,2.1rem);line-height:1.2;margin:0;text-wrap:balance}
+.eyebrow{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--fg-muted);margin:0 0 6px}
+p{margin:0;max-width:62ch}
+.stage{background:var(--surface-card);border:1px solid var(--border);border-radius:6px;display:grid;place-items:center;padding:clamp(16px,5vw,40px)}
+.markbox{position:relative;width:min(100%,300px);aspect-ratio:496/598}
+.markbox svg,.markbox canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.markbox canvas[hidden]{display:none}
+.controls{display:flex;flex-wrap:wrap;align-items:center;gap:12px 16px;margin-top:4px}
+button{font:inherit;font-weight:600;font-size:.95rem;color:var(--surface);background:var(--accent);border:0;border-radius:4px;padding:.55em 1.1em;cursor:pointer}
+button:hover{background:var(--accent-hover)}
+button:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.status{font-size:.9rem;color:var(--fg-muted)}
+.notes{display:grid;gap:14px;border-top:1px solid var(--border);padding-top:22px;color:var(--fg-muted);font-size:.97rem}
+.notes strong{color:var(--fg);font-weight:600}
+
+/* The ring brush lives inside a mask and is never painted. It only uncovers the original file. */
+.brush{fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1 2;stroke-dashoffset:1.05}
+.play .brush-ring{animation:draw var(--ring-ms) cubic-bezier(.5,0,.3,1) calc(var(--glyph-ms) + var(--gap-ms)) forwards}
+.done .brush{stroke-dashoffset:0}
+@keyframes draw{to{stroke-dashoffset:0}}
+@media (prefers-reduced-motion:reduce){
+  .brush,.play .brush-ring{animation:none;stroke-dashoffset:0}
+}
+</style>
+
+<main>
+  <header>
+    <p class="eyebrow">Motion study · short mark, ringed</p>
+    <h1>The signature, written the way it was written</h1>
+  </header>
+
+  <figure class="stage" style="margin:0">
+    <div class="markbox">
+    <svg id="mark" viewBox="0 0 496 598" role="img" aria-labelledby="mark-label">
+      <title id="mark-label">kwp, Kevin Pledger's handwritten initials, inside a teal ring</title>
+      <defs>
+        <mask id="m-ring" maskUnits="userSpaceOnUse" x="0" y="0" width="496" height="598">
+          <circle class="brush brush-ring" pathLength="1" cx="244.52" cy="286.04" r="195.41" stroke-width="30" transform="rotate(-132 244.52 286.04)"/>
+        </mask>
+      </defs>
+      <!-- The ringed file, uncovered by the ring brush. The glyph is uncovered on the canvas above it. -->
+      <g class="reg-light">
+        <image class="ringed" href="../../logos/logo_short_ring_teal.svg" width="496" height="598" mask="url(#m-ring)"/>
+      </g>
+      <g class="reg-dark">
+        <image class="ringed" href="../../logos/logo_short_ring_inv_teal.svg" width="496" height="598" mask="url(#m-ring)"/>
+      </g>
+    </svg>
+    <canvas id="pen" aria-hidden="true"></canvas>
+    </div>
+  </figure>
+
+  <div class="controls">
+    <button id="replay" type="button">Replay</button>
+    <span class="status" id="status" aria-live="polite"></span>
+  </div>
+
+  <section class="notes" aria-label="How this works">
+    <p><strong>Nothing here is redrawn.</strong> What you see is the signature file itself, traced from a Sharpie on a 3×5 card in 2013. Each point of ink is uncovered at the moment the pen first reached it, worked out from the path the pen took, so no stroke can appear before the pen gets there. When the pen finishes, the page shows the original file and nothing else.</p>
+    <p><strong>The order is yours.</strong> The first stroke runs top to bottom, the pen doubles back over the two short peaks, goes down the right side of the descender loop and back up the left, then climbs the stem and closes on the bowl. Then the ring draws clockwise, starting from the upper left where the signature began.</p>
+    <p><strong>Reduced motion.</strong> If your device asks for less motion, the mark appears complete and does not animate. The light and dark pages use two different files, the black glyph and the inverted one, rather than one file recolored.</p>
+  </section>
+</main>
+
+<script>
+(() => {
+  const svg = document.getElementById('mark');
+  const cv = document.getElementById('pen');
+  const ctx = cv.getContext('2d');
+  const btn = document.getElementById('replay');
+  const status = document.getElementById('status');
+  const root = document.documentElement;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const darkOS = window.matchMedia('(prefers-color-scheme: dark)');
+  const ms = n => parseFloat(getComputedStyle(root).getPropertyValue(n));
+  const W = 496, H = 598;
+
+  // The glyph files, drawn as they are. Register picks the file.
+  const glyph = { light: new Image(), dark: new Image() };
+  glyph.light.src = '../../logos/logo_short.svg';
+  glyph.dark.src = '../../logos/logo_short_inv.svg';
+  const isDark = () => root.dataset.theme ? root.dataset.theme === 'dark' : darkOS.matches;
+
+  // Time map: for every pixel of ink, when the pen first reached it (16-bit, R/G). Never shown.
+  const tm = new Image();
+  tm.src = 'timemap.png';
+  let order, times, maskCv, maskCtx, maskData;
+  const ready = Promise.all([tm, glyph.light, glyph.dark].map(i => i.decode())).then(() => {
+    const c = document.createElement('canvas'); c.width = W; c.height = H;
+    const x = c.getContext('2d', { willReadFrequently: true });
+    x.drawImage(tm, 0, 0);
+    const px = x.getImageData(0, 0, W, H).data;
+    const idx = [];
+    for (let i = 0; i < W * H; i++) if (px[i * 4 + 2] > 127) idx.push(i);
+    const tv = i => (px[i * 4] << 8) | px[i * 4 + 1];
+    idx.sort((a, b) => tv(a) - tv(b));
+    order = Int32Array.from(idx);
+    times = Float32Array.from(idx, i => tv(i) / 65000);
+    maskCv = document.createElement('canvas'); maskCv.width = W; maskCv.height = H;
+    maskCtx = maskCv.getContext('2d');
+    maskData = maskCtx.createImageData(W, H);
+  });
+
+  function size() {
+    const r = cv.getBoundingClientRect(), d = window.devicePixelRatio || 1;
+    cv.width = Math.round(r.width * d); cv.height = Math.round(r.height * d);
+  }
+  // Pen speed: mostly even, easing in and out a little at the ends.
+  const ease = x => 0.65 * x + 0.35 * (x * x * (3 - 2 * x));
+
+  let raf, timer, run = 0;
+  function finish() {
+    cancelAnimationFrame(raf);
+    svg.classList.remove('play');
+    svg.classList.add('done');
+    cv.hidden = true;
+    svg.querySelectorAll('.ringed').forEach(el => el.removeAttribute('mask'));
+  }
+  async function play() {
+    const me = ++run;
+    clearTimeout(timer); cancelAnimationFrame(raf);
+    if (reduce.matches) {
+      finish();
+      status.textContent = 'Animation is off because your device asks for reduced motion.';
+      return;
+    }
+    status.textContent = '';
+    svg.querySelectorAll('.ringed').forEach(el => el.setAttribute('mask', 'url(#m-ring)'));
+    svg.classList.remove('play', 'done');
+    cv.hidden = false;
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    try { await ready; } catch (e) {
+      finish();
+      status.textContent = 'Could not load the timing map. Serve this folder over http; a file:// page cannot read it.';
+      return;
+    }
+    if (me !== run) return;
+    size();
+    maskData.data.fill(0);
+    const img = isDark() ? glyph.dark : glyph.light;
+    const dur = ms('--glyph-ms');
+    let cursor = 0, t0;
+    void svg.getBoundingClientRect();
+    svg.classList.add('play');
+    const frame = now => {
+      if (t0 === undefined) t0 = now;
+      const p = ease(Math.min(1, (now - t0) / dur));
+      const a = maskData.data;
+      while (cursor < order.length && times[cursor] <= p) a[order[cursor++] * 4 + 3] = 255;
+      maskCtx.putImageData(maskData, 0, 0);
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.clearRect(0, 0, cv.width, cv.height);
+      ctx.drawImage(maskCv, 0, 0, cv.width, cv.height);
+      ctx.globalCompositeOperation = 'source-in';
+      ctx.drawImage(img, 0, 0, cv.width, cv.height);
+      if (p < 1) raf = requestAnimationFrame(frame);
+    };
+    raf = requestAnimationFrame(frame);
+    timer = setTimeout(finish, dur + ms('--gap-ms') + ms('--ring-ms') + 50);
+  }
+  btn.addEventListener('click', play);
+  play();
+})();
+</script>
