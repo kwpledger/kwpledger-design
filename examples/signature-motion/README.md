@@ -4,14 +4,22 @@ The short ringed mark, written in the order Kevin writes it: the glyph first, th
 drawn clockwise from the upper left, where the signature starts. About four seconds, played
 once, with a Replay button.
 
-**Status: exploration.** No surface uses this yet. Putting it in the site header would change
-the shared chrome rule ([`header-footer-design-system.md`](../../docs/header-footer-design-system.md),
-KWP-16), and that decision gets made on its own.
+**Status: exploration.** No surface uses this yet.
+
+**Not for the site header** (Kevin, 2026-09-27). Considered and rejected: on every page load it is
+a gimmick that gets old. Playing once per visit didn't save it either. That would need either a
+shared cookie across `*.kwpledger.com`, which would falsify the privacy page's "sets no cookies",
+or a rule for every subdomain. Do not propose it again without new reasoning. The header stays
+static ([`header-footer-design-system.md`](../../docs/header-footer-design-system.md), KWP-16).
+
+**Where it could go:** a splash screen, where people already wait. That means an app or game
+launch, or a video intro or outro card. It does not belong on kwpledger.com, which loads fast
+enough that a splash screen would add a wait just to show the animation.
 
 | | |
 | :-- | :-- |
 | Mark | `logo_short.svg` / `logo_short_ring_teal.svg` (light), `_inv` / `_ring_inv_teal` (dark) |
-| Glyph | ~2.6s, uncovered in first-arrival order (`timemap.png`) |
+| Glyph | ~2.6s, uncovered in first-arrival order (`timemap.png`). Kevin writes it in 1–1.5s; match that in real use |
 | Ring | ~1.1s after a 0.18s pause, clockwise from −132°, the angle of the glyph's first stroke |
 | Reduced motion | Shows the finished mark and says why; nothing animates |
 
