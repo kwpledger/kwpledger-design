@@ -14,6 +14,8 @@ bumped `package.json`.
 - [x] Infographic spec §2.3 and §2.4 corrected to measured figures. The old budget gave the footer 80px against the 161px the mark lockup measures, so its fixed 833px body never existed. The body now runs 751–880px depending on headline and subhead wrapping, and each module count states which internals fit. §5.2, §5.6 and Part 6 follow. PR #56.
 - [x] `infographic-footer-tags.md`: a library of footer tags by surface and topic, replacing a single "what you help with" line, so a YouTube or Substack graphic is not stamped with the LinkedIn specialty line. §5.8 points to it. PR #56.
 
+**The footer tag library shipped here early.** Kevin intended it for v0.9.0, as a minor change. It merged into this patch release through a misread approval. It ships as a three-tag seed. v0.9.0 is where it becomes the actual minor release, once it has been filled out.
+
 A docs correction: no token, font or logo changed.
 
 ## v0.8.0 — 2026-09-24
