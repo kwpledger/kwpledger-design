@@ -407,8 +407,10 @@ If a future version adds them, they arrive as a fixed drawn set with a stated st
 ```
 ──────────────────   1px --border, full content width
 [mark]  kwp          mark ~110px tall, wordmark step--1, --fg
-                                        |  what you help with, step--1, --fg-muted
+                                        |  footer tag, step--1, --fg-muted
 ```
+
+**The footer tag comes from [infographic-footer-tags.md](infographic-footer-tags.md), never from the graphic's own copy.** Parent-brand graphics carry a topic line. Graphics made for a named surface, such as a YouTube channel, carry the surface and the topic on two lines. Each graphic's README records the tag's ID. A content area with no tag gets one proposed to Kevin, not invented in the build: the tag is a statement about his professional scope, and that is his to make.
 
 `kwp` is **lowercase, always.** The monogram is traced from a handwritten signature and that is why.
 
@@ -668,7 +670,7 @@ If you copy the font files anywhere, `OFL-NOTICE.txt` goes with them.
     <!-- modules 2..n, slots s2..sn, in order -->
   </div>
 
-  <footer><span>kwp</span><span class="who">What you help with</span></footer>
+  <footer><span>kwp</span><span class="who">Topic line from infographic-footer-tags.md</span></footer>
 </div>
 ```
 
