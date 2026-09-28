@@ -9,6 +9,12 @@ version below is real, not reconstructed. Dates are GitHub's release dates
 bumped `package.json`.
 
 
+## v0.8.1 — unreleased
+
+- [x] Infographic spec §2.3 and §2.4 corrected to measured figures. The old budget gave the footer 80px against the 161px the mark lockup measures, so its fixed 833px body never existed. The body now runs 751–880px depending on headline and subhead wrapping, and each module count states which internals fit. §5.2, §5.6 and Part 6 follow. PR #PRNUM.
+
+A docs correction: no token, font or logo changed.
+
 ## v0.8.0 — 2026-09-24
 
 - [x] `BACKLOG-FORMAT.md`, the backlog and changelog standard every kwpledger repo follows, moved here from `kwpledger-site` as the hub for cross-repo standards. The package ships `docs/`, so every consumer carries its pinned copy. PR #49.

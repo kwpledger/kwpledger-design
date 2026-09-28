@@ -78,25 +78,60 @@ Express these as `fr` units in CSS; the pixel values are here so you can sanity-
 | Zone | Height | Contents |
 | :-- | :-- | :-- |
 | Top margin | 50 | |
-| Header | **276** | Eyebrow 24 · gap 10 · headline 151 (2 lines @ 72px/1.05) · gap 15 · subhead 76 (2 lines @ 28px/1.35) |
+| Header | **148–277** | Eyebrow 24 · gap 10 · headline · gap 15 · subhead. Headline: 60 (1 line @ 57px), 76 (1 @ 72), 120 (2 @ 57), 151 (2 @ 72). Subhead: 38 (1 line @ 28px/1.35), 76 (2 lines). |
 | Divider | 61 | 30 · 1px rule · 30 |
-| **Body** | **833** | The modules. This is your whole working area. |
-| Footer | 80 | 30 · 1px rule · 20 · one 19px line |
+| **Body** | **751–880** | The modules. This is your whole working area. What is left after the other zones. |
+| Footer | **161** | 30 · 1px rule · 20 · the 110px mark (§5.8) |
 | Bottom margin | 50 | |
 
-If the headline is one line, the header drops to 200 and the body grows to 909. That is the only legitimate way to buy vertical space. Do not shrink the gutters.
+The body zone, then, depends on two wrapping decisions. Measured in Chromium with the §8.3 skeleton and the shipped fonts:
+
+| Headline | Subhead 1 line | Subhead 2 lines |
+| :-- | :-- | :-- |
+| 1 line @ 57px | **880** | 843 |
+| 1 line @ 72px | 865 | 827 |
+| 2 lines @ 57px | 821 | 783 |
+| 2 lines @ 72px | 789 | **751** |
+
+**Headline and subhead wrapping are the only legitimate ways to buy vertical space.** Do not shrink the gutters, the mark, or the reading type.
+
+**These figures replace an earlier budget that no render could meet** (corrected 2026-09-28). It gave the footer 80px — one 19px line — and so a fixed 833px body. The footer has carried the 110px long mark since the examples were built, and it measures 161. That 81px went unaccounted, and it came out of the body. The published examples measure 823–829, never 833. `policy-to-practice-loop` recorded the gap in its README but did not carry it back here. The first graphic another tool built from this document took the old §2.4 at its word: a two-line headline over four stacked modules. It clipped the signature off the bottom of the canvas.
 
 ### 2.4 Module heights, by count
 
-Body zone 833px, 20px gaps:
+Two numbers decide whether a count fits: the **share** each module gets, and the **minimum** its internals need.
 
-| Modules | Height each | Viable? |
+**The share** is `(body − 20 × (n − 1)) / n`, with 20px gaps. At the two ends of the §2.3 table:
+
+| Modules | Share at 821 (2-line 57px headline, 1-line subhead) | Share at 880 (1-line 57px headline, 1-line subhead) |
 | :-- | :-- | :-- |
-| 4 | 193px | Roomy — title + 3 bullets, stacked internals |
-| 5 | 150px | Comfortable — title + 2 bullets, or horizontal internals |
-| 6 | 122px | Horizontal internals required |
-| 7 | 101px | Horizontal internals, one line of body each |
-| 8 | 86px | Ceiling. Chip + title + one clause. |
+| 4 | 190 | 205 |
+| 5 | 148 | 160 |
+| 6 | 120 | 130 |
+| 7 | 100 | 109 |
+| 8 | 85 | 93 |
+
+821 is the configuration of most published examples, which measure 823.
+
+**The minimum** depends on the module internals (§5.2). These are measured with a one-line title and one-line bullets. A title that wraps adds 41px.
+
+| Internals | Minimum height |
+| :-- | :-- |
+| **Stacked**, 20px padding | 171 with 1 bullet · 203 with 2 · 235 with 3 |
+| **Horizontal**, 20px padding | 170 with 1–3 bullets. The chip-and-title column sets the height. |
+| **Horizontal, no vertical padding**, content centered in a fixed row | ~88: chip 33 · gap 10 · title 41 · borders 4. This is what `policy-to-practice` does at 7 rows of 100px. |
+
+Put together:
+
+| Modules | Viable |
+| :-- | :-- |
+| 4 | Horizontal internals at any headline. Stacked with 2 bullets only at the 880 configuration. **A 2-line headline plus four stacked two-bullet modules overflows** by ~50px at 57px, and by ~80px at 72px. |
+| 5 | Horizontal, no vertical padding. At 20px padding, even horizontal internals need 930px and no configuration gives that. |
+| 6 | Horizontal, no vertical padding |
+| 7 | Horizontal, no vertical padding. One or two lines of body each. |
+| 8 | Horizontal, no vertical padding, and only with a 1-line headline. The 821 share (85) is under the 88 minimum. |
+
+**These replace an earlier table** built on the 833 body of §2.3's superseded budget (corrected 2026-09-28). It called four modules "roomy — title + 3 bullets, stacked internals", but that needs 1,000px. It called five "comfortable" with two bullets, but that needs 1,095 stacked. No render bore either out.
 
 **Eight is the hard maximum** and it is not an aesthetic limit — it is the number of categorical slots the system has (SPEC §4.1). A ninth module has no color to be. If you need nine, you need two graphics.
 
@@ -273,7 +308,7 @@ The eyebrow names the tension. The headline names the thing. The subhead names t
 
 **Bullets:** a 6px round dot in `--data-n-border`, 14px from the text. Never a hyphen, never an emoji, never a checkmark unless the semantics are genuinely success/failure — in which case use the status tokens and a word.
 
-At 6 or 7 modules, switch to **horizontal internals**: chip and title in a 300px left column, bullets in the remaining 660px. This is what makes the tighter counts survive; the seven-row reference does exactly this.
+From 5 modules up, and at 4 unless the headline and subhead both fit on one line, use **horizontal internals**: chip and title in a 300px left column, bullets in the remaining 660px. §2.4 has the measured reasons. At 5 or more, drop the module's vertical padding to 0 and center the content in a fixed row (`grid-template-rows: repeat(n, 1fr)` on the body). This is what makes the tighter counts survive, and the seven-row reference does exactly this.
 
 ### 5.3 Receipt panel
 
@@ -330,7 +365,7 @@ Keep the label to **two or three words**. At 19px with `0.10em` tracking the cha
 
 **One return path per graphic.** Two arcs in one channel is a wiring diagram, and this format is not one.
 
-The arc is the one element a generator reliably gets wrong, so give it the geometry directly. For a 150×833 channel, bottom-up (arrowhead at the bottom, into step 1):
+The arc is the one element a generator reliably gets wrong, so give it the geometry directly. The snippet below is drawn for a 150×833 channel. **Your channel is the height of your measured body zone (§2.3), not 833.** `policy-to-practice-loop` measured 823 and re-derived the `y` values from module centers in the render, and you should do the same. Bottom-up (arrowhead at the bottom, into step 1):
 
 ```html
 <svg class="return" viewBox="0 0 150 833" width="150" height="833" aria-hidden="true">
@@ -422,7 +457,7 @@ Pick one per graphic. Do not blend two.
 
 Use when the modules are **peers**. No arrows. At 6–7 rows use horizontal internals (§5.2).
 
-Body zone 833px: 4 rows at 193 · 5 at 150 · 6 at 122 · 7 at 101.
+Body zone 751–880px, per §2.3. At the common 821: 4 rows at 190 · 5 at 148 · 6 at 120 · 7 at 100. §2.4 says which internals each count needs.
 
 **A.2 — Stack with a return path.** Same stack, plus a 150px right-hand channel carrying one labeled arc from the last step back to the first (§5.6). Modules narrow to 810px; row heights and the count table above are unchanged.
 
@@ -443,7 +478,7 @@ Top-down matches how a feed image is scanned and is the safer default. **Bottom-
 
 Use when order matters. The five-step reference is this layout, and its alternation is what keeps a vertical list of five near-identical cards from reading as wallpaper.
 
-Four pairs at 193px is the comfortable version. Five at 150px works with two bullets per claim.
+Four pairs at ~190px (at an 821 body) is the comfortable version. Five at ~148px needs one-line claims. No ladder has been built yet, so render before trusting either figure.
 
 ### C. Bento — for toolkits and starter packs
 
@@ -451,7 +486,7 @@ Four pairs at 193px is the comfortable version. Five at 150px works with two bul
 
 Use when the modules are peers of **unequal weight** and the graphic is a reference rather than an argument. Hardest of the three to get right, and the least forgiving of overwriting — it is the one that turns into a wall of text.
 
-Body zone 833px: three rows of 264, or two rows of 406, or 406 + 407 split unevenly.
+Body zone per §2.3. At 821: three rows of 260, or two rows of 400.
 
 ---
 
