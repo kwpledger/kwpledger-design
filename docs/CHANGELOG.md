@@ -11,7 +11,7 @@ bumped `package.json`.
 
 ## v0.8.1 — unreleased
 
-- [x] Infographic spec §2.3 and §2.4 corrected to measured figures. The old budget gave the footer 80px against the 161px the mark lockup measures, so its fixed 833px body never existed. The body now runs 751–880px depending on headline and subhead wrapping, and each module count states which internals fit. §5.2, §5.6 and Part 6 follow. PR #PRNUM.
+- [x] Infographic spec §2.3 and §2.4 corrected to measured figures. The old budget gave the footer 80px against the 161px the mark lockup measures, so its fixed 833px body never existed. The body now runs 751–880px depending on headline and subhead wrapping, and each module count states which internals fit. §5.2, §5.6 and Part 6 follow. PR #56.
 
 A docs correction: no token, font or logo changed.
 
