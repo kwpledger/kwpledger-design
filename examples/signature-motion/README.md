@@ -20,7 +20,7 @@ enough that a splash screen would add a wait just to show the animation.
 | :-- | :-- |
 | Mark | `logo_short.svg` / `logo_short_ring_teal.svg` (light), `_inv` / `_ring_inv_teal` (dark) |
 | Glyph | ~2.6s, uncovered in first-arrival order (`timemap.png`). Kevin writes it in 1–1.5s; match that in real use |
-| Ring | ~1.1s after a 0.18s pause, clockwise from −132°, the angle of the glyph's first stroke |
+| Ring | ~1.1s after a 0.18s pause, clockwise from −144.2°, where the k's tall stroke crosses the ring, so the start hides under the ink (was −132°, the angle to the k's tip, which left a visible seam) |
 | Reduced motion | Shows the finished mark and says why; nothing animates |
 
 ## Why this is not a redraw
