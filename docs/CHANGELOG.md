@@ -9,6 +9,14 @@ version below is real, not reconstructed. Dates are GitHub's release dates
 bumped `package.json`.
 
 
+## v0.10.0 — 2026-09-29
+
+- [x] The MPSAS handwritten wordmark vendored into `logos/`: eight `wordmark_*.svg` files (one, two and three lines, and `MPSAS`, each with an inverted register), checksummed in `logos/PROVENANCE.md`. PR #61.
+
+**v0.9.0 is skipped, at Kevin's direction (2026-09-29).** v0.8.1 recorded v0.9.0 as reserved for the filled-out footer tag library. This release is numbered v0.10.0 instead of taking that slot. A later release can't be tagged lower than an earlier one, so the tag library will ship as a minor after v0.10.0.
+
+No token or font changed, and the existing `logo_*.svg` files are byte-identical to v0.8.1.
+
 ## v0.8.1 — 2026-09-28
 
 - [x] Infographic spec §2.3 and §2.4 corrected to measured figures. The old budget gave the footer 80px against the 161px the mark lockup measures, so its fixed 833px body never existed. The body now runs 751–880px depending on headline and subhead wrapping, and each module count states which internals fit. §5.2, §5.6 and Part 6 follow. PR #56.

@@ -1,6 +1,6 @@
 # These things need to be done in kwpledger-design v1.0 #
 
-Current release: **v0.8.0** (2026-09-24). Format: [BACKLOG-FORMAT](BACKLOG-FORMAT.md).
+Current release: **v0.10.0** (2026-09-29). Format: [BACKLOG-FORMAT](BACKLOG-FORMAT.md).
 
 **This repo's addition to the format: open decisions only.** [SPEC.md](SPEC.md)
 is the contract and [AGENTS.md](../AGENTS.md) the working agreement; this file
