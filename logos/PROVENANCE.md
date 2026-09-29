@@ -261,6 +261,50 @@ So, plainly: **this file existing is not evidence that teal means anything.** Wh
 
 Teal is also the only ring color on record that sits **at or under the 0.091 chroma ceiling while still being legible on a dark canvas** — it measures exactly 0.091, the chroma of `--teal-300`. Navy is under the ceiling but invisible there; everything else is visible but 1.3× to 3.3× over it.
 
+## The MPSAS wordmark — `wordmark_*.svg` (added 2026-09-29)
+
+**Not the header "wordmark."** In [`header-footer-design-system.md`](../docs/header-footer-design-system.md)
+"wordmark" means the typeset text *Kevin Pledger* beside the mark. These files are something else:
+**"Mr. Pledger Stays After School" in Kevin's own handwriting**, the name of the MPSAS channel,
+traced from a scan. Upstream's filenames are kept verbatim, so they can be checksummed against their source.
+
+**Same no-redraw rule as the signature.** Kevin wrote it with a 0.7 mm felt tip in September 2026.
+The file is a trace of that writing and must not be retraced, "cleaned up," or regenerated.
+
+**Vendored byte-identically** from `kwpledger/logos-and-wordmarks` at commit `40f787b`
+(2026-09-29). Upstream generates all eight from one trace with `tools/build_wordmarks.py`, and its
+`AGENTS.md` records every measurement. **Do not edit one here.** Changes happen upstream and are re-vendored.
+
+```
+df0573a691b019b46b62bda7be2adbb392eb3c574726f60b5c7246c917468ac0  wordmark_1line.svg
+108dc2e1cf2b8d5a1b4eaa65d7a0998df275147466dc2a65cd5f5c3017243431  wordmark_1line_inv.svg
+c7746d1599276db1859e7fd30e923cca682182a5444b81502cd35b86f90034e1  wordmark_2line.svg
+dc9a739a363f831a9dfe784f05e2e12b14cf15dbc5289912bb62d94daaa93484  wordmark_2line_inv.svg
+5c3b9e90490acf8a21a094780683dacd7c38045c2d149705e6cb18f2de706ee8  wordmark_3line.svg
+1a2133a8573728ddd83dd09d2ef50f7e9d1d6818678e1c17f884be054178ce4a  wordmark_3line_inv.svg
+ef92b214d2f4f31df3622f919a0081ec3323eb4876c48b8cb72aabe03ccc7c7e  wordmark_initials.svg
+fdff03d7ac6945e5dc22655ee6e3c52c955b9854613f466a2c01c1f0775d009d  wordmark_initials_inv.svg
+```
+
+| File | Canvas | Layout |
+| :-- | :-- | :-- |
+| `wordmark_1line.svg` | 2678×396 | `Mr. Pledger Stays After School`, as written |
+| `wordmark_2line.svg` | 1710×734 | `Mr. Pledger` / `Stays After School`, centered |
+| `wordmark_3line.svg` | 1202×1029 | `Mr. Pledger` / `Stays` / `After School`, centered |
+| `wordmark_initials.svg` | 771×308 | `MPSAS`, written separately rather than cut from the title |
+| `…_inv.svg` | same | white fill, black outline |
+
+- **Same two registers as the signature, chosen the same way.** Use the black file on light
+  canvases and `_inv` on dark ones. The inverted outline follows the same 15%-of-ink-stroke rule,
+  so verify it in a browser, never in cairosvg.
+- **No ring, no background.** All eight are transparent. The ring belongs to the `kwp` mark.
+- **Size by height, `width: auto`.** The four layouts have very different aspect ratios
+  (6.8:1 down to 1.2:1). The 53 px margin is identical on every side of every file, so switching
+  layouts at a fixed height keeps the padding consistent.
+- **Not decided yet: whether the glyph color may vary.** Until Kevin says otherwise, treat it the
+  way the signature is treated: black, or white with a black outline. Nothing in this repo places
+  the wordmark yet, so there are no placement rules.
+
 ## Tooling note: verify inverted marks in a browser, never in cairosvg
 
 The inverted files rely on `paint-order="stroke fill"`, which renders the outline *beneath* the fill so it sits outside the letterform instead of eating inward. That is what keeps the white signature at full weight.
