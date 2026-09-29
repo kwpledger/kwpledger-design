@@ -11,7 +11,7 @@ bumped `package.json`.
 
 ## v0.10.0 — 2026-09-29
 
-- [x] The MPSAS handwritten wordmark vendored into `logos/`: eight `wordmark_*.svg` files (one, two and three lines, and `MPSAS`, each with an inverted register), checksummed in `logos/PROVENANCE.md`. PR #PRNUM.
+- [x] The MPSAS handwritten wordmark vendored into `logos/`: eight `wordmark_*.svg` files (one, two and three lines, and `MPSAS`, each with an inverted register), checksummed in `logos/PROVENANCE.md`. PR #61.
 
 **v0.9.0 is skipped, at Kevin's direction (2026-09-29).** v0.8.1 recorded v0.9.0 as reserved for the filled-out footer tag library. This release is numbered v0.10.0 instead of taking that slot. A later release can't be tagged lower than an earlier one, so the tag library will ship as a minor after v0.10.0.
 
