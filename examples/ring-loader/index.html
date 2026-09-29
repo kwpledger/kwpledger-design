@@ -1,0 +1,86 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>kwp Ring Loader</title>
+<style>
+@font-face{font-family:'Lora';src:url('../../fonts/lora-latin.woff2') format('woff2');font-weight:600;font-display:swap}
+@font-face{font-family:'Hanken Grotesk';src:url('../../fonts/hanken-grotesk-latin.woff2') format('woff2');font-weight:100 900;font-display:swap}
+:root{
+  --surface:#fbfaf8; --surface-card:#ffffff; --fg:#1a1917; --fg-muted:#5c5a57;
+  --accent:#0d5c58; --border:#e3e0da; --ring:#0d5c58; --game:#e9e6e0; --game-fg:#5c5a57;
+  --font-display:'Lora',Georgia,'Iowan Old Style',Palatino,serif;
+  --font-body:'Hanken Grotesk',system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  /* One cycle: draw, a beat, erase, a beat. */
+  --cycle:2.6s;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  color-scheme:dark; --surface:#0a1420; --surface-card:#10202f; --fg:#e6ecf2; --fg-muted:#9aabbb;
+  --accent:#5fbdb4; --border:#1e3245; --ring:#5fbdb4; --game:#10202f; --game-fg:#9aabbb;
+}}
+:root[data-theme="dark"]{
+  color-scheme:dark; --surface:#0a1420; --surface-card:#10202f; --fg:#e6ecf2; --fg-muted:#9aabbb;
+  --accent:#5fbdb4; --border:#1e3245; --ring:#5fbdb4; --game:#10202f; --game-fg:#9aabbb;
+}
+body{background:var(--surface);color:var(--fg);font-family:var(--font-body);font-size:1.0625rem;line-height:1.6;padding-inline:16px;padding-block:clamp(24px,6vw,56px)}
+main{max-width:34rem;margin:0 auto;display:grid;gap:26px}
+.eyebrow{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--fg-muted);margin:0 0 6px}
+h1{font-family:var(--font-display);font-weight:600;font-size:clamp(1.5rem,4.5vw,2rem);line-height:1.2;margin:0;text-wrap:balance}
+p{margin:0}
+.muted{color:var(--fg-muted);font-size:.97rem}
+
+/* A stand-in game screen, with the loader where Kevin pictured it. */
+.screen{position:relative;aspect-ratio:16/10;max-width:100%;background:var(--game);border:1px solid var(--border);border-radius:6px;overflow:hidden;display:grid;place-items:center}
+.screen .msg{font-size:.9rem;color:var(--game-fg);letter-spacing:.04em}
+.screen .loader{position:absolute;right:14px;bottom:12px;height:52px;width:auto;aspect-ratio:496/598}
+
+.big{display:grid;place-items:center;background:var(--surface-card);border:1px solid var(--border);border-radius:6px;padding:28px}
+.big .loader{height:180px;width:auto;aspect-ratio:496/598}
+
+.loader{display:block;overflow:visible}
+/* Register picks the file, never a filter: black glyph on light, inverted on dark. */
+.loader .reg-dark{display:none}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .loader .reg-light{display:none}:root:not([data-theme="light"]) .loader .reg-dark{display:inline}}
+:root[data-theme="dark"] .loader .reg-light{display:none}
+:root[data-theme="dark"] .loader .reg-dark{display:inline}
+/* Ring geometry from the vendored files: centre (244.52, 286.04), r 195.41, stroke 15.45.
+   Rotated so the stroke starts at -144.2 deg, where the centerline of the k's tall stroke crosses the ring (the ink covers -148.7 to -139.7). */
+.loader circle{fill:none;stroke:var(--ring);stroke-width:15.45;stroke-dasharray:1 1;stroke-dashoffset:1;
+  animation:ring var(--cycle) infinite}
+@keyframes ring{
+  0%  {stroke-dashoffset:1;  animation-timing-function:cubic-bezier(.45,0,.35,1)}
+  42% {stroke-dashoffset:0}                 /* drawn all the way round */
+  50% {stroke-dashoffset:0;  animation-timing-function:cubic-bezier(.45,0,.35,1)}
+  92% {stroke-dashoffset:-1}                /* erased from the tail, still clockwise */
+  100%{stroke-dashoffset:-1}
+}
+@media (prefers-reduced-motion:reduce){
+  .loader circle{animation:none;stroke-dashoffset:0}
+}
+</style>
+
+<main>
+  <header>
+    <p class="eyebrow">Motion study · loader</p>
+    <h1>A loader where only the ring moves</h1>
+  </header>
+
+  <div class="screen">
+    <span class="msg">Level 9</span>
+    <svg class="loader small" viewBox="0 0 496 598" role="status" aria-label="Loading">
+      <circle pathLength="1" cx="244.52" cy="286.04" r="195.41" transform="rotate(-144.2 244.52 286.04)"/>
+      <image class="reg-light" href="../../logos/logo_short.svg" width="496" height="598"/>
+      <image class="reg-dark" href="../../logos/logo_short_inv.svg" width="496" height="598"/>
+    </svg>
+  </div>
+
+  <p class="muted">At game size, bottom right, while the next screen loads.</p>
+
+  <div class="big">
+    <svg class="loader large" viewBox="0 0 496 598" role="img" aria-label="The loader, enlarged: the kwp initials with the ring drawing around them">
+      <circle pathLength="1" cx="244.52" cy="286.04" r="195.41" transform="rotate(-144.2 244.52 286.04)"/>
+      <image class="reg-light" href="../../logos/logo_short.svg" width="496" height="598"/>
+      <image class="reg-dark" href="../../logos/logo_short_inv.svg" width="496" height="598"/>
+    </svg>
+  </div>
+
+  <p class="muted">Enlarged. The initials stay put the whole time, shown from the original file as a still image. Only the ring moves. It draws clockwise from the upper left, where the k's tall stroke sits, all the way round. After a short beat it erases clockwise from the same point, so the tail chases the head, then it starts again. One cycle takes 2.6 seconds. The ring sits under the initials, as it does in the ringed file, so at full draw you see exactly the mark. With reduced motion on, it shows the complete mark and stays still.</p>
+</main>
