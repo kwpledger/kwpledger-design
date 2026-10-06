@@ -11,7 +11,7 @@ The original stays as it is.
 | | |
 | :-- | :-- |
 | Footer tag | `AI implementation in organizations` (rendered uppercase by CSS) |
-| Footer tag ID | **None yet.** Not in [`docs/infographic-footer-tags.md`](../../docs/infographic-footer-tags.md) — that list is Kevin's, and this tag is awaiting his approval there |
+| Footer tag ID | `parent-organizations` — approved by Kevin, listed in [`docs/infographic-footer-tags.md`](../../docs/infographic-footer-tags.md) |
 | Exports | `policy-to-practice-loop-organizations.jpg` 1080×1350 q92 · `policy-to-practice-loop-organizations-letter.pdf` US Letter |
 
 Re-exported from `index.html` the same way as the original (screenshot clip
