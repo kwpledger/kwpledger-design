@@ -38,6 +38,7 @@ The Substack has no tags yet. Its name is itself a topic line, so whether its gr
 | ID | Surface line | Topic line | Words | Used by |
 | :-- | :-- | :-- | :-- | :-- |
 | `parent-regulated` | — | AI implementation in regulated environments | 5 | `four-principles`, `in-vs-about`, `little-ai-big-ai`, `policy-to-practice`, `policy-to-practice-loop` |
+| `parent-organizations` | — | AI implementation in organizations | 4 | `policy-to-practice-loop-organizations` |
 | `kpls-ai-ld` | Kevin Pledger Learning Systems | AI in learning & development | 8 | — |
 | `mpsas-statistics` | Mr. Pledger Stays After School | Statistics | 6 | — |
 
