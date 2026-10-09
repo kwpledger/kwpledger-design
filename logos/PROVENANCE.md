@@ -218,11 +218,11 @@ The ring carries **channel or section identity** — a different color per aspec
 - **The unassigned case has a color: teal.** `#0d5c58` (`--teal-700`) on a light canvas, `#5fbdb4` (`--teal-300`) on a dark one. A surface with no aspect of its own is no longer a reason to drop the ring.
 - **A ring color is a pair of hexes, one per register**, for the same reason the tokens are authored light and dark together — no single hex clears 3:1 on both canvases unless it sits near L 0.52–0.55.
 
-**Which color means what beyond that default is still open**, and every other ring hex in this file remains unassigned — a file existing here at some hex has never been evidence of a meaning.
+**Every aspect has a ring as of 2026-10-09.** Kevin assigned seven rings beyond the default, one per aspect, and `docs/logo-usage.md` §4 is the register. The raster-set hexes in this file are still unassigned. A file existing here at some hex has never been evidence of a meaning.
 
 **Corrected 2026-09-07:** an earlier revision named the two channel accents (KPLS `#4aa3ac`, MPSAS `#2f8079`) as the leading candidates for their own channels. **They were never candidates.** The channels' own `brand-tokens.css` has always carried dedicated ring tokens separate from the accents — `--ring-kpls #1a1f8f`, `--ring-mpsas #1c7a3f`, `--ring-spare #c0392b`. Those three are not shippable either: all break the 0.091 chroma ceiling, MPSAS lands 1° off `--success` and the spare 3° off `--danger`, and KPLS reads 1.44:1 on a dark canvas. Kevin declined a SPEC §10 identity exemption on 2026-09-07, so replacements come under the system.
 
-**Until then every aspect uses the default teal ring, channels included.** `docs/logo-usage.md` §4 is the authority and carries the measurements.
+**Replacements assigned 2026-10-09:** plum for MPSAS, muted violet for KPLS, all under the ceiling and clear of every status hue. The spare slot was retired. `docs/logo-usage.md` §4 is the authority and carries the measurements.
 
 The placement rules, the measured contrast table, and the bars a new ring color must clear live in [`docs/logo-usage.md`](../docs/logo-usage.md), which is the authority on placement. This file stays the authority on the assets.
 
@@ -238,6 +238,13 @@ Files produced from a vendored original by **recoloring the ring only**. The rul
 | `logo_short_ring_teal.svg` | `logo_short_ring.svg` | `#0d5c58` — `--teal-700` | The light-register default short mark. `#5fbdb4` measures 2.14:1 on a light canvas and cannot serve there. |
 | `logo_long_ring_teal.svg` | `logo_long_ring.svg` | `#0d5c58` — `--teal-700` | The light-register default long mark. |
 | `logo_long_ring_inv_teal.svg` | `logo_long_ring_inv.svg` | `#5fbdb4` — `--teal-300` | The dark-register default long mark. |
+| `logo_short_ring_olive.svg`, `logo_short_ring_inv_olive.svg`, `logo_long_ring_olive.svg`, `logo_long_ring_inv_olive.svg` | the four ringed originals | `#797d39`, olive | The software builds ring, both registers. One hex serves both canvases (`docs/logo-usage.md` §4). |
+| `logo_short_ring_copper.svg`, `logo_short_ring_inv_copper.svg`, `logo_long_ring_copper.svg`, `logo_long_ring_inv_copper.svg` | the four ringed originals | `#a66a47`, copper | The professional and AI-governance writing ring, both registers. One hex serves both canvases (`docs/logo-usage.md` §4). |
+| `logo_short_ring_rose.svg`, `logo_short_ring_inv_rose.svg`, `logo_long_ring_rose.svg`, `logo_long_ring_inv_rose.svg` | the four ringed originals | `#a96475`, dusty rose | The speaking ring, both registers. One hex serves both canvases (`docs/logo-usage.md` §4). |
+| `logo_short_ring_plum.svg`, `logo_short_ring_inv_plum.svg`, `logo_long_ring_plum.svg`, `logo_long_ring_inv_plum.svg` | the four ringed originals | `#9a6896`, plum | The MPSAS ring, both registers. One hex serves both canvases (`docs/logo-usage.md` §4). |
+| `logo_short_ring_violet.svg`, `logo_short_ring_inv_violet.svg`, `logo_long_ring_violet.svg`, `logo_long_ring_inv_violet.svg` | the four ringed originals | `#7f6faa`, muted violet | The KPLS ring, both registers. One hex serves both canvases (`docs/logo-usage.md` §4). |
+| `logo_short_ring_slate.svg`, `logo_short_ring_inv_slate.svg`, `logo_long_ring_slate.svg`, `logo_long_ring_inv_slate.svg` | the four ringed originals | `#5b79af`, slate blue | The fiction and worldbuilding ring, both registers. One hex serves both canvases (`docs/logo-usage.md` §4). |
+| `logo_short_ring_ocean.svg`, `logo_short_ring_inv_ocean.svg`, `logo_long_ring_ocean.svg`, `logo_long_ring_inv_ocean.svg` | the four ringed originals | `#3182a1`, ocean blue | The voice acting ring, both registers. One hex serves both canvases (`docs/logo-usage.md` §4). |
 
 **How it was made, and how to make the next one:** change the `stroke` hex on the `<circle>`, and nothing else. The whole diff is one attribute on line 7 — the two files are the same byte count and differ nowhere else. That is the entire recipe; it needs no tool and no session.
 

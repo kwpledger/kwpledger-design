@@ -425,7 +425,7 @@ The mark is chosen by **register**, and the choice is not optional. The inverted
 | Light canvas | `logo_long_ring_teal.svg` | `logo_short_ring_teal.svg` |
 | Dark canvas | `logo_long_ring_inv_teal.svg` | `logo_short_ring_inv_teal.svg` |
 
-**The ringed mark is the default**, at the default teal ring, per [`docs/logo-usage.md`](logo-usage.md). The ringless files (`logo_long.svg`, `logo_short_inv.svg`, and their pairs) are the exception and need a stated reason — §1.1 of that document lists the two known-good ones. Every infographic in `examples/` carries the ringed teal mark — the four that predated this rule were re-marked on 2026-09-23.
+**The ringed mark is the default**, with the ring of the graphic's aspect, and teal when it has none, per [`docs/logo-usage.md`](logo-usage.md). The ringless files (`logo_long.svg`, `logo_short_inv.svg`, and their pairs) are the exception and need a stated reason — §1.1 of that document lists the two known-good ones. Every infographic in `examples/` carries the ringed teal mark — the four that predated this rule were re-marked on 2026-09-23.
 
 All eight marks are **true vectors and transparent**, as of the 2026-08-30 rework. The two traps this section used to list — a file with no alpha that dropped a white box on a dark canvas, and an `.svg` that was really a base64 raster — are both gone with the raster set. `logos/PROVENANCE.md` keeps them on the record as superseded; do not reach for them.
 
@@ -713,7 +713,7 @@ Run this before every export. It is ordered by how often each one actually fails
 8. **If there is a return path**, its label is present, unrotated, and its arrowhead points at step 1.
 9. **Module titles are grammatically parallel.**
 10. **Every receipt is real.** No invented numbers, filenames, or screenshots.
-11. **`kwp` is lowercase, the mark matches the register, and it is ringed** — dark mark on a light canvas, inverted on dark; teal ring, `#0d5c58` light or `#5fbdb4` dark. A ringless mark needs a reason from `docs/logo-usage.md` §1.1. No generated signature mark. No superseded raster from `logos/`, and no `_ring` file left at the `#0026FF` it ships with.
+11. **`kwp` is lowercase, the mark matches the register, and it is ringed** — dark mark on a light canvas, inverted on dark; the ring of the graphic's aspect from `docs/logo-usage.md` §4, or teal (`#0d5c58` light, `#5fbdb4` dark) when it has none. A ringless mark needs a reason from `docs/logo-usage.md` §1.1. No generated signature mark. No superseded raster from `logos/`, and no `_ring` file left at the `#0026FF` it ships with.
 12. **One register.** No light values on a dark canvas.
 13. **Squint at it at 400px wide.** The headline and the module count should survive. If they don't, nothing else on the canvas matters.
 14. Exported at exactly **1080×1350**.

@@ -48,4 +48,4 @@ Released work is in [CHANGELOG.md](CHANGELOG.md).
 
 **Completed Items**
 
-(none)
+- [x] Ring colors assigned to all eight aspects (Kevin, 2026-10-09): teal default, olive builds, copper writing, dusty rose speaking, plum MPSAS, muted violet KPLS, slate blue fiction, ocean blue voice acting. `logo-usage.md` §4 is the register; 28 ring-only recolors added to `logos/` and listed in PROVENANCE. No token, font or vendored file changed. Waiting on Kevin's version number: a new assignment is a minor.

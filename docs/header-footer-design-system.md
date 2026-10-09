@@ -513,7 +513,7 @@ Each consumer is a **consumer** of this decision, never a precedent for it.
 - **Component CSS.** Named parts, not a stylesheet. See §0.
 - **Recoloring the glyph.** Not now, not ever. PROVENANCE is absolute and this document does not
   soften it.
-- **The remaining ring-aspect assignments.** `logo-usage.md` §4 leaves them open; every surface here
-  uses the default teal until that changes.
+- **Which ring a surface takes.** `logo-usage.md` §4 assigns a ring to each aspect (2026-10-09).
+  A surface takes its aspect's ring, and teal when it has none. This document only places the mark.
 - **A `kwp` favicon rule.** Related and not the same question — a favicon is 32px, far under §3.2's
   floor, and needs its own treatment. Unwritten.
