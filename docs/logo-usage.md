@@ -31,11 +31,10 @@ same honest reason — "which color means what is undecided," so a colored ring 
 identity nobody had handed out. That reasoning was correct and it is now spent: the unassigned
 case has a color.
 
-**What is still open:** which color belongs to which aspect beyond the default. **Everything
-sits on the teal ring until that is settled** (§4), including MPSAS and KPLS surfaces — Kevin's
-call on 2026-09-07, and not urgent. Dedicated ring colors do exist in the channels' own
-`brand-tokens.css`, but all three break the chroma ceiling or land on a status hue, and they are
-recorded in §4.2 as history rather than as shipping values.
+**Every aspect has a ring as of 2026-10-09** (§4). Kevin named eight aspects and assigned a color to
+each: the default teal plus seven new rings, all under the chroma ceiling. The channels' original
+ring hexes in `brand-tokens.css` break the ceiling or land on a status hue, and §4.2 keeps them as
+history, not as shipping values.
 
 ---
 
@@ -122,36 +121,63 @@ Meet it in the register you are actually shipping; do not average the two.
 
 ## 4. The assignment register
 
-**Settled:**
+**Kevin's assignments, 2026-10-09.** Eight aspects, each with one ring:
 
-| Aspect | Ring | Light hex | Dark hex |
-| :-- | :-- | :-- | :-- |
-| **Default / miscellaneous** — the portal, and anything without an aspect of its own | **teal** | `#0d5c58` (`--teal-700`) | `#5fbdb4` (`--teal-300`) |
+| Aspect | Ring | Light hex | Dark hex | Hue | Contrast light / dark | Which site entries belong to it |
+| :-- | :-- | :-- | :-- | :-- | :-- | :-- |
+| **Portal / default** (kwpledger.com, and anything without an aspect of its own) | **teal** | `#0d5c58` (`--teal-700`) | `#5fbdb4` (`--teal-300`) | h188 | 7.49 / 8.31 | none: the default |
+| **Software builds** (apps, MCP servers, games) | **olive** | `#797d39` | same | h112 | 4.19 / 4.24 | `builds` |
+| **Professional and AI-governance writing** (essays, case studies, LinkedIn posts, Substack) | **copper** | `#a66a47` | same | h50 | 4.22 / 4.21 | `case-studies`, `essays`, `posts` |
+| **Speaking and public presentations** | **dusty rose** | `#a96475` | same | h4 | 4.22 / 4.20 | none yet |
+| **YouTube: Mr. Pledger Stays After School** (MPSAS) | **plum** | `#9a6896` | same | h330 | 4.20 / 4.23 | `instruction` (`channel: mpsas`) |
+| **YouTube: Kevin Pledger Learning Systems** (KPLS) | **muted violet** | `#7f6faa` | same | h296 | 4.23 / 4.20 | `instruction` (`channel: kpls`) |
+| **Fiction and worldbuilding** | **slate blue** | `#5b79af` | same | h262 | 4.20 / 4.23 | `writing`, `worldbuilding`, `series` |
+| **Voice acting** (voiceovers and narration) | **ocean blue** | `#3182a1` | same | h228 | 4.16 / 4.27 | `voiceover` |
 
-Teal is the default for the reason it was always the least-bad ring: it is the only color on
-record that is **at or under the 0.091 chroma ceiling and legible**, it collides with no status
-hue, and it is the brand's own thread — `tokens/base.css` describes teal as the family both
-channels sit inside without either dominating. A default ring should read as the parent, and
-this one does.
+Contrast is against `#fbfaf8` (light) and `#0a1420` (dark), measured with `tools/color.mjs`.
 
-**The channels — everything sits on teal until the separation is settled.**
+**Teal is the only pair.** The seven new rings are each one hex that clears 3:1 on both canvases.
+They sit at chroma 0.091, the ceiling, and lightness near 0.57, the band §3 identifies as the only
+place one hex can serve both registers. Every hue has room in that band. Teal was settled first as
+a pair of brand tokens and stays that way.
 
-**Kevin's decision, 2026-09-07:** the channel rings each need to be *"something that doesn't
-break the system."* No exemption is being spent on them. **Until replacements are authored,
-MPSAS and KPLS surfaces take the default teal ring** — the same two hexes as everything else.
+**The last column says which entries belong to an aspect, not how the site colors them.** This
+table assigns ring colors. Whether the site also marks its collections with these colors is the
+site's own decision, made with its own domain tokens (SPEC §2). It is not settled here.
 
-| Aspect | Ring today | When settled |
-| :-- | :-- | :-- |
-| MPSAS | **the default teal ring** | A hue under the ceiling, off `--success`, and clear of teal |
-| KPLS | **the default teal ring** | Same bars, plus a light/dark pair — its original hex is invisible on dark |
-| spare / third aspect | *unassigned; no surface uses one* | Same bars, off `--danger` |
+**Why these hues.** Four bars (§5) leave three windows: copper at h47–55, between `--danger` and
+`--warning`; olive at h95–130; and a run from h213 around to h7, from blue to rose. Seven hues
+spread evenly across those windows give the table above. Kevin assigned the aspects in related
+pairs, so each pair of neighboring hues also belongs together in meaning:
 
-This is not a blocker on shipping anything. A channel mark placed today is correct with the
-teal ring; when the separation lands it is a `stroke` swap and these rows.
+- **Writing and speaking** take copper and rose, the two warm hues either side of `--danger`.
+- **The two channels** take violet and plum, next to each other. Kevin's brief for the channels is
+  a family, *"MPSAS visually rhymes with KPLS but does not copy it"*. Violet is the cooler one,
+  for the polished studio channel. Plum is the warmer one, for the after-hours teacher.
+- **Fiction and voice acting** take slate and ocean blue, next to each other: narration is the
+  spoken side of the same storytelling.
 
-**Do not use the channel accents as rings** — that was this file's original error and §4.2
-measures why. **Do not use the original ring hexes either** — they exist, they are recorded in
-§4.2, and all three break the system.
+**Two costs, accepted on purpose:**
+
+- **Neighbors in the blue-to-rose run are only 34° apart**, ΔOKLab about 0.053. Side by side they
+  are clearly distinct. On a 2.7px badge ring seen alone, slate and violet, or violet and plum,
+  can be confused. The surface around the mark always says what it is, so the ring is never the
+  only signal (SPEC's text-label rule, applied to identity).
+- **Dusty rose is 23° from `--danger`.** That clears the 20° bar, but by the smallest margin of
+  the seven. Speaking surfaces rarely sit near an error state, which is why speaking got it.
+
+**Ocean blue was not given to MPSAS, and the reason may come up again.** It is a cool hue for
+the warm channel, and it sits 0.063 from MPSAS's own teal accent `#2f8079` at nearly the same
+lightness, the closest any candidate came to either channel accent. That is the palette echo
+§4.2 rules out. The banners are negotiable (§4.4), but the cool-for-warm problem stands without
+them.
+
+**Settled is not permanent.** Kevin, 2026-10-09: nothing in this system is sacred, including the
+channel designs. A ring change is a `stroke` swap and a row in this table. It still clears the
+§5 bars and it is still Kevin's call.
+
+**Do not use the channel accents as rings**, and **do not use the original ring hexes** from
+`brand-tokens.css`. §4.2 measures why for both.
 
 ### 4.1 Why these two behave differently, and why that is not an accident
 
@@ -210,7 +236,7 @@ essentially *on* `--danger`; and KPLS vanishes on a dark canvas at 1.44:1, so it
 
 SPEC §10 would permit an identity exemption. **Kevin declined it on 2026-09-07** — the rings come
 under the system rather than the system bending around them. So these three hexes are **recorded
-history, not shipping values.** Everything sits on teal until replacements are authored.
+history, not shipping values.** Their replacements were assigned on 2026-10-09 (§4).
 
 The rest of this section is why the *accents* were never a candidate either.
 
@@ -286,9 +312,9 @@ placement rules, the register pairing in §3, and the bars in §5 survive untouc
 structure is load-bearing on which hues win. **Do not pre-emptively redesign the channel colors
 to get ahead of this.**
 
-**Open.** Every other aspect. Red, orange, and the rest of the raster set's hexes are
-**unassigned** — a file existing in `logos/` at some hex has never been evidence of a meaning,
-and still is not.
+**Assigned 2026-10-09** (§4). The superseded raster set's red, orange and other hexes are still
+**not** ring colors. A file existing in `logos/` at some hex has never been evidence of a
+meaning.
 
 ---
 
@@ -324,9 +350,9 @@ Two bands are worth knowing about before choosing anything:
 - **h95–h130 — the olive-green band**, e.g. `#3f4c02` / `#5a6827` at h120. Reads as "dark green"
   and is 25–35° clear of both the default teal and `--success`.
 
-Recorded as measurements, **not as a proposal.** Which hue means which channel is Kevin's, and
-these two bands are where the arithmetic says the room is — not an argument that he should want
-either one.
+Recorded as measurements first. **The assignment made on 2026-10-09 used neither band as
+proposed here.** The h215–h245 band is closest to teal, and §4 puts ocean blue at h228 rather
+than h215 to keep its distance. The olive band became software builds, not a channel.
 
 **Never ship a `_ring` file at the hex it arrives with.** Upstream ships all four circled files
 `stroke="#0026FF"` as a placeholder meant to be swapped. It is not a neutral default; it is the
@@ -343,6 +369,13 @@ suffix means the file is still at the upstream placeholder and is **not shippabl
 | :-- | :-- | :-- |
 | **Short, default ring** | `logo_short_ring_teal.svg` | `logo_short_ring_inv_teal.svg` |
 | **Long, default ring** | `logo_long_ring_teal.svg` | `logo_long_ring_inv_teal.svg` |
+| Short / long, olive (builds) ring | `logo_short_ring_olive.svg`, `logo_long_ring_olive.svg` | `logo_short_ring_inv_olive.svg`, `logo_long_ring_inv_olive.svg` |
+| Short / long, copper (writing) ring | `logo_short_ring_copper.svg`, `logo_long_ring_copper.svg` | `logo_short_ring_inv_copper.svg`, `logo_long_ring_inv_copper.svg` |
+| Short / long, dusty rose (speaking) ring | `logo_short_ring_rose.svg`, `logo_long_ring_rose.svg` | `logo_short_ring_inv_rose.svg`, `logo_long_ring_inv_rose.svg` |
+| Short / long, plum (MPSAS) ring | `logo_short_ring_plum.svg`, `logo_long_ring_plum.svg` | `logo_short_ring_inv_plum.svg`, `logo_long_ring_inv_plum.svg` |
+| Short / long, muted violet (KPLS) ring | `logo_short_ring_violet.svg`, `logo_long_ring_violet.svg` | `logo_short_ring_inv_violet.svg`, `logo_long_ring_inv_violet.svg` |
+| Short / long, slate blue (fiction) ring | `logo_short_ring_slate.svg`, `logo_long_ring_slate.svg` | `logo_short_ring_inv_slate.svg`, `logo_long_ring_inv_slate.svg` |
+| Short / long, ocean blue (voice acting) ring | `logo_short_ring_ocean.svg`, `logo_long_ring_ocean.svg` | `logo_short_ring_inv_ocean.svg`, `logo_long_ring_inv_ocean.svg` |
 | Short, ringless (§1.1) | `logo_short.svg` | `logo_short_inv.svg` |
 | Long, ringless (§1.1) | `logo_long.svg` | `logo_long_inv.svg` |
 
@@ -385,8 +418,8 @@ sound when it was written.
   short teal mark from §1 and §4 here and adds only placement, order, and sizing. Its 2.4rem
   minimum canvas height is derived from the ring stroke in PROVENANCE and is the one number it
   contributes back — below it the ring goes sub-pixel and soft.
-- **The remaining aspect assignments.** §4 leaves them open deliberately. Adding one is a
-  conversation with Kevin plus a row in that table, not a file dropped in `logos/`.
+- **A ninth aspect.** §4 assigns eight. Adding one is a conversation with Kevin plus a row in
+  that table, not a file dropped in `logos/`. It also has to clear §5 against all eight.
 - **Recoloring the glyph.** Not now, not ever, not for any aspect. PROVENANCE is the authority
   and it is absolute.
 - **Retiring the superseded rasters.** Deleting them is a major bump under the pinning model and

@@ -65,4 +65,4 @@ footer .who .surface{display:block;}
 
 ## Not decided here
 
-**Ring color per surface.** §5.8 says the ring is intended to encode channel or section identity, but which ring belongs to which channel is still open ([logo-usage.md](logo-usage.md)). Until that is settled, every graphic uses the default teal ring. A surface's tag says where the graphic belongs, and the ring does not yet.
+**Ring color per surface.** The ring encodes which aspect of Kevin's work a graphic belongs to, and every aspect has one as of 2026-10-09 ([logo-usage.md](logo-usage.md) §4). A graphic takes its aspect's ring, and teal when it has none. The tag and the ring are separate choices: the tag names the surface where the graphic is posted, and the ring names the aspect it belongs to. A KPLS graphic on LinkedIn takes the LinkedIn tag and the KPLS ring.
