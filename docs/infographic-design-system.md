@@ -177,7 +177,7 @@ Never justify. Never hyphenate. Never letterspace Lora.
 
 Bold within a body line uses Hanken Grotesk 600, and never more than one phrase per module. Colored emphasis inside the headline uses `--accent` on a **word or short phrase**, never a whole clause — the reference graphics all do this and it is the cheapest way to give a headline a focal point.
 
-**Italics in Lora titles are discouraged, not forbidden** (Kevin, 2026-10-16): an exception needs a reason. Hanken Grotesk ships no italic, so an italic there is synthesized — don't.
+**Italics in Lora titles are discouraged, not forbidden** (Kevin, 2026-10-16): an exception needs a reason. **Italics in Hanken Grotesk subtitle and body text are allowed** (Kevin, 2026-10-16); it ships a real italic.
 
 ---
 
@@ -682,7 +682,7 @@ Paste this file, then say roughly:
 
 > Build a 1080×1350 infographic following the attached spec exactly. Topic: **[topic]**. Layout: **[A stack / B ladder / C bento]**. **[N]** modules. Light register.
 >
-> Use exactly the hex values in the spec and do not substitute, adjust, or "improve" them. Headings in **Lora SemiBold 600**. Body in Hanken Grotesk. No topic icons, no emoji, no gradients, no shadows, no italics. The footer mark is the file I uploaded — place it as-is, do not redraw or recreate it. Output one standalone HTML file, then render it to JPG at exactly 1080×1350.
+> Use exactly the hex values in the spec and do not substitute, adjust, or "improve" them. Headings in **Lora SemiBold 600**. Body in Hanken Grotesk. No topic icons, no emoji, no gradients, no shadows, no italics in headings. The footer mark is the file I uploaded — place it as-is, do not redraw or recreate it. Output one standalone HTML file, then render it to JPG at exactly 1080×1350.
 >
 > Before you build, show me the copy as plain text with a word count, and stop for my approval.
 
@@ -761,7 +761,7 @@ Changing any of those four is still a conversation about this document, as *Chan
 - Never exceed 8 modules.
 - Never let color be the only difference between two things.
 - Never mix light and dark values on one canvas.
-- Never synthesize a Lora weight (anything outside 400–700). Never italicize Hanken Grotesk; italic Lora only with a reason.
+- Never synthesize a Lora weight (anything outside 400–700). Italic Lora only with a reason; italic Hanken in subtitles and body text is fine.
 - Never use an emoji.
 - Never invent a receipt.
 - Never write `KWP`.

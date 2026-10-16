@@ -11,22 +11,25 @@
  * serves as /fonts/, including OFL-NOTICE.txt. The license travels with the
  * fonts. Override the src paths if your host puts them elsewhere.
  *
- * Latin subset only: ~73KB for the two upright faces, plus a ~41KB Lora
- * italic that browsers fetch only when text on the page is set in it. Not
+ * Latin subset only: ~73KB for the two upright faces, plus ~41KB (Lora) and
+ * ~36KB (Hanken) italics that browsers fetch only when text is set in them. Not
  * loaded from Google Fonts: no third-party request, no dependency on an
  * external host staying up.
  *
  * The pairing is the one settled for both YouTube channels, which is what
  * makes every surface read as the same family. Both are VARIABLE: Lora across
- * 400–700, upright and italic; Hanken Grotesk across 100–900, upright only.
+ * 400–700, Hanken Grotesk across 100–900, each upright and italic.
  * Any weight inside a range is real. Outside it — Lora at 300 or 800 — the
  * browser fakes it. --fw-display (600) is the default heading weight, not the
  * only one.
  *
  * Until v0.11.0 Lora shipped as a static SemiBold, and "600 only" was a fact
  * about that file rather than a design decision. The YouTube lockups it came
- * from set the name in 700. Hanken Grotesk still ships no italic, so an italic
- * in body text is synthesized.
+ * from set the name in 700.
+ *
+ * Italics (Kevin, 2026-10-16): discouraged in Lora titles, allowed in Hanken
+ * Grotesk subtitles and body text. The italic files are not preloaded; each
+ * costs nothing on a page that never uses it.
  */
 @font-face {
   font-family: 'Lora';
@@ -38,11 +41,9 @@
     U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
-/* Discouraged in titles, not forbidden (Kevin, 2026-10-16). Not preloaded:
- * it costs nothing on a page that never sets Lora in italic. */
 @font-face {
   font-family: 'Lora';
-  src: url('/fonts/lora-italic-latin.woff2') format('woff2');
+  src: url('/fonts/lora-latin-italic.woff2') format('woff2');
   font-weight: 400 700;
   font-style: italic;
   font-display: swap;
@@ -55,6 +56,16 @@
   src: url('/fonts/hanken-grotesk-latin.woff2') format('woff2');
   font-weight: 100 900;
   font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304,
+    U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Hanken Grotesk';
+  src: url('/fonts/hanken-grotesk-latin-italic.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: italic;
   font-display: swap;
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304,
     U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;

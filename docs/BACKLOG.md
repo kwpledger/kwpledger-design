@@ -16,7 +16,7 @@ Released work is in [CHANGELOG.md](CHANGELOG.md).
 
 ## To Do (consumers) ##
 
-- [ ] **1.** Pinned consumers take v0.11.0, `kwpledger-site` first. Nothing changes on screen until a heading asks for a weight other than 600: `--fw-display` is unchanged and the roman file keeps its name, so preloads still resolve. The italic file is new and must be copied into each host's `/fonts/` with the others.
+- [ ] **1.** Pinned consumers take v0.11.0, `kwpledger-site` first. Nothing changes on screen until a heading asks for a weight other than 600: `--fw-display` is unchanged and the roman file keeps its name, so preloads still resolve. The two italic files are new and must be copied into each host's `/fonts/` with the others.
 - [ ] **2.** Tell the convention-only consumers what moved. The Base44 prompt and Substack settings in PALETTE.md still say SemiBold, now as the default heading weight rather than the only one. Re-apply the Office theme-fonts file: the heading font is now plain Lora.
 
 **Completed Items**

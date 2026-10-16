@@ -4,20 +4,20 @@ Fonts in this directory
 Both typefaces are licensed under the SIL Open Font License, Version 1.1,
 which permits redistribution and web embedding, including self-hosting.
 
-lora-latin.woff2, lora-italic-latin.woff2
+lora-latin.woff2, lora-latin-italic.woff2
   Lora, upright and italic — VARIABLE, weight axis 400-700.
   Copyright (c) Cyreal (https://github.com/cyrealtype/Lora-Cyrillic)
   https://fonts.google.com/specimen/Lora
   License: SIL OFL 1.1 — https://openfontlicense.org/
 
-hanken-grotesk-latin.woff2
-  Hanken Grotesk — VARIABLE, weight axis 100-900.
+hanken-grotesk-latin.woff2, hanken-grotesk-latin-italic.woff2
+  Hanken Grotesk, upright and italic — VARIABLE, weight axis 100-900.
   Copyright (c) Alfredo Marco Pradil
   https://fonts.google.com/specimen/Hanken+Grotesk
   License: SIL OFL 1.1 — https://openfontlicense.org/
 
-All three files are the latin subset only (~113 KB combined; the italic
-loads only when a page uses it). Characters outside
+All four files are the latin subset only (~149 KB combined; the two italics
+load only when a page uses them). Characters outside
 that range fall back to the next family in the stack, which is the intended
 behavior — see the unicode-range declarations in tokens/fonts.css.
 

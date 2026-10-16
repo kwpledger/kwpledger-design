@@ -75,7 +75,7 @@ the reserve so you can see what you are protecting. Never export with guides on.
 ## 2. Type
 
 Same two families, same rules as everywhere else. Lora at **SemiBold 600** by default; another weight in its 400–700 range when there is a reason for it.
-**Italics in Lora titles are discouraged, not forbidden** (Kevin, 2026-10-16): an exception needs a reason. Hanken Grotesk ships no italic, so an italic there is synthesized — don't.
+**Italics in Lora titles are discouraged, not forbidden** (Kevin, 2026-10-16): an exception needs a reason. **Italics in Hanken Grotesk subtitle and body text are allowed** (Kevin, 2026-10-16); it ships a real italic.
 Never justify, never hyphenate, never letterspace Lora.
 
 | Element | Size | Face | Notes |
