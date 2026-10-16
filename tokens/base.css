@@ -76,7 +76,7 @@
   --border: var(--sand-200);
 
   /* Type */
-  /* Lora is available at 600 only — see the fonts.css note. */
+  /* Lora is variable, 400–700; --fw-display is the default heading weight. See fonts.css. */
   --font-display: 'Lora', Georgia, 'Iowan Old Style', 'Palatino Linotype', Palatino, serif;
   --font-body: 'Hanken Grotesk', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial,
     sans-serif;

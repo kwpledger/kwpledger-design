@@ -1,6 +1,6 @@
 # These things need to be done in kwpledger-design v1.0 #
 
-Current release: **v0.10.0** (2026-09-29). Format: [BACKLOG-FORMAT](BACKLOG-FORMAT.md).
+Current release: **v0.11.0** (2026-10-16). Format: [BACKLOG-FORMAT](BACKLOG-FORMAT.md).
 
 **This repo's addition to the format: open decisions only.** [SPEC.md](SPEC.md)
 is the contract and [AGENTS.md](../AGENTS.md) the working agreement; this file
@@ -16,7 +16,8 @@ Released work is in [CHANGELOG.md](CHANGELOG.md).
 
 ## To Do (consumers) ##
 
-(none)
+- [ ] **1.** Pinned consumers take v0.11.0, `kwpledger-site` first. Nothing changes on screen until a heading asks for a weight other than 600: `--fw-display` is unchanged and the roman file keeps its name, so preloads still resolve. The two italic files are new and must be copied into each host's `/fonts/` with the others.
+- [ ] **2.** Tell the convention-only consumers what moved. The Base44 prompt and Substack settings in PALETTE.md still say SemiBold, now as the default heading weight rather than the only one. Re-apply the Office theme-fonts file: the heading font is now plain Lora.
 
 **Completed Items**
 
@@ -48,4 +49,4 @@ Released work is in [CHANGELOG.md](CHANGELOG.md).
 
 **Completed Items**
 
-- [x] Ring colors assigned to all eight aspects (Kevin, 2026-10-09): teal default, olive builds, copper writing, dusty rose speaking, plum MPSAS, muted violet KPLS, slate blue fiction, ocean blue voice acting. `logo-usage.md` §4 is the register; 28 ring-only recolors added to `logos/` and listed in PROVENANCE. No token, font or vendored file changed. **No version bump for this** (Kevin, 2026-10-09): it records a decision, and the bump comes when the rings are first applied to something. Until then the new files sit on `main` and ship with the next release.
+(none)

@@ -14,11 +14,11 @@ Paste the relevant table into the prompt and say the colors are fixed. Something
 
 > Use exactly these colors and do not substitute or adjust them. Background `#fbfaf8`, cards `#ffffff`, body text `#1a1917`, secondary text `#5c5a57`, links and buttons `#0d5c58` with `#0a4a47` on hover, borders `#e3e0da`. In dark mode: background `#0a1420`, cards `#10202f`, body text `#e6ecf2`, secondary text `#9aabbb`, links and buttons `#5fbdb4` with `#8ad8d0` on hover, borders `#1e3245`.
 >
-> Fonts: headings in Lora SemiBold, body in Hanken Grotesk.
+> Fonts: headings in Lora SemiBold (600), body in Hanken Grotesk.
 
 **Two things that go wrong if you do not say them out loud:**
 
-1. **Lora is only available at SemiBold (600).** Ask for Lora Bold or Lora Regular and the browser fakes the weight — it looks subtly wrong and nobody can say why. Say "Lora SemiBold" every time.
+1. **Name the heading weight.** Lora runs 400–700 and SemiBold 600 is the system's default for headings. Leave it unsaid and a generator picks its own, usually the browser's bold. Another weight is allowed when there is a reason for it. Outside 400–700 it gets faked.
 2. **Generators love to saturate.** If the output comes back brighter than these values, it has substituted its own palette. Say "do not adjust these colors" explicitly.
 
 ---
@@ -170,7 +170,7 @@ A color-coded legend with no text is not acceptable output, however good it look
 
 | | Family | Weight | Use |
 | :-- | :-- | :-- | :-- |
-| Display | **Lora** | SemiBold 600 **only** | Headings |
+| Display | **Lora** | Variable 400–700; headings default to SemiBold 600 | Headings |
 | Body | **Hanken Grotesk** | Variable 100–900 | Everything else |
 
 Fallbacks, in order:

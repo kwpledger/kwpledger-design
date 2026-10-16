@@ -9,6 +9,15 @@ version below is real, not reconstructed. Dates are GitHub's release dates
 bumped `package.json`.
 
 
+## v0.11.0 — 2026-10-16
+
+- [x] Lora is now a variable font, 400–700, upright plus a new italic (`fonts/lora-latin-italic.woff2`), replacing the static SemiBold. "600 only" was never a design decision. The KWP-8 session self-hosted a static SemiBold in 2026-08 without recording why, and every later doc repeated what that file could do as if it were a rule. The YouTube lockups the pairing came from set the name in Lora 700. `--fw-display` stays 600 as the default heading weight, so this is a visual no-op until a heading opts into another weight. The roman file keeps its name, so consumer preloads still resolve. Kevin's call, 2026-10-16.
+- [x] Italics, Kevin's call 2026-10-16: **discouraged in Lora titles, not forbidden** (an exception needs a reason), and **allowed in Hanken Grotesk subtitles and body text**. Both have real italic files now: `lora-latin-italic.woff2` and the new `hanken-grotesk-latin-italic.woff2` (variable 100–900, 35.6KB, same Hanken 3.013 as the upright). Neither is preloaded, so each costs nothing on a page that doesn't use it.
+- [x] Office theme heading font is plain `Lora` instead of `Lora SemiBold`, with the static four installed so B and I map to real faces.
+- [x] Ring colors assigned to all eight aspects (Kevin, 2026-10-09): teal default, olive builds, copper writing, dusty rose speaking, plum MPSAS, muted violet KPLS, slate blue fiction, ocean blue voice acting. `logo-usage.md` §4 is the register; 28 ring-only recolors added to `logos/` and listed in PROVENANCE. No token, font or vendored file changed. **No version bump for this** (Kevin, 2026-10-09): it records a decision, and the bump comes when the rings are first applied to something. Until then the new files sit on `main` and ship with the next release.
+
+Size: the upright faces are ~73KB, up from ~56KB. The italics add ~41KB (Lora) and ~36KB (Hanken), each only on pages that use it. No color token changed: `npm run verify` reports identical values.
+
 ## v0.10.0 — 2026-09-29
 
 - [x] The MPSAS handwritten wordmark vendored into `logos/`: eight `wordmark_*.svg` files (one, two and three lines, and `MPSAS`, each with an inverted register), checksummed in `logos/PROVENANCE.md`. PR #61.

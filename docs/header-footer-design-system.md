@@ -177,7 +177,7 @@ which this model reproduces exactly. If a surface needs a smaller mark than 2.4r
 | Property | Value |
 | :-- | :-- |
 | Family | `var(--font-display)` |
-| Weight | `var(--fw-display)` — explicit; Lora ships at 600 only and inheriting 400 synthesizes |
+| Weight | `var(--fw-display)` — explicit; inheriting the body's 400 would set the wordmark lighter than every other surface |
 | Size | `var(--step-0)` |
 | Letter-spacing | `0.01em` |
 | Color | `var(--fg)`, `var(--accent)` on hover |

@@ -23,7 +23,7 @@ upload carries those too, preserving layout:
 
 - `design-system/**`  — the cards + `_lib/card.css`
 - `tokens/**`         — base / categorical / status / fonts / index CSS (both registers as authored)
-- `fonts/**`          — the two woff2 + OFL-NOTICE.txt
+- `fonts/**`          — the woff2 faces + OFL-NOTICE.txt
 - `logos/**`          — marks + PROVENANCE.md (referenced by brand/logo-marks.html)
 - `examples/*/*.jpg`  — rendered format references (referenced by formats/*.html)
 

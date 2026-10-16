@@ -106,25 +106,18 @@ The Darker variants are safe and one of them is free: Word's **Heading 1** style
 
 | Office slot | Family to install | Why that one |
 | :-- | :-- | :-- |
-| Heading font (`+Headings`) | **Lora SemiBold** | The system ships Lora at weight 600 and no other weight |
+| Heading font (`+Headings`) | **Lora** | Regular/italic/bold/bold-italic, so B and I map to real faces |
 | Body font (`+Body`) | **Hanken Grotesk** | Regular/italic/bold/bold-italic, so B and I map to real faces |
 
-**The `.woff2` files in `fonts/` will not install.** They are latin-subset web files; Windows and macOS want TTF or OTF. Get the desktop files from Google Fonts — [Lora](https://fonts.google.com/specimen/Lora) and [Hanken Grotesk](https://fonts.google.com/specimen/Hanken+Grotesk) — and install:
-
-- `Lora-SemiBold.ttf` — inside the download's `static/` folder. **Not** the variable `Lora-VariableFont_wght.ttf`: Windows registers a variable font at its default instance, which is Regular 400, and the SemiBold is then unreachable from Word.
-- `HankenGrotesk-Regular.ttf`, `-Italic`, `-Bold`, `-BoldItalic` — the static four, same reasoning.
+**The `.woff2` files in `fonts/` will not install.** They are latin-subset web files; Windows and macOS want TTF or OTF. Get the desktop files from Google Fonts — [Lora](https://fonts.google.com/specimen/Lora) and [Hanken Grotesk](https://fonts.google.com/specimen/Hanken+Grotesk) — and install, for each family, the static four from the download's `static/` folder: `-Regular`, `-Italic`, `-Bold`, `-BoldItalic`. The variable `*-VariableFont_wght.ttf` alone is not enough: Windows registers a variable font at its default instance, which is Regular 400, so Word's **B** would be synthesized rather than mapped to a real Bold.
 
 Install the fonts **before** the theme-fonts file, or Word will resolve the names to a substitute and cache it.
 
-### "Lora SemiBold" is not a typo for "Lora"
+### Why plain "Lora" now (v0.11.0)
 
-The weight 600 face installs under **its own family name**. Ask for `Lora` and you get Lora Regular — a different, lighter design than every other kwp surface, and nobody will be able to say why the document feels off. Office does exactly this itself: its default theme's heading font is *Calibri Light*, not Calibri.
+Until v0.11.0 this theme named **Lora SemiBold**, because the web files shipped Lora at weight 600 and no other. That was a fact about one file, not a design decision, and the web faces are variable now (`tokens/fonts.css`). With nothing to pin the desktop to, the theme names the family Kevin has installed: Lora (Kevin, 2026-10-16).
 
-Which leads to the rule that follows from it:
-
-> **Do not bold a heading in this theme.** The weight is already in the face. There is no Lora Bold installed, so Word will *synthesize* one — smearing the SemiBold outline — which is the same fake-weight failure `tokens/fonts.css` exists to prevent, just on the desktop.
-
-If a heading style arrives bold (some templates set it), **Modify > uncheck Bold**. The heading will not get lighter; it will stop being faked.
+What changes in practice: a heading comes out at Lora Regular unless its style is bold, and with the static Bold installed, **bold is a real face, not a smear** — Lora 700, the weight the YouTube lockups set the name in. Whether headings are bold is a style choice per template, not something the theme enforces.
 
 ### Sharing a document
 
