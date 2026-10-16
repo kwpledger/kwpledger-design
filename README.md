@@ -25,7 +25,7 @@ tokens/
   base.css         # palette + semantic layers, type scale, spacing scale
   categorical.css  # --data-1 … --data-8, three values each, both themes
   status.css       # --success / --warning / --danger, same triple
-fonts/             # Lora + Hanken Grotesk, latin subset, ~56KB, and the OFL notice
+fonts/             # Lora (variable, + italic) + Hanken Grotesk, latin subset, and the OFL notice
 logos/             # the kwp signature marks + the MPSAS wordmark, and PROVENANCE.md — never redraw
 tools/             # contrast + parity verifier. No build, no toolchain.
 docs/

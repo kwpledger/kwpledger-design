@@ -8,21 +8,17 @@
 
       docs/office-theme.md
 
-  "Lora SemiBold" is NOT a typo for "Lora". The system ships Lora at weight 600
-  and no other weight (see tokens/fonts.css). On Windows the static SemiBold
-  face installs under its own family name, exactly as Office's own themes name
-  "Calibri Light" rather than asking for Calibri and hoping. Naming the family
-  that carries the weight is what stops Word synthesising one.
+  Headings are plain "Lora" (Kevin, 2026-10-16). Until v0.11.0 this named
+  "Lora SemiBold", because the web files shipped Lora at weight 600 only;
+  they are variable now (see tokens/fonts.css), so there is no single weight
+  to pin the desktop to.
 
-  So: do not bold a heading in this theme. The weight is already in the face.
-
-  Hanken Grotesk is variable on the web and static on the desktop; install the
-  four regular/italic/bold/bold-italic files so Word's B and I map to real
-  faces instead of faking them.
+  Both families: install the static regular/italic/bold/bold-italic files so
+  Word's B and I map to real faces instead of faking them.
 -->
 <a:fontScheme xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" name="kwp-design">
   <a:majorFont>
-    <a:latin typeface="Lora SemiBold"/>
+    <a:latin typeface="Lora"/>
     <a:ea typeface=""/>
     <a:cs typeface=""/>
   </a:majorFont>

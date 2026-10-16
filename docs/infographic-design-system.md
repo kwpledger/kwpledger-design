@@ -141,7 +141,7 @@ Put together:
 
 ## Part 3 — Type
 
-Two families. No third. Lora **SemiBold 600 only** — asking for any other Lora weight makes the renderer synthesize it, and synthesized Lora looks subtly broken in a way nobody can name.
+Two families. No third. Lora at **SemiBold 600** by default; another weight in its 400–700 range when there is a reason for it. Outside that range the renderer synthesizes the weight, and synthesized Lora looks subtly broken in a way nobody can name.
 
 ### 3.1 The ladder
 
@@ -177,7 +177,7 @@ Never justify. Never hyphenate. Never letterspace Lora.
 
 Bold within a body line uses Hanken Grotesk 600, and never more than one phrase per module. Colored emphasis inside the headline uses `--accent` on a **word or short phrase**, never a whole clause — the reference graphics all do this and it is the cheapest way to give a headline a focal point.
 
-**No italics anywhere.** Neither shipped face carries a true italic; both would be synthesized.
+**Italics in Lora titles are discouraged, not forbidden** (Kevin, 2026-10-16): an exception needs a reason. Hanken Grotesk ships no italic, so an italic there is synthesized — don't.
 
 ---
 
@@ -562,7 +562,7 @@ If you copy the font files anywhere, `OFL-NOTICE.txt` goes with them.
 <meta charset="utf-8">
 <style>
   @font-face { font-family:'Lora'; src:url('lora-latin.woff2') format('woff2');
-               font-weight:600; font-style:normal; }
+               font-weight:400 700; font-style:normal; }
   @font-face { font-family:'Hanken Grotesk'; src:url('hanken-grotesk-latin.woff2') format('woff2');
                font-weight:100 900; font-style:normal; }
 
@@ -610,7 +610,7 @@ If you copy the font files anywhere, `OFL-NOTICE.txt` goes with them.
            text-transform:uppercase; color:var(--accent);}
   h1{font-family:var(--font-display); font-weight:600;
      font-size:var(--step-5); line-height:1.05; margin-top:var(--space-2xs);}
-  h1 em{font-style:normal; color:var(--accent);}   /* no italics, ever */
+  h1 em{font-style:normal; color:var(--accent);}   /* emphasis is color, not italic */
   .subhead{font-size:var(--step-1); line-height:1.35;
            color:var(--fg-muted); margin-top:var(--space-xs);}
   hr{border:0; border-top:1px solid var(--border); margin:var(--space-m) 0;}
@@ -682,7 +682,7 @@ Paste this file, then say roughly:
 
 > Build a 1080×1350 infographic following the attached spec exactly. Topic: **[topic]**. Layout: **[A stack / B ladder / C bento]**. **[N]** modules. Light register.
 >
-> Use exactly the hex values in the spec and do not substitute, adjust, or "improve" them. Headings in **Lora SemiBold 600 only** — no other Lora weight. Body in Hanken Grotesk. No topic icons, no emoji, no gradients, no shadows, no italics. The footer mark is the file I uploaded — place it as-is, do not redraw or recreate it. Output one standalone HTML file, then render it to JPG at exactly 1080×1350.
+> Use exactly the hex values in the spec and do not substitute, adjust, or "improve" them. Headings in **Lora SemiBold 600**. Body in Hanken Grotesk. No topic icons, no emoji, no gradients, no shadows, no italics. The footer mark is the file I uploaded — place it as-is, do not redraw or recreate it. Output one standalone HTML file, then render it to JPG at exactly 1080×1350.
 >
 > Before you build, show me the copy as plain text with a word count, and stop for my approval.
 
@@ -691,7 +691,7 @@ Upload three files with it: the two woff2 faces (§8.2) and the footer mark for 
 Four things go wrong if you do not say them out loud — the first two are the same failures documented in [PALETTE.md](PALETTE.md):
 
 1. **Generators saturate.** If the output comes back brighter than the tables in §4, it substituted its own palette. Say "do not adjust these colors."
-2. **Lora exists at 600 only.** Ask for Lora Bold or Regular and it gets faked.
+2. **Name the Lora weight.** Leave it unsaid and the generator picks its own, usually the browser's bold. Say 600.
 3. **Generators add icons and emoji unprompted.** Say no icons and no emoji explicitly, every time.
 4. **Generators will happily redraw your signature.** Asked for a logo they do not have, they invent one rather than leave a gap. Upload the file and say "place it as-is."
 
@@ -761,7 +761,7 @@ Changing any of those four is still a conversation about this document, as *Chan
 - Never exceed 8 modules.
 - Never let color be the only difference between two things.
 - Never mix light and dark values on one canvas.
-- Never synthesize a Lora weight. Never use italics.
+- Never synthesize a Lora weight (anything outside 400–700). Never italicize Hanken Grotesk; italic Lora only with a reason.
 - Never use an emoji.
 - Never invent a receipt.
 - Never write `KWP`.

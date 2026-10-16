@@ -61,9 +61,11 @@ context (40) plus their gap comes to 91. If the badge changes size, this row cha
 
 ## 2. Type
 
-Same two families, same rules as everywhere else. Lora **SemiBold 600 only**. **No italics** —
-neither shipped face has a true italic, and a quotation is exactly where a designer's hand
-reaches for one. Never justify, never hyphenate, never letterspace Lora.
+Same two families, same rules as everywhere else. Lora at **SemiBold 600** by default; another weight in its 400–700 range when there is a reason for it.
+**Italics are discouraged, not forbidden** (Kevin, 2026-10-16). Lora has a true italic now,
+but a quotation is exactly where a designer's hand reaches for one out of habit, so an
+exception needs a reason beyond "it's a quote". Hanken Grotesk ships no italic; never
+italicize it. Never justify, never hyphenate, never letterspace Lora.
 
 ### 2.1 Why the type is bigger than the infographic's
 
@@ -299,7 +301,7 @@ Measured in a render, not estimated:
 6. Inverted mark on the dark canvas, and the ring is `#5fbdb4` — never the `#0026FF` that the
    upstream `_ring` files ship with.
 7. `kwp` is lowercase everywhere it appears, including alt text.
-8. No italics. No enclosing quotation marks — marks around quoted *terms* are fine, and single.
+8. No italics without a reason (§2). No enclosing quotation marks — marks around quoted *terms* are fine, and single.
    No third accent element beyond the opening mark and the ring.
 9. Grayscale test: nothing is lost, because nothing on this canvas is carried by color.
 10. Squint at 400px wide: the quote's first line and the name both survive.

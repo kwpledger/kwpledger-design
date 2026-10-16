@@ -1,4 +1,4 @@
-<!-- @dsCard group="Type" name="Type scale" subtitle="Lora 600 display, Hanken Grotesk variable body, six fluid steps" -->
+<!-- @dsCard group="Type" name="Type scale" subtitle="Lora variable display (600 default), Hanken Grotesk variable body, six fluid steps" -->
 <meta charset="utf-8">
 <title>Type scale — kwp design</title>
 <link rel="stylesheet" href="../_lib/card.css">
@@ -6,15 +6,15 @@
 <div class="card-head">
   <h1>Type</h1>
   <p>The pairing settled for both YouTube channels, which is what makes every surface read as the
-     same family. Latin subset only, ~56KB total — self-hosted, so no third-party request and no
+     same family. Latin subset only, ~73KB upright (the Lora italic loads only when used) — self-hosted, so no third-party request and no
      dependency on an external host staying up.</p>
 </div>
 
 <div class="rule">
-  <strong>Lora ships at weight 600 only.</strong> It is a static face; Hanken Grotesk is variable
-  (100–900). Ask Lora for any other weight and the browser fakes it — a synthesized bold that does
-  not match the real one. That is what <code>--fw-display</code> exists to prevent: use
-  <code>var(--fw-display)</code>, never a literal.
+  <strong>Both faces are variable.</strong> Lora runs 400–700, upright and italic; Hanken Grotesk
+  runs 100–900, upright only. Any weight in range is real; outside it the browser fakes one.
+  <code>--fw-display</code> (600) is the default heading weight — use it unless a heading has a
+  reason to differ. Italic Lora in a title is discouraged, not forbidden.
 </div>
 
 <section>
@@ -22,7 +22,7 @@
   <div class="stack" style="max-width:var(--page)">
     <div style="padding:var(--space-s); background:var(--surface-card); border:1px solid var(--border); border-radius:8px">
       <div style="font-family:var(--font-display); font-weight:var(--fw-display); font-size:var(--step-3); line-height:1.15">Lora — the display face</div>
-      <code class="token" style="margin-top:var(--space-2xs); color:var(--fg-muted)">--font-display · --fw-display: 600</code>
+      <code class="token" style="margin-top:var(--space-2xs); color:var(--fg-muted)">--font-display · variable 400–700 · --fw-display: 600</code>
       <p style="margin:var(--space-2xs) 0 0; color:var(--fg-muted); font-size:var(--step--1)">Headings, pull quotes, the signature moments. Serif, with enough contrast to carry a large canvas.</p>
     </div>
     <div style="padding:var(--space-s); background:var(--surface-card); border:1px solid var(--border); border-radius:8px">
