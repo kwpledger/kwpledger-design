@@ -11,16 +11,13 @@ four `REPLACE ME` blocks in Mode A, re-render.
 | Reserve | **Left 528px carries no content** (§1.1). The avatar sits there. |
 | Modes | **A — event** (four slots) · **B — standing** (between events) |
 | Mark | `logo_short_ring_inv_teal.svg`, 180px tall, right side. Teal ring (§5). |
-| Exports | `linkedin-banner-event.jpg` · `linkedin-banner-standing.jpg`, both 1584×396 q92 — **stale, see below** |
+| Exports | `linkedin-banner-event.jpg` · `linkedin-banner-standing.jpg`, both 1584×396 q92 |
 
-## The exports are stale
+## The exports
 
-`index.html` moved to the ringed short mark on 2026-09-06 (see the format spec §5). **The two
-JPEGs still show the old ringless long mark** and need one re-render.
-
-They were left rather than regenerated for one reason: the mark height is set to 180px and that
-number is still Kevin's to settle — §5.2 explains where it came from and says it is tunable.
-Re-export once the height is final, rather than twice.
+Both JPEGs were re-rendered on 2026-10-18 from `index.html` with the ringed short mark at 180px
+(spec §5.2), Kevin having confirmed the height as final. The event export still carries the
+`REPLACE ME` placeholders on purpose: it is the template's picture, not a finished banner.
 
 ## The two modes are both in this one file
 
