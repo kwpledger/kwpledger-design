@@ -25,6 +25,13 @@ one reusable issue when they disagree. Precise, and self-healing: it re-derives
 the answer from scratch every run, so a missed notification corrects itself on
 the next one.
 
+It also opens one PR adding a single open item to the consumer's
+`docs/BACKLOG.md`, at the end of `## To Do (design) ##`, because sessions read
+the backlog and not Issues (Kevin, 2026-10-20: two consumers sat at v0.8.0
+behind an open issue the backlog never mentioned). It needs the repo's Actions
+setting "Allow GitHub Actions to create and approve pull requests". It edits
+the backlog only; taking the release stays a human's PR.
+
 **Hands-on consumers** have no dependency and no build. A Base44 app, a
 Substack theme, a fixed-canvas export, a Unity project — none of them can poll
 anything. For these, the list below is the entire mechanism.
@@ -69,7 +76,8 @@ a version is tagged. Edit the list here; the issue follows.
 ### Hands-on — nothing reaches these but this list
 
 - [ ] **Base44 apps** — `tapdodge`, `plankvoice`. Values are pasted, not
-      imported. A token change means editing each app by hand.
+      imported. A token change means editing each app by hand. One that
+      starts pinning the package moves to *Pinned* (see *Adding a consumer*).
 - [ ] **`smartalarm-pro`** — a Base44 app, not consuming these tokens yet.
       Listed on Kevin's say-so (2026-09-22) so it is not forgotten when it
       does. Nothing to do for it until then.
@@ -84,11 +92,23 @@ a version is tagged. Edit the list here; the issue follows.
 
 ## Adding a consumer
 
-If it has an npm dependency and a build, give it a copy of
-`.github/workflows/design-drift.yml` from any of the three pinned consumers —
-it is identical in all of them and needs no configuration — then add it above.
+If it has an npm dependency and a build, it joins the pinned channel, in the
+same PR that adds the dependency (Kevin, 2026-10-20):
+
+1. Copy `.github/workflows/design-drift.yml` from any of the three pinned
+   consumers — it is identical in all of them and needs no configuration.
+2. Make sure it has a `docs/BACKLOG.md` in the [BACKLOG-FORMAT](BACKLOG-FORMAT.md)
+   shape. The workflow writes its line there and fails without the file.
+   `## To Do (design) ##` is optional; it is created if missing.
+3. Turn on Settings → Actions → General → "Allow GitHub Actions to create and
+   approve pull requests", or the backlog PR fails (loudly — the issue still
+   opens).
+4. Move it into *Pinned* above.
+
 If it does not, add it to the hands-on list and accept that a human is the
-transport.
+transport. **A hands-on consumer that later takes the package moves**: a Base44
+app or a game such as `tapdodge` that gains a `package.json` pinning this repo
+gets the four steps above at that point, not "eventually".
 
 **Do not name a private repo here that isn't already named elsewhere in this
 repo unless Kevin says to do so** (his wording, 2026-09-22). This repo is
