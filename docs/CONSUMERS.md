@@ -25,6 +25,13 @@ one reusable issue when they disagree. Precise, and self-healing: it re-derives
 the answer from scratch every run, so a missed notification corrects itself on
 the next one.
 
+It also opens one PR adding a single open item to the consumer's
+`docs/BACKLOG.md`, at the end of `## To Do (design) ##`, because sessions read
+the backlog and not Issues (Kevin, 2026-10-20: two consumers sat at v0.8.0
+behind an open issue the backlog never mentioned). It needs the repo's Actions
+setting "Allow GitHub Actions to create and approve pull requests". It edits
+the backlog only; taking the release stays a human's PR.
+
 **Hands-on consumers** have no dependency and no build. A Base44 app, a
 Substack theme, a fixed-canvas export, a Unity project — none of them can poll
 anything. For these, the list below is the entire mechanism.
