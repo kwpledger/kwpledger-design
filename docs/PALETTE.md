@@ -1,8 +1,8 @@
 # kwp palette — the human-readable copy
 
-**Every value in this system, as plain hex.** For consumers that cannot take a dependency on this repo — Base44 apps, a Unity project, a slide template, anything where you have to *tell* a tool the colors rather than import them.
+**Every value in this system, as plain hex.** For consumers that do not take a dependency on this repo — a Base44 app that has not pinned the package, a Unity project, a slide template, anything where you have to *tell* a tool the colors rather than import them.
 
-This is a real deliverable, not a convenience. Base44 generates the app; there is no `package.json` to add a dependency to. The only way these apps stay on-brand is if the values are written down somewhere a person can read them out.
+This is a real deliverable, not a convenience. The only way these consumers stay on-brand is if the values are written down somewhere a person can read them out. A Base44 app *can* take the dependency (it has a `package.json`, and `plankvoice` pins this repo since 2026-10-22; see [CONSUMERS.md](CONSUMERS.md)); prefer that when the app is maintained from outside Base44, and use this file for prompting the builder.
 
 > **This file is generated from the token files and must be regenerated when they change.** Values here are correct as of the tokens at the same commit. If they disagree, `tokens/` wins — it is what `npm run verify` checks.
 
