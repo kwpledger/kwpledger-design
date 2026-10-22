@@ -92,9 +92,11 @@ Import the tokens, then bridge the ones you want as utilities. Use `@theme inlin
 
 Confirm the exact `@theme` behavior against the Tailwind version you are on when you migrate — this is the intent, and the reasoning above tells you what to adjust if the mechanism differs.
 
-### Base44 apps, and anything else that cannot take a dependency
+### Base44 apps, and anything else that does not take a dependency
 
-These consume the system **by convention, not by dependency** — the platform generates the app, so there is nothing to install into. Use [docs/PALETTE.md](docs/PALETTE.md); it is written to be pasted into a prompt.
+These consume the system **by convention, not by dependency**. Use [docs/PALETTE.md](docs/PALETTE.md); it is written to be pasted into a prompt.
+
+A Base44 app can also pin the package like any other npm consumer: it has a `package.json`, and Base44 runs `npm install`. `plankvoice` does, since 2026-10-22; [docs/CONSUMERS.md](docs/CONSUMERS.md) has what it took.
 
 ---
 

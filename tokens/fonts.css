@@ -2,8 +2,8 @@
  * kwp design — @font-face declarations.
  *
  * Split out from base.css deliberately. A consumer that already serves these
- * faces, or that cannot copy files into a public directory (Base44), imports
- * base.css and skips this file. The --font-display / --font-body stacks in
+ * faces, or that bundles them itself (plankvoice declares its own @font-face
+ * against this package's files), imports base.css and skips this file. The --font-display / --font-body stacks in
  * base.css degrade to their fallbacks without it.
  *
  * PATHS ARE ABSOLUTE — /fonts/. That is a convention, not a bundler feature:

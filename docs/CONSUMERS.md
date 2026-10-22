@@ -32,9 +32,9 @@ behind an open issue the backlog never mentioned). It needs the repo's Actions
 setting "Allow GitHub Actions to create and approve pull requests". It edits
 the backlog only; taking the release stays a human's PR.
 
-**Hands-on consumers** have no dependency and no build. A Base44 app, a
-Substack theme, a fixed-canvas export, a Unity project — none of them can poll
-anything. For these, the list below is the entire mechanism.
+**Hands-on consumers** have no dependency and no build. A Substack theme, a
+fixed-canvas export, a Unity project, a Base44 app that has not pinned the
+package yet — none of them can poll anything. For these, the list below is the entire mechanism.
 
 That is why the roster exists even though the pinned consumers do not need it:
 it is the only thing that reaches the ones that cannot check for themselves.
@@ -72,12 +72,23 @@ a version is tagged. Edit the list here; the issue follows.
       text and the woff2/SVG binaries **by path**, so a release that renames one
       breaks its build rather than falling back silently. Declares its own
       `@font-face` against content-hashed URLs; see SPEC §9.
+- [ ] **`plankvoice`** — a Base44 app, pinned since 2026-10-22: the first
+      Base44 consumer to take the package. Vite + Tailwind 3 on the shadcn
+      template: `src/index.css` imports `base.css`, `categorical.css` and
+      `status.css` and maps the template's variable names onto the semantic
+      layer; `tailwind.config.js` reads them through `color-mix` so opacity
+      modifiers survive non-HSL values; next-themes sets `data-theme` as well
+      as `.dark`. Bundles Lora and Hanken from the package by relative path,
+      so a release that renames a font file breaks its build. Its
+      `docs/DESIGN-SYSTEM.md` holds the mapping and the Base44-specific traps.
 
 ### Hands-on — nothing reaches these but this list
 
-- [ ] **Base44 apps** — `tapdodge`, `plankvoice`. Values are pasted, not
-      imported. A token change means editing each app by hand. One that
-      starts pinning the package moves to *Pinned* (see *Adding a consumer*).
+- [ ] **Base44 apps** — `tapdodge`. Values are pasted, not imported. A token
+      change means editing each app by hand. A Base44 app *can* pin the
+      package (it has a `package.json`, and Base44 runs `npm install`); one
+      that does moves to *Pinned* (see *Adding a consumer*), as `plankvoice`
+      did.
 - [ ] **`smartalarm-pro`** — a Base44 app, not consuming these tokens yet.
       Listed on Kevin's say-so (2026-09-22) so it is not forgotten when it
       does. Nothing to do for it until then.
@@ -95,8 +106,9 @@ a version is tagged. Edit the list here; the issue follows.
 If it has an npm dependency and a build, it joins the pinned channel, in the
 same PR that adds the dependency (Kevin, 2026-10-20):
 
-1. Copy `.github/workflows/design-drift.yml` from any of the three pinned
+1. Copy `.github/workflows/design-drift.yml` from any of the pinned
    consumers — it is identical in all of them and needs no configuration.
+   Copy it from a consumer's `main`, not a local checkout, which can be stale.
 2. Make sure it has a `docs/BACKLOG.md` in the [BACKLOG-FORMAT](BACKLOG-FORMAT.md)
    shape. The workflow writes its line there and fails without the file.
    `## To Do (design) ##` is optional; it is created if missing.
@@ -109,6 +121,13 @@ If it does not, add it to the hands-on list and accept that a human is the
 transport. **A hands-on consumer that later takes the package moves**: a Base44
 app or a game such as `tapdodge` that gains a `package.json` pinning this repo
 gets the four steps above at that point, not "eventually".
+
+**For a Base44 app specifically,** two things learned on `plankvoice`
+(2026-10-22). Bundle the fonts from the package with `@font-face` rules: Base44's
+workspace font upload refuses family names that are already Google Fonts, which
+Lora and Hanken Grotesk both are. And a Base44 sync can flatten a `CLAUDE.md`
+symlink into a copy, which breaks Base44's own preview build; check it after
+creating a branch. Details in that repo's `docs/DESIGN-SYSTEM.md`.
 
 **Do not name a private repo here that isn't already named elsewhere in this
 repo unless Kevin says to do so** (his wording, 2026-09-22). This repo is
