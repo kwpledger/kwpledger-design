@@ -9,6 +9,12 @@ version below is real, not reconstructed. Dates are GitHub's release dates
 bumped `package.json`.
 
 
+## v0.12.0 — 2026-10-24
+
+- [x] IBM Plex Mono is the system's monospace face, with a new `--font-mono` token beside `--font-display` and `--font-body`. The face was Kevin's choice after trying the candidates (2026-10-22), and so was its shape: **Regular 400 only, no italic**, because no front-facing app, game or site needs a bold or italic monospace. Plex Mono is static, so that is one file, `fonts/ibm-plex-mono-latin.woff2` (14.7KB, latin subset, from `@fontsource/ibm-plex-mono` 5.3.0), with its licence added to `OFL-NOTICE.txt`. Fallback stack: `ui-monospace`, SF Mono, Menlo, Consolas, Liberation Mono, `monospace`. Prompted by PlankVoice, whose timers fell back to the system monospace.
+
+**A consumer using a heavier mono weight should drop to 400 when it takes this**, or the browser fakes the weight from the Regular. Nothing changes on a surface that never sets text in `--font-mono`; the file is fetched only when one does. No color token changed: `npm run verify` reports identical values.
+
 ## v0.11.0 — 2026-10-16
 
 - [x] Lora is now a variable font, 400–700, upright plus a new italic (`fonts/lora-latin-italic.woff2`), replacing the static SemiBold. "600 only" was never a design decision. The KWP-8 session self-hosted a static SemiBold in 2026-08 without recording why, and every later doc repeated what that file could do as if it were a rule. The YouTube lockups the pairing came from set the name in Lora 700. `--fw-display` stays 600 as the default heading weight, so this is a visual no-op until a heading opts into another weight. The roman file keeps its name, so consumer preloads still resolve. Kevin's call, 2026-10-16.

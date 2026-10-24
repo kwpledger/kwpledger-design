@@ -80,6 +80,9 @@
   --font-display: 'Lora', Georgia, 'Iowan Old Style', 'Palatino Linotype', Palatino, serif;
   --font-body: 'Hanken Grotesk', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial,
     sans-serif;
+  /* IBM Plex Mono is static Regular 400 only: set mono text at 400. See fonts.css. */
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono',
+    monospace;
   --fw-display: 600;
 
   --step--1: clamp(0.83rem, 0.79rem + 0.19vw, 0.94rem);

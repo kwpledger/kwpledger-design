@@ -14,7 +14,7 @@ Paste the relevant table into the prompt and say the colors are fixed. Something
 
 > Use exactly these colors and do not substitute or adjust them. Background `#fbfaf8`, cards `#ffffff`, body text `#1a1917`, secondary text `#5c5a57`, links and buttons `#0d5c58` with `#0a4a47` on hover, borders `#e3e0da`. In dark mode: background `#0a1420`, cards `#10202f`, body text `#e6ecf2`, secondary text `#9aabbb`, links and buttons `#5fbdb4` with `#8ad8d0` on hover, borders `#1e3245`.
 >
-> Fonts: headings in Lora SemiBold (600), body in Hanken Grotesk.
+> Fonts: headings in Lora SemiBold (600), body in Hanken Grotesk, timers and figures in IBM Plex Mono Regular (400, never bold).
 
 **Two things that go wrong if you do not say them out loud:**
 
@@ -172,13 +172,17 @@ A color-coded legend with no text is not acceptable output, however good it look
 | :-- | :-- | :-- | :-- |
 | Display | **Lora** | Variable 400–700; headings default to SemiBold 600 | Headings |
 | Body | **Hanken Grotesk** | Variable 100–900 | Everything else |
+| Mono | **IBM Plex Mono** | Regular 400 only, no italic | Timers, figures, code |
 
 Fallbacks, in order:
 
 - Lora → Georgia, Iowan Old Style, Palatino Linotype, Palatino, serif
 - Hanken Grotesk → system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif
+- IBM Plex Mono → ui-monospace, SF Mono, Menlo, Consolas, Liberation Mono, monospace
 
-Both are open licensed (SIL OFL). The license notice is in `fonts/OFL-NOTICE.txt` and **travels with the font files** — if you copy the woff2s, copy the notice.
+**Set Plex Mono at Regular.** There is no bold file, so a bold timer is the browser smearing the Regular, not the typeface.
+
+All three are open licensed (SIL OFL). The license notice is in `fonts/OFL-NOTICE.txt` and **travels with the font files** — if you copy the woff2s, copy the notice.
 
 ### Type scale
 
