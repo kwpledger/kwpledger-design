@@ -1,6 +1,6 @@
 # These things need to be done in kwpledger-design v1.0 #
 
-Current release: **v0.11.0** (2026-10-16). Format: [BACKLOG-FORMAT](BACKLOG-FORMAT.md).
+Current release: **v0.12.0** (2026-10-24). Format: [BACKLOG-FORMAT](BACKLOG-FORMAT.md).
 
 **This repo's addition to the format: open decisions only.** [SPEC.md](SPEC.md)
 is the contract and [AGENTS.md](../AGENTS.md) the working agreement; this file
@@ -16,7 +16,7 @@ Released work is in [CHANGELOG.md](CHANGELOG.md).
 
 ## To Do (consumers) ##
 
-- [ ] **1.** The remaining pinned consumers take v0.11.0 (`meal-planner`, `runbox-mcp`). Nothing changes on screen until a heading asks for a weight other than 600: `--fw-display` is unchanged and the roman file keeps its name, so preloads still resolve. The two italic files are new and must be copied into each host's `/fonts/` with the others.
+- [ ] **1.** The remaining pinned consumers take v0.11.0 (`meal-planner`, `runbox-mcp`). Nothing changes on screen until a heading asks for a weight other than 600: `--fw-display` is unchanged and the roman file keeps its name, so preloads still resolve. The two italic files are new and must be copied into each host's `/fonts/` with the others. **v0.12.0 rides the same bump**: `ibm-plex-mono-latin.woff2` is copied with the rest, and is fetched only by a page that sets text in `--font-mono`. `kwpledger-site` takes v0.12.0 on its own. `plankvoice` is the one consumer that uses monospace today, and takes it first (2026-10-24).
 - [ ] **2.** Tell the convention-only consumers what moved. The Base44 prompt and Substack settings in PALETTE.md still say SemiBold, now as the default heading weight rather than the only one. Re-apply the Office theme-fonts file: the heading font is now plain Lora.
 
 **Completed Items**
@@ -29,11 +29,9 @@ Released work is in [CHANGELOG.md](CHANGELOG.md).
 ## To Do (tokens) ##
 
 - [ ] **1.** Decide whether a recessed surface and an on-accent foreground belong in the shared system. `meal-planner` defines both locally, `--surface-sunken` and `--accent-fg`, as SPEC §10.3 permits with a stated reason. Its [upstream report](https://github.com/kwpledger/meal-planner/blob/main/docs/UPSTREAM-REPORT.md) makes the case, with derivations and contrast measurements. Adding a semantic token is a minor bump and a conversation with Kevin (SPEC §11). Meal-planner's own reasoning: any consumer with a dark theme hits the on-accent gap. A second consumer hit it on 2026-10-22: PlankVoice's template has a `--primary-foreground` with no upstream token to map it to.
-- [ ] **2.** Add IBM Plex Mono as the system's monospace face, with a `--font-mono` token beside `--font-display` and `--font-body`. **The face is decided** (Kevin, 2026-10-22, after trying the candidates). **So is its shape** (Kevin, 2026-10-22): **Regular (400) only, no italic.** No front-facing app, game or site needs bold monospace, and either answer can change when a need does. Plex Mono is static, not variable, so that is one file. What remains is the work, a minor bump: the latin subset, its licence notice, the `fonts.css` block, the `--font-mono` token, and SPEC. Consumers using heavier weights today (PlankVoice's timers ask for semibold and bold) should drop to regular when they take it, rather than get a weight the browser fakes. Prompted by PlankVoice, whose timers, history and records use `font-mono` with `tabular-nums` and currently fall back to the system monospace. For the record: Hanken Grotesk has no `tnum` feature, but its default digits already share one width (560 units), so a Hanken timer would not jitter either; Plex Mono is a style choice, not a fix.
-
 **Completed Items**
 
-(none)
+- [x] IBM Plex Mono added as `--font-mono`, Regular 400 only, no italic, one static file. Kevin chose the face and its shape on 2026-10-22 and the minor bump on 2026-10-24. Released as v0.12.0. Consumers using heavier mono weights (PlankVoice's timers ask for semibold and bold) drop to 400 when they take it. For the record: Hanken Grotesk has no `tnum` feature, but its default digits already share one width (560 units), so a Hanken timer would not jitter either; Plex Mono is a style choice, not a fix. 2026-10-24.
 
 
 ## To Do (tooling) ##

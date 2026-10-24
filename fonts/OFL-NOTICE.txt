@@ -1,7 +1,7 @@
 Fonts in this directory
 =======================
 
-Both typefaces are licensed under the SIL Open Font License, Version 1.1,
+All three typefaces are licensed under the SIL Open Font License, Version 1.1,
 which permits redistribution and web embedding, including self-hosting.
 
 lora-latin.woff2, lora-latin-italic.woff2
@@ -16,8 +16,16 @@ hanken-grotesk-latin.woff2, hanken-grotesk-latin-italic.woff2
   https://fonts.google.com/specimen/Hanken+Grotesk
   License: SIL OFL 1.1 — https://openfontlicense.org/
 
-All four files are the latin subset only (~149 KB combined; the two italics
-load only when a page uses them). Characters outside
+ibm-plex-mono-latin.woff2
+  IBM Plex Mono, Regular (400) only, upright only — STATIC, not variable.
+  Copyright 2017 IBM Corp.
+  https://github.com/IBM/plex
+  License: SIL OFL 1.1 — https://openfontlicense.org/
+  Taken from @fontsource/ibm-plex-mono 5.3.0 (its latin-400-normal file).
+
+All five files are the latin subset only (~164 KB combined; the two italics
+load only when a page uses them, and Plex Mono only when text is set in
+it). Characters outside
 that range fall back to the next family in the stack, which is the intended
 behavior — see the unicode-range declarations in tokens/fonts.css.
 
@@ -25,6 +33,6 @@ Why self-hosted rather than loaded from Google Fonts: no third-party request
 on page load, and no dependency on an external host remaining available.
 
 To replace either typeface, drop in a new .woff2, update the matching
-@font-face block in tokens/fonts.css and the --font-display / --font-body
-tokens in tokens/base.css, and check --fw-display still falls inside the new
+@font-face block in tokens/fonts.css and the --font-display / --font-body /
+--font-mono tokens in tokens/base.css, and check --fw-display still falls inside the new
 face's weight range.
