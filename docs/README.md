@@ -21,6 +21,7 @@ contract**, and it wins over anything written here or there.
 | [header-footer-design-system.md](header-footer-design-system.md) | The shared chrome rule (KWP-16) — binds every surface. |
 | [theme-toggle-capability.md](theme-toggle-capability.md) | The light/dark toggle contract, and why each dark register is authored twice. |
 | [infographic-design-system.md](infographic-design-system.md) | The 1080×1350 infographic format — a layer-3 consumer. |
+| [infographic-prompt-decision.md](infographic-prompt-decision.md) | Why the generator prompt states the Lora default and no italics, and how a graphic opts into an exception. |
 | [infographic-footer-tags.md](infographic-footer-tags.md) | The library of footer tags beside the infographic signature mark, by surface and topic. Kevin's list. |
 | [quote-post-design-system.md](quote-post-design-system.md) | The 1400×1000 (7:5) quote-card format — a layer-3 consumer. |
 | [linkedin-banner-design-system.md](linkedin-banner-design-system.md) | The banner format. |
