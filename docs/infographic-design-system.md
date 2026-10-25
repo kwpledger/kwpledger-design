@@ -554,6 +554,8 @@ The two woff2 files live in `fonts/` in this repo. Options, best first:
 2. **Base64-embed them** into the HTML as data URIs. Self-contained, larger file.
 3. **Accept the fallbacks** — Georgia for Lora, system-ui for Hanken Grotesk. The graphic will be structurally correct and typographically wrong. Fine for a layout check, not for publishing.
 
+**Exceptions only:** a graphic that departs from the no-italics default (§8.4) also needs `hanken-grotesk-latin-italic.woff2` or `lora-latin-italic.woff2`, uploaded the same way. Leave them out otherwise. A face that is declared but never used costs nothing, and an italic that is used without its file is synthesized.
+
 If you copy the font files anywhere, `OFL-NOTICE.txt` goes with them.
 
 ### 8.3 Skeleton
@@ -565,6 +567,12 @@ If you copy the font files anywhere, `OFL-NOTICE.txt` goes with them.
                font-weight:400 700; font-style:normal; }
   @font-face { font-family:'Hanken Grotesk'; src:url('hanken-grotesk-latin.woff2') format('woff2');
                font-weight:100 900; font-style:normal; }
+  /* Exceptions only — add when a graphic opts into italics (§8.4). Leave out otherwise.
+  @font-face { font-family:'Lora'; src:url('lora-latin-italic.woff2') format('woff2');
+               font-weight:400 700; font-style:italic; }
+  @font-face { font-family:'Hanken Grotesk'; src:url('hanken-grotesk-latin-italic.woff2') format('woff2');
+               font-weight:100 900; font-style:italic; }
+  */
 
   :root{
     /* ---- LIGHT REGISTER. Swap this block for dark; never mix. ---- */
@@ -682,7 +690,7 @@ Paste this file, then say roughly:
 
 > Build a 1080×1350 infographic following the attached spec exactly. Topic: **[topic]**. Layout: **[A stack / B ladder / C bento]**. **[N]** modules. Light register.
 >
-> Use exactly the hex values in the spec and do not substitute, adjust, or "improve" them. Headings in **Lora SemiBold 600**. Body in Hanken Grotesk. No topic icons, no emoji, no gradients, no shadows, no italics in headings. The footer mark is the file I uploaded — place it as-is, do not redraw or recreate it. Output one standalone HTML file, then render it to JPG at exactly 1080×1350.
+> Use exactly the hex values in the spec and do not substitute, adjust, or "improve" them. Headings in **Lora SemiBold 600**, no other weight. Body in Hanken Grotesk 400, with 600 for bold. **No italics anywhere.** No topic icons, no emoji, no gradients, no shadows. The footer mark is the file I uploaded — place it as-is, do not redraw or recreate it. Output one standalone HTML file, then render it to JPG at exactly 1080×1350.
 >
 > Before you build, show me the copy as plain text with a word count, and stop for my approval.
 
@@ -691,11 +699,15 @@ Upload three files with it: the two woff2 faces (§8.2) and the footer mark for 
 Four things go wrong if you do not say them out loud — the first two are the same failures documented in [PALETTE.md](PALETTE.md):
 
 1. **Generators saturate.** If the output comes back brighter than the tables in §4, it substituted its own palette. Say "do not adjust these colors."
-2. **Name the Lora weight.** Leave it unsaid and the generator picks its own, usually the browser's bold. Say 600.
+2. **Name the Lora weight, and say no italics.** Leave the weight unsaid and the generator picks its own, usually the browser's bold. Say 600. Leave italics unsaid and it adds them, and without the italic file loaded they are synthesized.
 3. **Generators add icons and emoji unprompted.** Say no icons and no emoji explicitly, every time.
 4. **Generators will happily redraw your signature.** Asked for a logo they do not have, they invent one rather than leave a gap. Upload the file and say "place it as-is."
 
 The "show me the copy first" step is the highest-value line in that prompt. It catches the word-budget overrun while it is still cheap to fix.
+
+#### When a graphic needs an exception
+
+The prompt states the default and does not list what §3.4 allows. Naming an allowance invites the generator to use it where nobody asked. To use one, edit the prompt for that graphic only. For italic Hanken in the subhead, or an italic Lora title with a reason, also upload `hanken-grotesk-latin-italic.woff2` or `lora-latin-italic.woff2`, add the matching `@font-face` with `font-style: italic` (§8.3), and record the departure in the graphic's README per *Departing from this document in one graphic*. The prompt grants the exception; the skeleton does not. Reasoning: [infographic-prompt-decision.md](infographic-prompt-decision.md).
 
 ---
 

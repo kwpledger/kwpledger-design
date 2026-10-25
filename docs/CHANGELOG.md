@@ -9,6 +9,10 @@ version below is real, not reconstructed. Dates are GitHub's release dates
 bumped `package.json`.
 
 
+## v0.12.1 — 2026-10-25
+
+- [x] Docs fix: the infographic generator prompt (`infographic-design-system.md` §8.4) now says "no italics anywhere" and names Lora 600 only, instead of "no italics in headings". It states the default and does not list what §3.4 allows; a graphic that wants an italic edits the prompt, uploads the italic file and adds the `@font-face` (§8.2, §8.3). The decision and its reasoning: [infographic-prompt-decision.md](infographic-prompt-decision.md). No token, font or gate changed: `npm run verify` reports identical values.
+
 ## v0.12.0 — 2026-10-24
 
 - [x] IBM Plex Mono is the system's monospace face, with a new `--font-mono` token beside `--font-display` and `--font-body`. The face was Kevin's choice after trying the candidates (2026-10-22), and so was its shape: **Regular 400 only, no italic**, because no front-facing app, game or site needs a bold or italic monospace. Plex Mono is static, so that is one file, `fonts/ibm-plex-mono-latin.woff2` (14.7KB, latin subset, from `@fontsource/ibm-plex-mono` 5.3.0), with its licence added to `OFL-NOTICE.txt`. Fallback stack: `ui-monospace`, SF Mono, Menlo, Consolas, Liberation Mono, `monospace`. Prompted by PlankVoice, whose timers fell back to the system monospace.
