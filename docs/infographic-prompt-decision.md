@@ -25,7 +25,7 @@ Should the prompt state only the default, or name the exceptions (e.g. "italic H
 
 ## What to change in infographic-design-system.md
 
-Not applied in this commit; this record is additive and the spec edit is its own change. Three edits, all wording and an example, with no token or gate affected:
+Applied in v0.12.1. Three edits, all wording and an example, with no token or gate affected:
 
 **§8.4 prompt**, replace *"Headings in **Lora SemiBold 600**. Body in Hanken Grotesk. … no italics in headings."* with:
 
