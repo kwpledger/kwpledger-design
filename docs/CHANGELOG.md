@@ -9,6 +9,13 @@ version below is real, not reconstructed. Dates are GitHub's release dates
 bumped `package.json`.
 
 
+## v0.13.0 — 2026-10-26
+
+- [x] kwp Handwriting is the system's fourth face, with a new `--font-hand` token beside `--font-mono`. It is Kevin's own handwriting made into a font, for the very rare case where hand-drawn is the point, such as the arrows on the infographic format. Two static files, Regular 400 (~153KB) and Bold 700 (~77KB), `fonts/kwp-handwriting-regular.woff2` and `kwp-handwriting-bold.woff2`. Shipped unsubset on purpose, so the Regular's contextual alternates survive. Fetched only when text is set in `--font-hand`. Declared as `kwp Handwriting`, lowercase like the initials. Not an OFL font; the provenance note is in `OFL-NOTICE.txt`. Fallback stack: Segoe Print, Bradley Hand, `cursive`. Guidance and open items: [handwriting-font.md](handwriting-font.md).
+- [x] The infographic spec names it as the one exception to "two families"; §5.5/§5.6 arrow geometry is unchanged, so whether arrows become glyphs or stay SVG paths is still open.
+
+Nothing changes on a surface that never sets text in `--font-hand`. No color token changed: `npm run verify` reports identical values.
+
 ## v0.12.1 — 2026-10-25
 
 - [x] Docs fix: the infographic generator prompt (`infographic-design-system.md` §8.4) now says "no italics anywhere" and names Lora 600 only, instead of "no italics in headings". It states the default and does not list what §3.4 allows; a graphic that wants an italic edits the prompt, uploads the italic file and adds the `@font-face` (§8.2, §8.3). The decision and its reasoning: [infographic-prompt-decision.md](infographic-prompt-decision.md). No token, font or gate changed: `npm run verify` reports identical values.
