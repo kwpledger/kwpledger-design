@@ -141,7 +141,7 @@ Put together:
 
 ## Part 3 — Type
 
-Two families. No third. Lora at **SemiBold 600** by default; another weight in its 400–700 range when there is a reason for it. Outside that range the renderer synthesizes the weight, and synthesized Lora looks subtly broken in a way nobody can name.
+Two families. No third, with one named exception: `--font-hand` (kwp Handwriting), for hand-drawn arrows and annotations only — see [handwriting-font.md](handwriting-font.md). Lora at **SemiBold 600** by default; another weight in its 400–700 range when there is a reason for it. Outside that range the renderer synthesizes the weight, and synthesized Lora looks subtly broken in a way nobody can name.
 
 ### 3.1 The ladder
 

@@ -83,6 +83,9 @@
   /* IBM Plex Mono is static Regular 400 only: set mono text at 400. See fonts.css. */
   --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono',
     monospace;
+  /* Kevin's handwriting. Rare on purpose: arrows and annotations, never running text.
+     Static 400 and 700 only. See fonts.css and docs/handwriting-font.md. */
+  --font-hand: 'kwp Handwriting', 'Segoe Print', 'Bradley Hand', cursive;
   --fw-display: 600;
 
   --step--1: clamp(0.83rem, 0.79rem + 0.19vw, 0.94rem);
