@@ -12,6 +12,7 @@ contract**, and it wins over anything written here or there.
 | :-- | :-- |
 | [SPEC.md](SPEC.md) | The contract — naming, layering, the categorical scale, the contrast gates, and the reasoning behind each. Read before changing any value. |
 | [PALETTE.md](PALETTE.md) | Every value as hex, for consumers that cannot take a dependency. |
+| [handwriting-font.md](handwriting-font.md) | The `--font-hand` face: what it is for, what it is not for, coverage, and what is still undecided. |
 | [logo-usage.md](logo-usage.md) | How the signature marks may be placed. `logos/PROVENANCE.md` is the authority on the artwork itself. |
 
 ## Consumer-facing specs

@@ -37,6 +37,14 @@
  * ~15KB, fetched only when text is set in --font-mono. A heavier weight or an
  * italic asked of it is faked by the browser; set mono text at 400. Either
  * answer can change when a real need does.
+ *
+ * kwp Handwriting is the fourth face and a deliberate rarity: Kevin's own
+ * handwriting, for the cases where hand-drawn is the point (the arrows on the
+ * infographic format). Not a heading, body or label face. Two static files,
+ * Regular 400 and Bold 700, ~153KB and ~77KB, fetched only when text is set in
+ * --font-hand. These are NOT the latin subset: the Regular carries contextual
+ * alternates that make repeated letters differ, and subsetting would risk
+ * flattening them. Do not subset without testing that. See docs/handwriting-font.md.
  */
 @font-face {
   font-family: 'Lora';
@@ -86,4 +94,21 @@
   font-display: swap;
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304,
     U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* The family name is lowercase kwp on purpose: the initials are, everywhere. */
+@font-face {
+  font-family: 'kwp Handwriting';
+  src: url('/fonts/kwp-handwriting-regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'kwp Handwriting';
+  src: url('/fonts/kwp-handwriting-bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
 }
