@@ -98,6 +98,9 @@ a version is tagged. Edit the list here; the issue follows.
       artwork; the specs themselves may need their hex values regenerated.
 - [ ] **`office-theme.md`** — Kevin's Microsoft 365 theme. Documented here,
       consumed by hand, nothing depends on it.
+- [ ] **Markdown Viewer** — `consumers/markdown-viewer.css`, Kevin's print
+      theme for markdownviewer.org. Light-register hex copied from `base.css`;
+      fonts from Google Fonts. Re-upload it after editing.
 - [ ] **Unity** — not built yet. Listed so it is not forgotten when it is.
 <!-- consumers:end -->
 

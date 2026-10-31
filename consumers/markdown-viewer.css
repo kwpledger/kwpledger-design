@@ -1,0 +1,125 @@
+/*
+ * kwp — Markdown Viewer print theme
+ *
+ * For markdownviewer.org: Style > Custom CSS > upload (.css). A hands-on
+ * consumer: pasted, not imported, so nothing tells it a token changed. See
+ * docs/CONSUMERS.md and consumers/README.md.
+ *
+ * Fonts come from Google Fonts, which Markdown Viewer already loads from. Its
+ * Font Family picker sets ONE family for the whole document; this needs three
+ * (Lora headings, Hanken Grotesk body, IBM Plex Mono code), so the @import
+ * below asks for all of them. @import only works as the first rule in a
+ * stylesheet. If headings ever come out in Georgia, that is the import being
+ * dropped; pick Hanken Grotesk in the picker and the body still lands.
+ *
+ * Colors are the LIGHT register of tokens/base.css, because paper is light.
+ * Values are literal hex: a pasted stylesheet cannot reach the tokens. The
+ * comment beside each value names its token; if one moves upstream, edit it
+ * here by hand.
+ */
+@import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=IBM+Plex+Mono&family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
+
+/* ---- Page & body ------------------------------------------------------ */
+@page { margin: 0.75in; }
+
+body, p, li, td, th, dd, dt {
+  font-family: 'Hanken Grotesk', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color: #1a1917;                 /* --fg (ink-900) */
+}
+p, li, dd { font-size: 1rem; line-height: 1.6; }
+p { margin: 0 0 0.75rem; }
+
+/* ---- Headings — Lora 600 ---------------------------------------------- */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Lora', Georgia, 'Iowan Old Style', 'Palatino Linotype', Palatino, serif;
+  font-weight: 600;               /* --fw-display */
+  font-style: normal;             /* italics discouraged in Lora titles */
+  color: #1a1917;
+  line-height: 1.25;
+  margin: 2.5rem 0 0.75rem;
+  border: 0;
+  break-after: avoid;
+  page-break-after: avoid;
+}
+h1 { font-size: 2.07rem; margin-top: 0; color: #0d5c58; }  /* --accent */
+h2 { font-size: 1.73rem; padding-bottom: 0.25rem; border-bottom: 1px solid #e3e0da; }
+h3 { font-size: 1.44rem; }
+h4 { font-size: 1.2rem; }
+h5, h6 { font-size: 1rem; color: #5c5a57; }                 /* --fg-muted */
+
+/* Bold text */
+strong, b { font-weight: 700; color: inherit; }
+
+/* Links — teal, underlined so they survive greyscale printing */
+a { color: #0d5c58; text-decoration: underline; text-underline-offset: 0.15em; }
+a:hover { color: #0a4a47; }                                  /* --accent-hover */
+
+/* Rules */
+hr { border: 0; border-top: 1px solid #e3e0da; margin: 2.5rem 0; height: 0; background: none; }
+
+/* Blockquotes — teal thread down the left, not a filled box */
+blockquote {
+  margin: 1rem 0;
+  padding: 0.25rem 0 0.25rem 1rem;
+  border-left: 3px solid #0d5c58;
+  background: transparent;
+  color: #5c5a57;
+  break-inside: avoid;
+}
+blockquote p:last-child { margin-bottom: 0; }
+
+/* Inline code — IBM Plex Mono, 400 only (it ships no bold or italic) */
+code, kbd, samp, pre {
+  font-family: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+  font-weight: 400;
+  font-style: normal;
+}
+code {
+  font-size: 0.875em;
+  padding: 0.1em 0.35em;
+  background: #fbfaf8;            /* --surface (paper-50) */
+  border: 1px solid #e3e0da;
+  border-radius: 4px;
+  color: #1a1917;
+}
+
+/* Code blocks — whitespace preserved so ASCII diagrams stay aligned */
+pre {
+  font-size: 0.8rem;
+  line-height: 1.45;
+  padding: 1rem;
+  background: #fbfaf8;
+  border: 1px solid #e3e0da;
+  border-radius: 6px;
+  color: #1a1917;
+  white-space: pre;
+  overflow-x: auto;
+  break-inside: avoid;
+}
+pre code { font-size: inherit; padding: 0; background: none; border: 0; border-radius: 0; }
+
+/* Lists */
+ul, ol { padding-left: 1.5rem; margin: 0 0 0.75rem; }
+li { margin: 0.25rem 0; }
+li::marker { color: #0d5c58; }
+ol > li::marker { font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 0.9em; }
+
+/* Images */
+img { max-width: 100%; height: auto; break-inside: avoid; }
+
+/* Tables — hairlines, sand header, no zebra fills to waste ink */
+table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: 0.94rem; break-inside: auto; }
+thead { display: table-header-group; }   /* repeat header on each printed page */
+tr { break-inside: avoid; }
+th, td { padding: 0.5rem 0.75rem; border: 1px solid #e3e0da; text-align: left; vertical-align: top; }
+th { font-weight: 700; background: #fbfaf8; color: #1a1917; }
+tbody tr:nth-child(even) { background: transparent; }
+
+/* Task lists */
+input[type="checkbox"] { accent-color: #0d5c58; }
+
+/* ---- Print: force ink-friendly, exact colors -------------------------- */
+@media print {
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  p, li { orphans: 3; widows: 3; }
+}
