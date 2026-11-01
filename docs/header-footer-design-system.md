@@ -346,18 +346,49 @@ one rule end up looking different.
 which is the state every visitor arrives in, and the one a returning visitor most often wants back.
 A two-state control silently converts "I have no preference" into a preference.
 
-**Last in the header**, after the nav. §2 puts nav after the lockup; the toggle goes after that.
+**Last in the header's markup**, after the nav. §2 puts nav after the lockup; the toggle goes after
+that. *Markup* order, which is focus order: where it is drawn is CSS's business (below).
+
+**On a phone, drawn on the lockup row** (Kevin, 2026-10-19). When lockup, nav and toggle no longer
+fit on one row, the toggle sits at the right end of the lockup's row and the nav takes the row
+beneath to itself. Links wrapping round a control read as crammed; one band of links under the name
+reads as deliberate. CSS places it (`position: absolute` against the header's inner container, on
+the lockup row's centre line); the markup does not move. Focus then reaches the toggle after the
+links although it is drawn above them, a small and predictable mismatch, and the accepted one: the
+alternative, `display: contents` on the nav so its children can be reordered, has a history of
+dropping the nav landmark from the accessibility tree. Switch at a **measured** width, the point
+where the surface's own header stops fitting on one row, in `em` so it moves with text size; not a
+guessed phone width. kwpledger.com measured its six links at 730–740px and switches below `47em`.
+
+**Icons, and the words stay** (Kevin, 2026-10-19, after Claude's own settings). Monitor, sun, moon.
+Each icon is `aria-hidden`; each button keeps its word twice, as visually hidden text (its
+accessible name) and as `title` (the hover tooltip). An icon with no name is an unlabelled button,
+and a name only in `aria-label` gives a mouse user nothing to hover for. Draw the icons in
+`currentColor`, stroke only, so the selected and hover colours below reach them the way they
+reached the words.
 
 **A radiogroup, because the options are mutually exclusive and not independent** — not a checkbox,
 not a two-state switch, not a `<select>`:
 
 ```html
 <div class="theme-toggle" role="radiogroup" aria-label="Colour theme" data-theme-toggle>
-  <button type="button" role="radio" aria-checked="true"  tabindex="0"  data-theme-value="system">System</button>
-  <button type="button" role="radio" aria-checked="false" tabindex="-1" data-theme-value="light">Light</button>
-  <button type="button" role="radio" aria-checked="false" tabindex="-1" data-theme-value="dark">Dark</button>
+  <button type="button" role="radio" aria-checked="true"  tabindex="0"  data-theme-value="system" title="System">
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><!-- monitor --></svg>
+    <span class="visually-hidden">System</span>
+  </button>
+  <button type="button" role="radio" aria-checked="false" tabindex="-1" data-theme-value="light" title="Light">
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><!-- sun --></svg>
+    <span class="visually-hidden">Light</span>
+  </button>
+  <button type="button" role="radio" aria-checked="false" tabindex="-1" data-theme-value="dark" title="Dark">
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><!-- moon --></svg>
+    <span class="visually-hidden">Dark</span>
+  </button>
 </div>
 ```
+
+The icon paths are in the reference implementation; any monitor, sun and moon will do, provided
+they are stroke-only line icons at the size of the surrounding text.
 
 Roving tabindex: exactly one button is `tabindex="0"`. **Arrow keys move focus _and_ selection** —
 that is the radiogroup contract, and moving selection alone strands focus on a button that roving
@@ -387,7 +418,8 @@ that appears dead is worse than one that quietly does the default.
 page but not the mark is the §4 failure with extra steps.
 
 **Colour the selected state from tokens, and check both registers.** `background: var(--accent)`
-with `color: var(--surface)` measures **7.49:1** light and **8.31:1** dark on kwpledger.com. The
+with `color: var(--surface)` measures **7.49:1** light and **8.31:1** dark on kwpledger.com (the
+icons inherit it through `currentColor`, so the measurement stands). The
 obvious-looking `color: #fff` measures **2.23:1** in dark — a fail, and one that only appears in the
 register a light-mode author never looks at.
 
