@@ -81,6 +81,14 @@ a version is tagged. Edit the list here; the issue follows.
       as `.dark`. Bundles Lora and Hanken from the package by relative path,
       so a release that renames a font file breaks its build. Its
       `docs/DESIGN-SYSTEM.md` holds the mapping and the Base44-specific traps.
+- [ ] **`smartalarm-pro`** — a Base44 app, pinned since 2026-11-04 (at
+      v0.13.0), the second Base44 consumer. Same template and same setup as
+      `plankvoice`: tokens imported in `src/index.css`, `color-mix` in
+      `tailwind.config.js`, fonts bundled from the package by relative path.
+      Its own `--brand` is an alias of `--accent`. Its theme switch sets
+      `data-theme` itself (`ThemeContext.jsx` plus a pre-paint script in
+      `index.html`) rather than through next-themes. Its
+      `docs/DESIGN-SYSTEM.md` holds the mapping.
 
 ### Hands-on — nothing reaches these but this list
 
@@ -89,7 +97,6 @@ a version is tagged. Edit the list here; the issue follows.
       package (it has a `package.json`, and Base44 runs `npm install`); one
       that does moves to *Pinned* (see *Adding a consumer*), as `plankvoice`
       did.
-- [ ] **`smartalarm-pro`** — a Base44 app, not consuming these tokens yet.
       Listed on Kevin's say-so (2026-09-22) so it is not forgotten when it
       does. Nothing to do for it until then.
 - [ ] **Substack** — theme colors set in the publication settings UI.
