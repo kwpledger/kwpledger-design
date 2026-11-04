@@ -21,6 +21,7 @@ Released work is in [CHANGELOG.md](CHANGELOG.md).
 
 **Completed Items**
 
+- [x] `smartalarm-pro` took the package at v0.13.0 (smartalarm-pro#4) and moved from hands-on to pinned in CONSUMERS.md. The second Base44 consumer, set up like `plankvoice`. 2026-11-04.
 - [x] `kwpledger-site` took v0.11.0 (kwpledger-site#110): pin moved, both italic files copied into `public/fonts/`. No visible change: the built CSS differs only in its `@font-face` blocks, and screenshots of all 13 pages differ only in anti-aliasing on Lora letter edges. 2026-10-16.
 - [x] Hands-on boxes on #45 (v0.7.0) and #51 (v0.8.0) ticked as acknowledged, nothing to re-apply, and both issues closed. Kevin's call. 2026-09-24.
 - [x] The three pinned consumers took v0.8.0 (kwpledger-site#59, meal-planner#43, runbox-mcp#68) and now carry `BACKLOG-FORMAT.md` in `node_modules`; their format links point here. 2026-09-24.
