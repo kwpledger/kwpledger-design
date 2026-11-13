@@ -9,6 +9,13 @@ version below is real, not reconstructed. Dates are GitHub's release dates
 bumped `package.json`.
 
 
+## v0.14.0 — 2026-11-13
+
+- [x] An app's own screens are outside the header rule (Kevin, 2026-11-13). Sign-in and home screens carry no lockup; the mark lives on the app's About screen. SPEC §10.1 says so, and the header rule's §5 Base44 row now covers web pages only.
+- [x] New consumer spec, [about-screen-design-system.md](about-screen-design-system.md): the About screen for the Base44 apps and their native iPhone apps. It sets the seven parts in fixed order (mark, name and version, a line about the app with the link to kwpledger.com, the app's own privacy note, `hello@kwpledger.com`, `©`, font licences), where About lives, what a privacy note covers, and how web and SwiftUI each build it.
+
+A minor, not a patch: a rule moved, though no token, font or gate did. `npm run verify` reports identical values. Consumers bump the pin and have nothing to re-apply; an app follows the new spec when it builds its About screen.
+
 ## v0.13.0 — 2026-10-26
 
 - [x] kwp Handwriting is the system's fourth face, with a new `--font-hand` token beside `--font-mono`. It is Kevin's own handwriting made into a font, for the very rare case where hand-drawn is the point, such as the arrows on the infographic format. Two static files, Regular 400 (~153KB) and Bold 700 (~77KB), `fonts/kwp-handwriting-regular.woff2` and `kwp-handwriting-bold.woff2`. Shipped unsubset on purpose, so the Regular's contextual alternates survive. Fetched only when text is set in `--font-hand`. Declared as `kwp Handwriting`, lowercase like the initials. Not an OFL font; the provenance note is in `OFL-NOTICE.txt`. Fallback stack: Segoe Print, Bradley Hand, `cursive`. Guidance and open items: [handwriting-font.md](handwriting-font.md).

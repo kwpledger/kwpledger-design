@@ -433,7 +433,7 @@ each tier is a strict subset of the one above, so nothing is ever *replaced* by 
 | Tier | Surfaces | Required |
 | :-- | :-- | :-- |
 | **Full control** | kwpledger.com, the `*.kwpledger.com` project pages | Everything in §2–§4. No latitude — except §4.4, whose *presence* is a per-surface choice. Its shape is not. |
-| **Image + text, no markup control** | Base44 | The lockup as one image where possible, the wordmark text, chrome before content. Register pinned to whatever the platform's theme actually is. |
+| **Image + text, no markup control** | Base44 web pages | The lockup as one image where possible, the wordmark text, chrome before content. Register pinned to whatever the platform's theme actually is. **An app's own screens are not in this row** (Kevin, 2026-11-13): they carry no lockup, and the mark lives on the app's About screen. See [about-screen-design-system.md](about-screen-design-system.md) and SPEC §10.1. |
 | **Theme settings only** | Substack | One logo upload + the accent. Pin the publication's theme, then pick the file matching that register (§4). |
 | **Fixed canvas** | Infographic, quote post, LinkedIn banner | Governed by that format's own footer spec. This document defers to them; they defer to `logo-usage.md` for which mark. |
 

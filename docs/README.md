@@ -19,7 +19,8 @@ contract**, and it wins over anything written here or there.
 
 | file | what it holds |
 | :-- | :-- |
-| [header-footer-design-system.md](header-footer-design-system.md) | The shared chrome rule (KWP-16) — binds every surface. |
+| [header-footer-design-system.md](header-footer-design-system.md) | The shared chrome rule (KWP-16) — binds every web surface. |
+| [about-screen-design-system.md](about-screen-design-system.md) | The About screen every app carries, and why an app's own screens carry no lockup. |
 | [theme-toggle-capability.md](theme-toggle-capability.md) | The light/dark toggle contract, and why each dark register is authored twice. |
 | [infographic-design-system.md](infographic-design-system.md) | The 1080×1350 infographic format — a layer-3 consumer. |
 | [infographic-prompt-decision.md](infographic-prompt-decision.md) | Why the generator prompt states the Lora default and no italics, and how a graphic opts into an exception. |
