@@ -99,6 +99,13 @@ a version is tagged. Edit the list here; the issue follows.
       did.
       Listed on Kevin's say-so (2026-09-22) so it is not forgotten when it
       does. Nothing to do for it until then.
+- [ ] **Product sites** — the `site/` folder in `smartalarm-pro`, `plankvoice`,
+      `tapdodge` and `labyrinth-tilt`: static pages with no build, so the
+      tokens, fonts and the two teal ring marks are **committed copies** in
+      `site/public/`. Re-copy with `node site/sync-design.mjs` (`--check`
+      compares without copying). The two pinned apps hear about a release
+      through their drift check, but that check reads the app's pin, not
+      these copies. Header and footer follow the shared rule unchanged.
 - [ ] **Substack** — theme colors set in the publication settings UI.
 - [ ] **Fixed-canvas formats** — the infographic (1080×1350), quote post
       (1400×1000) and LinkedIn banner specs in `docs/`. Re-export affected
