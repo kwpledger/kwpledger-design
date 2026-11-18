@@ -189,6 +189,52 @@ Everything before the first tag, without per-version detail. …
    version and publishes the GitHub release. There is no separate tag step, and
    a session cannot cut one by hand.
 
+### A repo with several backlogs
+
+Some repos keep more than one backlog, one per self-contained part of the
+project (a set of chapters, levels or modules). They share one version, so one
+bump is one release, and the repo still has **one `CHANGELOG.md`**. Splitting
+it into a file per backlog would make a single bump write several changelogs.
+
+Each version section gets one subsection per backlog that finished something:
+
+```markdown
+## v0.6.0 — 2026-11-18
+
+### 01 <Backlog name>
+
+- [x] One line per completed item. PR #52.
+
+### 02 <Backlog name>
+
+- [x] …
+
+### Shared
+
+- [x] Items that belong to no single backlog.
+```
+
+- The release steps above run once per backlog: each backlog's `- [x]` items
+  move into its own `###` under the new version, and its Completed Items reset
+  to `(none)`. The version number, date and any closing paragraph are written
+  once.
+- Order subsections by backlog number, with the shared one last.
+- **A backlog with nothing completed in that version gets no subsection.**
+  `(none)` belongs in the backlog, where it resets the list; in a changelog it
+  is noise.
+- **A shelved or archived backlog adds nothing.** Its unfinished items were
+  never completed in any version, so no changelog section claims them. A
+  section it already earned in an earlier release stays as written.
+- **Renumbering never rewrites an older section.** If backlogs are renumbered
+  (the fourth becomes the third), old sections keep the numbers and names they
+  had when they shipped. Put the name in the heading, not only the number, so
+  an old `### 03` is still readable after the numbers move.
+
+A repo with one backlog needs none of this. A repo whose changelog has grown
+too long may also split it by minor series (`CHANGELOG-v0.5.md`, one file
+per series, with a status line saying whether the series is open or closed and
+a link to the next). That is an option, not part of the format.
+
 ### Versions
 
 Pre-1.0 numbers are written in sand, by Kevin's own description. Bump the
