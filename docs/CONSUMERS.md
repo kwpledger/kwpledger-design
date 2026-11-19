@@ -112,6 +112,10 @@ a version is tagged. Edit the list here; the issue follows.
       artwork; the specs themselves may need their hex values regenerated.
 - [ ] **`office-theme.md`** — Kevin's Microsoft 365 theme. Documented here,
       consumed by hand, nothing depends on it.
+- [ ] **Swiss deck** — `office/swiss-deck/`, the PowerPoint template. Reads
+      `tokens/base.css` and `office/theme-colors/kwp-design.xml` at build time.
+      Rebuild with `npm install && npm run build` in that folder and commit the
+      new `Swiss-Deck-Template.potx`. Spec: `swiss-deck-design-system.md`.
 - [ ] **Markdown Viewer** — `consumers/markdown-viewer.css`, Kevin's print
       theme for markdownviewer.org. Light-register hex copied from `base.css`;
       fonts from Google Fonts. Re-upload it after editing.
