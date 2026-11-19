@@ -1,0 +1,5 @@
+# Build intermediates and the sample deck. Only the template (.potx) is committed.
+*-raw.pptx
+*-raw.json
+Swiss-Deck-Sample.pptx
+*.pdf

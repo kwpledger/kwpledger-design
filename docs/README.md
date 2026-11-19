@@ -29,6 +29,7 @@ contract**, and it wins over anything written here or there.
 | [linkedin-banner-design-system.md](linkedin-banner-design-system.md) | The banner format. |
 | [social-card-design-system.md](social-card-design-system.md) | The 1200×630 link-preview card (`og:image`) — a layer-3 consumer. |
 | [office-theme.md](office-theme.md) | Kevin's Microsoft 365 theme. Consumed by hand; nothing depends on it. |
+| [swiss-deck-design-system.md](swiss-deck-design-system.md) | The Swiss deck PowerPoint template: one typeface, a 12-column grid, 18 layouts. Built from the tokens by `office/swiss-deck/`. |
 | [illustration-brief-desire-path.md](illustration-brief-desire-path.md) | A single illustration brief. |
 
 ## How this repo is run
