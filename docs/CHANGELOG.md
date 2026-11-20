@@ -9,7 +9,7 @@ version below is real, not reconstructed. Dates are GitHub's release dates
 bumped `package.json`.
 
 
-## v0.15.0 — 2026-11-19
+## v0.15.0 — 2026-11-20
 
 - [x] New consumer: the Swiss deck, a PowerPoint template in one typeface (Hanken Grotesk, Plex Mono labels) on a 12-column grid, with 18 layouts on one Slide Master. The band, a live slide number and the grid guides sit on the master. `office/swiss-deck/Swiss-Deck-Template.potx` is the built file, and `office/swiss-deck/` has its generator (its own `package.json`, so the root stays dependency-free). Colours are read from `tokens/base.css` at build time, and the theme slots are `office/theme-colors/kwp-design.xml`, unchanged. Spec: [swiss-deck-design-system.md](swiss-deck-design-system.md).
 
