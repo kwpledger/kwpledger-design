@@ -9,6 +9,12 @@ version below is real, not reconstructed. Dates are GitHub's release dates
 bumped `package.json`.
 
 
+## v0.15.0 — 2026-11-19
+
+- [x] New consumer: the Swiss deck, a PowerPoint template in one typeface (Hanken Grotesk, Plex Mono labels) on a 12-column grid, with 18 layouts on one Slide Master. The band, a live slide number and the grid guides sit on the master. `office/swiss-deck/Swiss-Deck-Template.potx` is the built file, and `office/swiss-deck/` has its generator (its own `package.json`, so the root stays dependency-free). Colours are read from `tokens/base.css` at build time, and the theme slots are `office/theme-colors/kwp-design.xml`, unchanged. Spec: [swiss-deck-design-system.md](swiss-deck-design-system.md).
+
+A minor, not a patch: the package ships a new consumer file, though no token, font, gate or rule moved. `npm run verify` reports identical values. Consumers bump the pin and have nothing to re-apply.
+
 ## v0.14.0 — 2026-11-13
 
 - [x] An app's own screens are outside the header rule (Kevin, 2026-11-13). Sign-in and home screens carry no lockup; the mark lives on the app's About screen. SPEC §10.1 says so, and the header rule's §5 Base44 row now covers web pages only.
