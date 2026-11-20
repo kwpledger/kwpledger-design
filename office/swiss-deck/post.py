@@ -6,6 +6,8 @@ pptxgenjs cannot write any of the following, so this does it on the zipped XML:
   - the theme's twelve colour slots, copied from office/theme-colors/kwp-design.xml
   - the band (deck name, session, live slide number, rule) on the real Slide Master
   - the 12-column grid as locked Slide Master guides
+  - Cover as the title layout, Blank last, so a new deck opens on Cover
+  - video variant: no slide-number field, bottom guide at the safe line
   - placeholder names, zero text inset, anchors, uppercase labels
   - a tint on picture placeholders; diagram slots as content placeholders
   - a colour-map override on dark layouts and their slides (tx1 -> lt1)
@@ -81,7 +83,7 @@ m = strip_sldnum(files["ppt/slideMasters/slideMaster1.xml"].decode())
 band = (
     textbox(9001, "Band: deck name", 96, 72, 560, 34, f'<a:r>{rpr("tx1", bold=True)}<a:t>{xml_escape(meta["deck"])}</a:t></a:r>')
     + textbox(9002, "Band: session", 656, 72, 608, 34, f'<a:r>{rpr("tx1", mono=True)}<a:t>{xml_escape(meta["session"])}</a:t></a:r>')
-    + number_box(9003, "tx1")
+    + ("" if meta.get("video") else number_box(9003, "tx1"))  # video: no slide numbers
     + (f'<p:cxnSp><p:nvCxnSpPr><p:cNvPr id="9004" name="Band: rule"/><p:cNvCxnSpPr/><p:nvPr userDrawn="1"/></p:nvCxnSpPr>'
        f'<p:spPr><a:xfrm><a:off x="{96*PX}" y="{121*PX}"/><a:ext cx="{1728*PX}" cy="0"/></a:xfrm>'
        f'<a:prstGeom prst="line"><a:avLst/></a:prstGeom><a:ln w="12700">{fill("tx1")}</a:ln></p:spPr></p:cxnSp>')
@@ -102,13 +104,17 @@ for c in range(12):
     for x in (96 + c * 146, 96 + c * 146 + 122):
         guides.append(f'<p15:guide id="{gid}" pos="{x*4}" userDrawn="1"><p15:clr><a:srgbClr val="F26B43"/></p15:clr></p15:guide>')
         gid += 1
-for y in (72, 121, 171, 984):
+for y in (72, 121, 171, meta.get("bottom", 984)):
     guides.append(f'<p15:guide id="{gid}" orient="horz" pos="{y*4}" userDrawn="1"><p15:clr><a:srgbClr val="F26B43"/></p15:clr></p15:guide>')
     gid += 1
 m = m.replace("</p:sldMaster>",
               '<p:extLst><p:ext uri="{27BBF7A9-308A-43DC-89C8-2F4F27A1C1F1}">'
               '<p15:sldGuideLst xmlns:p15="http://schemas.microsoft.com/office/powerpoint/2012/main">'
               + "".join(guides) + "</p15:sldGuideLst></p:ext></p:extLst></p:sldMaster>")
+rels = files["ppt/slideMasters/_rels/slideMaster1.xml.rels"].decode()
+blank_rid = re.search(r'Id="(rId\d+)"[^>]*Target="../slideLayouts/slideLayout1.xml"', rels).group(1)
+blank_entry = re.search(rf'<p:sldLayoutId [^>]*r:id="{blank_rid}"/>', m).group(0)
+m = m.replace(blank_entry, "", 1).replace("</p:sldLayoutIdLst>", blank_entry + "</p:sldLayoutIdLst>", 1)
 files["ppt/slideMasters/slideMaster1.xml"] = m.encode()
 
 # ---------- layouts ----------
@@ -144,7 +150,9 @@ for i, lay in enumerate(layouts):
         dark_layout_files.add(f"slideLayout{i + 2}.xml")
     if lay["hideMasterBand"]:
         x = x.replace("<p:sldLayout ", '<p:sldLayout showMasterSp="0" ', 1)
-    if lay["bandColor"]:
+    if lay.get("isTitle"):  # the layout PowerPoint gives a new deck's first slide
+        x = x.replace("<p:sldLayout ", '<p:sldLayout type="title" ', 1)
+    if lay["bandColor"] and not meta.get("video"):
         x = x.replace("</p:spTree>", number_box(9003, lay["bandColor"]) + "</p:spTree>", 1)
     files[path] = x.encode()
 files["ppt/slideLayouts/slideLayout1.xml"] = files["ppt/slideLayouts/slideLayout1.xml"].replace(b'name="DEFAULT"', b'name="Blank"')

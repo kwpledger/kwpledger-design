@@ -4,7 +4,8 @@
 
 | File | What it is |
 | :-- | :-- |
-| [`office/swiss-deck/Swiss-Deck-Template.potx`](../office/swiss-deck/Swiss-Deck-Template.potx) | The template. Double-click it to start an untitled deck. |
+| [`office/swiss-deck/Swiss-Deck-Template.potx`](../office/swiss-deck/Swiss-Deck-Template.potx) | The template for presenting. Double-click it to start an untitled deck. |
+| [`office/swiss-deck/Swiss-Deck-Video-Template.potx`](../office/swiss-deck/Swiss-Deck-Video-Template.potx) | The variant for 1080p video. See [Video variant](#video-variant). |
 | [`office/swiss-deck/build.js`](../office/swiss-deck/build.js) | Layout geometry and the sample deck's copy (pptxgenjs). |
 | [`office/swiss-deck/post.py`](../office/swiss-deck/post.py) | Applies what pptxgenjs can't write: the theme slots, master band, guides, placeholder fixes and colour map. Standard library only. |
 
@@ -18,7 +19,7 @@ After a token release, or after changing a layout:
 cd office/swiss-deck && npm install && npm run build
 ```
 
-This writes the template (committed) and `Swiss-Deck-Sample.pptx`, which shows every layout filled in, with speaker notes. The sample is not committed. The generator has its own `package.json` so that the root package stays dependency-free.
+This writes both templates (committed) and a sample deck for each, `Swiss-Deck-Sample.pptx` and `Swiss-Deck-Video-Sample.pptx`, which show every layout filled in, with speaker notes. The samples are not committed. The generator has its own `package.json` so that the root package stays dependency-free.
 
 ## The system
 
@@ -36,7 +37,11 @@ This writes the template (committed) and `Swiss-Deck-Sample.pptx`, which shows e
 
 The big-number layout is the one exception, at 200 pt, because a single numeral there works as a graphic. The theme's heading and body fonts are **both** Hanken Grotesk, on purpose. That is the format, not a departure from the Lora/Hanken pairing.
 
-**The band.** Deck name, session label, a live slide number and a 1 pt rule sit on the Slide Master, so you set them once in *View → Slide Master*. The number is a slide-number field, so it appears without *Insert → Slide Number*.
+**The band.** Deck name, session label, a live slide number and a 1 pt rule sit on the Slide Master, so you set them once in *View → Slide Master*. The number is a slide-number field, so it appears without *Insert → Slide Number*. It shows the current slide only. PowerPoint has no field for the total, so "1 / 18" would have to be typed by hand and would go stale the first time a slide is added.
+
+**A new deck opens on 01 Cover.** Cover is marked as the title layout, and the blank layout sits last in the list.
+
+**Line heights are measured, not assumed.** Office's "single" line is the font's own line height: 1.3 em for both Hanken Grotesk and Plex Mono. Line spacing multiplies that. So a box sized as size × spacing comes out about 30% short. `build.js` sizes every box as size × 1.3 × spacing × lines.
 
 **Registers.** Light is `--paper-50` with ink text. Dark is `--navy-900`: dark layouts override the colour map (`tx1 → lt1`), so the band and any `Text 1` content turn light on their own. Accent is `--teal-700`, used once, for the close. Muted text is `--ink-500` on light, `--navy-200` on dark and `--teal-200` on teal (4.7:1). Highlight is `--teal-700` on light and `--teal-300` on dark.
 
@@ -74,6 +79,21 @@ Picture placeholders are tinted (`--sand-200` / `--navy-800`), so empty slots ar
 **The band is full-strength, not muted.** A muted band would need `--ink-500` and `--navy-200` in theme slots, and the settled Office mapping holds neither. The band is set in `Text 1`, which the dark override turns light. The web specimen's muted band, and the two colours it used that are not tokens, were not carried over.
 
 **No bullets at level 1.** The master's body style has no bullet and no hanging indent. Lists in this format are numbered in the text ("01 …"), so a bullet would only add noise. Turn one on per paragraph if a deck needs it.
+
+## Video variant
+
+`Swiss-Deck-Video-Template.potx` has the same 18 layouts on the same grid, set for 1080p export (*File → Export → Create a Video*, 1080p) and watching on a phone:
+
+| | Deck | Video |
+| :-- | --: | --: |
+| Live area ends at | y 984 | **y 950**, the bottom 12% stays clear of the player's controls, progress bar and captions |
+| Label (Plex Mono) | 12 pt | **20 pt** (40 px), the floor for text read on a phone |
+| Body | 16 pt | **22 pt** |
+| Subhead | 24 pt | **28 pt** |
+| Slide number in the band | yes | **no**, because a viewer can't jump to "slide 7" |
+| Mosaic notes | three | **two**, because three two-line notes at 22 pt need more height than the mosaic has |
+
+Display, title and the big number are unchanged. They were already large enough. Use no transitions, or cuts only: the format's motion is the cut.
 
 ## Sharing a deck
 

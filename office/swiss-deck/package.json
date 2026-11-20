@@ -1,10 +1,10 @@
 {
   "name": "@kwpledger/swiss-deck",
   "private": true,
-  "description": "Builds the Swiss deck PowerPoint template from the tokens. Kept out of the root package so the design system stays dependency-free.",
+  "description": "Builds the Swiss deck PowerPoint templates (presenting and 1080p video) from the tokens. Kept out of the root package so the design system stays dependency-free.",
   "type": "commonjs",
   "scripts": {
-    "build": "node build.js template && python3 post.py template-raw.pptx Swiss-Deck-Template.potx && node build.js sample && python3 post.py sample-raw.pptx Swiss-Deck-Sample.pptx"
+    "build": "node build.js deck template && python3 post.py deck-template-raw.pptx Swiss-Deck-Template.potx && node build.js deck sample && python3 post.py deck-sample-raw.pptx Swiss-Deck-Sample.pptx && node build.js video template && python3 post.py video-template-raw.pptx Swiss-Deck-Video-Template.potx && node build.js video sample && python3 post.py video-sample-raw.pptx Swiss-Deck-Video-Sample.pptx"
   },
   "dependencies": {
     "pptxgenjs": "4.0.1",
