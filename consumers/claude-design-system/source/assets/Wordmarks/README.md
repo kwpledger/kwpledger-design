@@ -1,0 +1,1 @@
+The MPSAS handwritten wordmark (Mr. Pledger Stays After School), vendored in v0.10.0: one, two and three lines, and the initials, each with an `_inv` file for dark grounds. Black ink on light grounds, `_inv` on dark. Use only on MPSAS surfaces. Checksums are in Logos/PROVENANCE.md.

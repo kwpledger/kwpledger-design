@@ -1,0 +1,50 @@
+<!-- @dsCard height=288 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>kwpledger design</title>
+<style>
+  html, body { margin:0; padding:0; height:100%; }
+  body { background:var(--surface); color:var(--fg); font-family:var(--font-body); overflow:hidden; }
+  .cover { position:relative; height:288px; overflow:hidden; }
+  .art { position:absolute; top:0; left:480px; width:480px; height:288px; overflow:hidden; }
+  .art svg { display:block; width:480px; height:288px; }
+  .slab { fill:var(--teal-700); }
+  .light { fill:var(--teal-300); }
+  .tint { fill:var(--sand-200); }
+  .deep { fill:var(--navy-600); }
+  .ring { fill:none; stroke-width:3; }
+  .ring.on-slab { stroke:var(--paper-0); }
+  .ring.on-ground { stroke:var(--accent); }
+  .words { position:absolute; left:var(--space-l); bottom:var(--space-l); max-width:440px; }
+  .name { margin:0; font-family:var(--font-display); font-weight:var(--fw-display); font-size:88px; line-height:.95; letter-spacing:-.01em; color:var(--fg); }
+  .tag { margin:var(--space-xs) 0 0 2px; font-size:14px; line-height:20px; color:var(--fg-muted); }
+</style>
+</head>
+<body>
+<div class="cover">
+<div class="art" aria-hidden="true">
+<svg viewBox="0 0 480 288" width="480" height="288">
+<!--
+  blocks      teal-700 160×264 bled off the top (the thread, the largest) · teal-300 176×200 bled off the right · sand-200 96×144 (the warm tint) · navy-600 96×40 (the dark family, small) — about 35% of 960×288
+  arrangement one tall teal slab with satellites, bottoms on one line space-xl−space-s (48px) above the edge, space-s gutters
+  pattern     open rings, from "only the ring's color varies": the signature's ring at space-xl and space-2xl radii, one in paper-0 cut across the slab, two in accent crossing the satellites; three in all
+  scales      sides in space-s multiples (16px); gutters space-s; ring radii space-xl (64) and space-2xl (96), space-l (40); square corners (the system has no radius tokens)
+-->
+<rect class="slab" x="40" y="-24" width="160" height="264"/>
+<rect class="deep" x="216" y="40" width="96" height="40"/>
+<rect class="tint" x="216" y="96" width="96" height="144"/>
+<rect class="light" x="328" y="40" width="176" height="200"/>
+<circle class="ring on-slab" cx="128" cy="112" r="64"/>
+<circle class="ring on-ground" cx="392" cy="152" r="96"/>
+<circle class="ring on-ground" cx="264" cy="40" r="40"/>
+</svg>
+</div>
+<div class="words">
+<h1 class="name">kwpledger<br>design</h1>
+<p class="tag">Stately, not neon: the parent identity for kwpledger.com.</p>
+</div>
+</div>
+</body>
+</html>
