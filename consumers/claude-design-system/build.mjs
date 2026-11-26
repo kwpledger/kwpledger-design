@@ -15,7 +15,8 @@
  *
  * Derived, not authored: tokens.json, tokens.css and components/bundle.css are
  * read out of tokens/*.css; the previews are design-system/ cards with their
- * paths re-pointed; fonts, logos, examples and docs are copied byte for byte.
+ * paths re-pointed; fonts, logos, examples, docs and the Office theme and
+ * template files are copied byte for byte.
  * The prose (brand book, component guidelines, cover) is hand-written and
  * lives in source/, copied as is.
  *
@@ -26,6 +27,7 @@ import { readFileSync, writeFileSync, mkdirSync, copyFileSync, readdirSync, stat
 import { join, dirname, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { execFileSync } from 'node:child_process';
+import { crc32 } from 'node:zlib';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const args = Object.fromEntries(process.argv.slice(2).reduce((a, v, i, all) => (v.startsWith('--') ? [...a, [v.slice(2), all[i + 1]]] : a), []));
@@ -51,6 +53,21 @@ const DOCS = ['SPEC', 'PALETTE', 'logo-usage', 'header-footer-design-system', 'i
   'swiss-deck-design-system', 'office-theme', 'handwriting-font', 'theme-toggle-capability', 'CONSUMERS', 'CHANGELOG'];
 const DOCS_LEFT_OUT = ['BACKLOG', 'BACKLOG-FORMAT', 'CHANGELOG-TEMPLATE', 'HANDOFF-FILE', 'OWNERSHIP', 'README',
   'illustration-brief-desire-path', 'infographic-prompt-decision'];
+
+// A one-file zip, method 0 (stored): the entry's bytes are the file's bytes.
+function zipOne(name, data) {
+  const n = Buffer.from(name, 'utf8'), crc = crc32(data), D = 0x5b79, T = 0; // 2025-11-25 00:00, fixed so builds repeat
+  const local = Buffer.alloc(30); local.writeUInt32LE(0x04034b50, 0); local.writeUInt16LE(20, 4); local.writeUInt16LE(0x0800, 6);
+  local.writeUInt16LE(0, 8); local.writeUInt16LE(T, 10); local.writeUInt16LE(D, 12); local.writeUInt32LE(crc, 14);
+  local.writeUInt32LE(data.length, 18); local.writeUInt32LE(data.length, 22); local.writeUInt16LE(n.length, 26);
+  const cen = Buffer.alloc(46); cen.writeUInt32LE(0x02014b50, 0); cen.writeUInt16LE(20, 4); cen.writeUInt16LE(20, 6); cen.writeUInt16LE(0x0800, 8);
+  cen.writeUInt16LE(0, 10); cen.writeUInt16LE(T, 12); cen.writeUInt16LE(D, 14); cen.writeUInt32LE(crc, 16);
+  cen.writeUInt32LE(data.length, 20); cen.writeUInt32LE(data.length, 24); cen.writeUInt16LE(n.length, 28);
+  const cdOff = 30 + n.length + data.length, cdLen = 46 + n.length;
+  const end = Buffer.alloc(22); end.writeUInt32LE(0x06054b50, 0); end.writeUInt16LE(1, 8); end.writeUInt16LE(1, 10);
+  end.writeUInt32LE(cdLen, 12); end.writeUInt32LE(cdOff, 16);
+  return Buffer.concat([local, n, data, cen, n, end]);
+}
 
 const notes = [];
 const fail = (m) => { console.error('build.mjs: ' + m); process.exit(1); };
@@ -199,6 +216,19 @@ for (const f of readdirSync(join(ROOT, 'logos')).sort()) {
   else cp(join(ROOT, 'logos', f), (f.startsWith('wordmark_') ? 'assets/Wordmarks/' : 'assets/Logos/') + f);
 }
 for (const a of walk(join(ROOT, 'examples'))) if (/\.(jpg|png|pdf)$/i.test(a)) cp(a, 'assets/Examples/' + relative(join(ROOT, 'examples'), a));
+// Office: the shipped outputs only. office/swiss-deck/ is also an npm package
+// (package.json, lockfile, build.js, post.py); its toolchain never goes in.
+const OFFICE = [/^theme-colors\/[^/]+\.xml$/, /^theme-fonts\/[^/]+\.xml$/, /^swiss-deck\/[^/]+\.potx$/];
+if (existsSync(join(ROOT, 'office'))) for (const a of walk(join(ROOT, 'office'))) {
+  const rel = relative(join(ROOT, 'office'), a).split('\\').join('/');
+  if (rel.split('/').includes('node_modules')) continue;
+  if (!OFFICE.some((r) => r.test(rel))) continue;
+  // The artifact can neither serve nor store a .potx, so a template goes in as a
+  // zip holding the file byte for byte (stored, not compressed). Upload it as an
+  // asset: see README.md, "Taking a release".
+  if (rel.endsWith('.potx')) wr('assets/Office/' + rel + '.zip', zipOne(rel.split('/').pop(), readFileSync(a)));
+  else cp(a, 'assets/Office/' + rel);
+}
 for (const d of DOCS) cp(join(ROOT, 'docs', d + '.md'), `docs/${d}.md`);
 for (const f of readdirSync(join(ROOT, 'docs')).filter((f) => f.endsWith('.md')).map((f) => f.slice(0, -3)))
   if (!DOCS.includes(f) && !DOCS_LEFT_OUT.includes(f)) notes.push(`new doc not mapped: docs/${f}.md (add it to DOCS or DOCS_LEFT_OUT)`);
@@ -212,7 +242,7 @@ for (const a of walk(SRC)) {
 
 const sync = { repo: 'kwpledger/kwpledger-design', version, sha, date,
   sections: ['project/assets/Logos/PROVENANCE.md', ...DOCS.map((d) => `project/docs/${d}.md`)],
-  assetGroups: ['Logos', 'Wordmarks', 'Examples'], notes };
+  assetGroups: ['Logos', 'Wordmarks', 'Examples', 'Office'], notes };
 writeFileSync(join(OUT, 'sync.json'), JSON.stringify(sync, null, 2) + '\n');
 console.log(`Built ${version}@${sha}: ${toks.length} colors, ${fonts.length} faces, ${Object.keys(CARDS).length} previews → ${P}`);
 for (const n of notes) console.log('note: ' + n);
