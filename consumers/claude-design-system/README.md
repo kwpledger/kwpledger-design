@@ -22,6 +22,7 @@ could not place. It reads the checked-out commit and writes only under
 | `components/bundle.css` | the `--step-*` scale from `base.css` and the chrome from `design-system/_lib/card.css` |
 | `components/<Card>/preview.html` | the cards in `design-system/`, image paths re-pointed |
 | `fonts/`, `assets/Logos/`, `assets/Wordmarks/`, `assets/Examples/`, `docs/`, `tokens/` | copied byte for byte |
+| `assets/Office/` | `office/theme-colors/*.xml`, `office/theme-fonts/*.xml`, `office/swiss-deck/*.potx`, byte for byte (each template inside a one-file `.zip`, which the artifact can store and a `.potx` it cannot); the deck's npm package and build scripts stay out |
 | `README.md`, `components/*/README.md`, `components/Cover/preview.html`, `assets/*/README.md` | `source/`, hand-written |
 | token usage notes | `source/usage.json` |
 
@@ -54,7 +55,9 @@ Kevin asks: "take vX.Y.Z into the design system." The artifact's
 4. A file in `old/` and not in `new/` is gone from the repo. Ask before
    removing it, and move it aside rather than deleting it (the type's
    `craft.md`, "Move aside").
-5. Publish only the changed files, then the index last, as the type's
+5. Publish only the changed files. A `.zip` under `assets/Office/` cannot be
+   served as a file: upload it with the artifact's asset upload and record it
+   in the index's `assetGroups.Office.files`. Then publish the index last, as the type's
    `SKILL.md` says, with `lastChange.via` = `GitHub · kwpledger/kwpledger-design@<sha>`.
 6. Tick the design system's box on the release issue. Report what changed,
    what was kept and what `sync.json` noted.

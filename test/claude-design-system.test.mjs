@@ -26,11 +26,11 @@ function runWith(mutate = () => {}) {
   const dir = mkdtempSync(join(tmpdir(), 'kwp-cds-'));
   const root = join(dir, 'repo'), out = join(dir, 'out');
   try {
-    cpSync(repo, root, { recursive: true, filter: (s) => !['.git', 'node_modules', 'office'].includes(basename(s)) });
+    cpSync(repo, root, { recursive: true, filter: (s) => !['.git', 'node_modules'].includes(basename(s)) });
     mutate(root);
     const r = spawnSync(process.execPath, [join(root, 'consumers/claude-design-system/build.mjs'), '--out', out, '--root', root], { encoding: 'utf8' });
     const read = (p) => readFileSync(join(out, p), 'utf8');
-    return { status: r.status, output: r.stdout + r.stderr, read };
+    return { status: r.status, output: r.stdout + r.stderr, read, out };
   } finally {
     // out is read inside the caller before cleanup via the returned closure
     process.on('exit', () => rmSync(dir, { recursive: true, force: true }));
@@ -94,4 +94,16 @@ test('a new doc is reported, not silently skipped', () => {
   const r = runWith((root) => writeFileSync(join(root, 'docs/new-format.md'), '# New format\n'));
   assert.equal(r.status, 0, r.output);
   assert.match(r.output, /new doc not mapped: docs\/new-format\.md/);
+});
+
+test('Office takes the theme files and templates, never the deck\'s npm package', () => {
+  const r = runWith();
+  assert.equal(r.status, 0, r.output);
+  assert.match(r.read('project/assets/Office/theme-colors/kwp-design.xml'), /<a:clrScheme/);
+  assert.match(r.read('project/assets/Office/theme-fonts/kwp-design.xml'), /<a:fontScheme/);
+  const z = readFileSync(join(r.out, 'project/assets/Office/swiss-deck/Swiss-Deck-Template.potx.zip'));
+  const potx = readFileSync(join(repo, 'office/swiss-deck/Swiss-Deck-Template.potx'));
+  assert.ok(z.includes(potx), 'the zip does not hold the template byte for byte');
+  for (const f of ['package.json', 'package-lock.json', 'build.js', 'post.py'])
+    assert.throws(() => r.read('project/assets/Office/swiss-deck/' + f), `${f} leaked into the artifact`);
 });
