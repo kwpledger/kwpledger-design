@@ -120,6 +120,11 @@ a version is tagged. Edit the list here; the issue follows.
 - [ ] **Markdown Viewer** — `consumers/markdown-viewer.css`, Kevin's print
       theme for markdownviewer.org. Light-register hex copied from `base.css`;
       fonts from Google Fonts. Re-upload it after editing.
+- [ ] **Claude design system** — the "kwpledger design" Design System
+      artifact on claude.ai that Claude sessions design from. Built by
+      `consumers/claude-design-system/build.mjs`; a Claude session publishes
+      it when Kevin says to take the release. The procedure is in that
+      folder's README.
 - [ ] **Unity** — not built yet. Listed so it is not forgotten when it is.
 <!-- consumers:end -->
 

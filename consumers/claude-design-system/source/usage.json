@@ -1,0 +1,44 @@
+{
+  "_comment": "Usage notes for tokens.json. build.mjs refuses to run if base.css declares a token with no entry here: add the note, then rebuild.",
+  "palette": {
+    "paper-0": "Palette (layer 1). White; behind `surface-card` in light. Never reference from a component.",
+    "paper-50": "Palette (layer 1). Warm off-white; behind `surface` in light. Never reference from a component.",
+    "sand-200": "Palette (layer 1). Warm hairline; behind `border` in light.",
+    "ink-900": "Palette (layer 1). Near-black warm ink; behind `fg` in light.",
+    "ink-500": "Palette (layer 1). Warm grey ink; behind `fg-muted` in light.",
+    "teal-800": "Palette (layer 1). Behind `accent-hover` in light.",
+    "teal-700": "Palette (layer 1). Behind `accent` in light; also the default (teal) ring on a light canvas.",
+    "teal-300": "Palette (layer 1). Behind `accent` in dark; the default ring on a dark canvas. Chroma 0.091: the ceiling every other color stays under.",
+    "teal-200": "Palette (layer 1). Behind `accent-hover` in dark.",
+    "navy-900": "Palette (layer 1). Deep navy-slate; behind `surface` in dark.",
+    "navy-800": "Palette (layer 1). Behind `surface-card` in dark.",
+    "navy-600": "Palette (layer 1). Behind `border` in dark.",
+    "navy-200": "Palette (layer 1). Behind `fg-muted` in dark.",
+    "navy-50": "Palette (layer 1). Behind `fg` in dark."
+  },
+  "semantic": {
+    "surface": "Page ground. The only page background.",
+    "surface-card": "Raised panel: cards, and the ground for info messages (there is no --info).",
+    "fg": "Body text on `surface` and `surface-card`.",
+    "fg-muted": "Secondary text on `surface` and `surface-card`; still clears AA.",
+    "accent": "Interactive: links, buttons, the one eyebrow. Text on `surface` and `surface-card`.",
+    "accent-hover": "Interactive, hovered. Text on `surface` and `surface-card`.",
+    "border": "Hairlines and edges. Also the meta rule on fixed canvases, so teal appears once."
+  },
+  "spacing": {
+    "space-2xs": "Heading to its own paragraph; tight pairs.",
+    "space-xs": "Inside small panels; message padding.",
+    "space-s": "Default gap between related items.",
+    "space-m": "Card padding; gap after a header block.",
+    "space-l": "Boundary between ideas; section spacing.",
+    "space-xl": "Large section breaks.",
+    "space-2xl": "Page-level breathing room."
+  },
+  "layout": {
+    "measure": "Max width of body copy.",
+    "page": "Max width of a full-width layout."
+  },
+  "fontWeight": {
+    "fw-display": "Default heading weight for `--font-display`. Use `var(--fw-display)`, never a literal."
+  }
+}
